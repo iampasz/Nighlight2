@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="grayText">#404040</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="blask">#0b0000</color>
+
+    <string-array name="myColors" translatable="false">
+        <item>#ff4040</item>
+        <item>#ff4040</item>
+        <item>#ff8c40</item>
+        <item>#ffdf40</item>
+        <item>#80ff40</item>
+        <item>#40ffe9</item>
+        <item>#404dff</item>
+        <item>#a940ff</item>
+        <item>#767676</item>
+    </string-array>
+
+    <string-array name="bgColors" translatable="false">
+        <item>#01083d</item>
+        <item>#052334</item>
+        <item>#1e2326</item>
+        <item>#06460c</item>
+        <item>#4b2700</item>
+        <item>#300436</item>
+
+        <item>#051060</item>
+        <item>#093955</item>
+        <item>#384248</item>
+        <item>#0B6013</item>
+        <item>#603403</item>
+        <item>#4B0954</item>
+        <item>#000000</item>
+        <item>#FFFFFF</item>
+
+
+    </string-array>
+
+    <string-array name="bgNlColors" translatable="false">
+        <item>#ff2f2f</item>
+        <item>#ff8737</item>
+        <item>#ffe14e</item>
+        <item>#45b30c</item>
+        <item>#16b7a4</item>
+        <item>#4753ff</item>
+        <item>#ac44ff</item>
+        <item>#81a70f</item>
+        <item>#e18700</item>
+        <item>#a940ff</item>
+        <item>#767676</item>
+        <item>#ff6ce2</item>
+        <item>#737373</item>
+        <item>#F2F2F2</item>
+    </string-array>
+
+
+
+    <string-array name="menuColors" translatable="false">
+        <item>#ff2f2f</item>
+        <item>#ff8737</item>
+        <item>#ffe14e</item>
+        <item>#82ff41</item>
+        <item>#3cffe8</item>
+        <item>#4753ff</item>
+        <item>#ac44ff</item>
+
+    </string-array>
+
+
+
+</resources>

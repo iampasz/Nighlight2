@@ -1,0 +1,66 @@
+<resources>
+
+    <string name="app_name">Nachtlicht 2</string>
+
+    <string name="melodies">Melodien</string>
+    <string name="color_background">Hintergrundfarbe</string>
+    <string name="color_nl">Nachtlichtfarbe</string>
+    <string name="background">Hintergrund</string>
+    <string name="animation">Animation</string>
+    <string name="timer">Timer</string>
+    <string name="brightness">Helligkeit</string>
+
+    <string name="settings">Einstellungen</string>
+    <string name="block">Sperren</string>
+    <string name="unlock">Freischalten</string>
+
+    <string name="bear">Tragen</string>
+    <string name="mouse">Maus</string>
+    <string name="bunny">Hase</string>
+    <string name="cat">Katze</string>
+    <string name="frog">Frosch</string>
+    <string name="piggy">Schweinchen</string>
+    <string name="dog">Hund</string>
+    <string name="hippo">Nilpferd</string>
+
+
+    <string name="close">Schließen</string>
+    <string name="set">Satz</string>
+    <string name="cancel">Stornieren</string>
+    <string name="hours">Std</string>
+    <string name="minutes">Minute</string>
+
+    <string name="disable_ads">Werbungen ausschalten?</string>
+    <string name="disable_ads_des">Nach dem Anzeigen von Anzeigen werden die Anzeigen für zwei Sitzungen deaktiviert</string>
+    <string name="disable_ads_ses">Sitzungen ohne Werbung:</string>
+
+    <string name="chose_color_nl">Nachtlichtfarbe</string>
+    <string name="chose_color_nl_des">Stellen Sie mithilfe der Farbpalette die passende Nachtlichtfarbe ein.</string>
+
+    <string name="chose_color_bg">Hintergrundfarbe</string>
+    <string name="chose_color_bg_des">Stellen Sie mit dem Farbwähler die entsprechende Hintergrundfarbe ein</string>
+
+    <string name="extra_nl">Zusätzliche Nachtlichter</string>
+    <string name="extra_nl_des">Installieren Sie ein zusätzliches Nachtlicht aus dem Netzwerk. Internet erforderlich</string>
+
+    <string name="extra_melody">Zusätzliche Melodien</string>
+    <string name="extra_melody_des">Installieren Sie zusätzliche Melodien aus dem Netzwerk. Internet erforderlich</string>
+
+    <string name="more_aps">Mehr Apps</string>
+    <string name="more_aps_des">Zeigen Sie eine Liste ähnlicher Apps auf Ihrem Telefon an</string>
+
+    <string name="politick">Datenschutz-Bestimmungen</string>
+    <string name="politick_des">Bewerbungsrichtlinien öffnen</string>
+
+    <string name="no_ads_message">Die Anzeige wurde noch nicht geladen. Warten</string>
+
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
+    <string name="dont">Benachrichtigung nicht mehr anzeigen</string>
+
+    <string name="selected_button">Ok</string>
+    <string name="dialog_title">Farben</string>
+    <string name="custom_button">Farbpalette</string>
+    <string name="presets_button">Standardfarben</string>
+
+</resources>

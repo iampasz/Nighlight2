@@ -1,0 +1,66 @@
+<resources>
+
+    <string name="app_name">Nocne światło 2</string>
+
+    <string name="melodies">Melodie</string>
+    <string name="color_background">Kolor tła</string>
+    <string name="color_nl">Kolor światła nocnego</string>
+    <string name="background">Tło</string>
+    <string name="animation">Animacja</string>
+    <string name="timer">Regulator czasowy</string>
+    <string name="brightness">Jasność</string>
+
+    <string name="settings">Ustawienia</string>
+    <string name="block">Zamek</string>
+    <string name="unlock">Odblokować</string>
+
+    <string name="bear">Niedźwiedź</string>
+    <string name="mouse">Mysz</string>
+    <string name="bunny">Królik</string>
+    <string name="cat">Kot</string>
+    <string name="frog">Frog</string>
+    <string name="piggy">Żaba</string>
+    <string name="dog">Pies</string>
+    <string name="hippo">Hipopotam</string>
+
+
+    <string name="close">Zamknąć</string>
+    <string name="set">Ustawić</string>
+    <string name="cancel">Anulować</string>
+    <string name="hours">Godziny</string>
+    <string name="minutes">Minuty</string>
+
+    <string name="disable_ads">Wyłącz reklamy?</string>
+    <string name="disable_ads_des">Po obejrzeniu reklam reklamy zostaną wyłączone na dwie sesje</string>
+    <string name="disable_ads_ses">Sesje bez reklam:</string>
+
+    <string name="chose_color_nl">Kolor światła nocnego</string>
+    <string name="chose_color_nl_des">Ustaw odpowiedni kolor lampki nocnej za pomocą palety kolorów.</string>
+
+    <string name="chose_color_bg">Kolor tła</string>
+    <string name="chose_color_bg_des">Ustaw odpowiedni kolor tła za pomocą próbnika kolorów</string>
+
+    <string name="extra_nl">Dodatkowe lampki nocne</string>
+    <string name="extra_nl_des">Zainstaluj dodatkową lampkę nocną z sieci. Wymagany dostęp do Internetu</string>
+
+    <string name="extra_melody">Dodatkowe melodie</string>
+    <string name="extra_melody_des">Zainstaluj dodatkowe melodie z sieci. Wymagany dostęp do Internetu</string>
+
+    <string name="more_aps">Więcej aplikacji</string>
+    <string name="more_aps_des">Pokaż listę podobnych aplikacji na swoim telefonie</string>
+
+    <string name="politick">Polityka prywatności</string>
+    <string name="politick_des">Otwarta polityka aplikacji</string>
+
+    <string name="no_ads_message">Reklama jeszcze się nie załadowała. Czekać</string>
+
+    <string name="yes">Tak</string>
+    <string name="no">Nie</string>
+    <string name="dont">Nie pokazuj ponownie powiadomienia</string>
+
+    <string name="selected_button">Ok</string>
+    <string name="dialog_title">Zabarwienie</string>
+    <string name="custom_button">Paleta kolorów</string>
+    <string name="presets_button">Standardowe kolory</string>
+
+</resources>

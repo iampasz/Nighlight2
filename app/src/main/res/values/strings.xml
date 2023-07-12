@@ -1,0 +1,70 @@
+<resources>
+
+    <string name="banner_ad_unit_id" translatable="false">ca-app-pub-1237459888817948/9922711695</string>
+    <string name="colon" translatable="false">:</string>
+    <string name="image_des" translatable="false">image</string>
+
+    <string name="app_name">Nightlight 2</string>
+
+    <string name="melodies">Melodies</string>
+    <string name="color_background">Background color</string>
+    <string name="color_nl">Nightlight color</string>
+    <string name="background">Background</string>
+    <string name="animation">Animation</string>
+    <string name="timer">Timer</string>
+    <string name="brightness">Brightness</string>
+
+    <string name="settings">Settings</string>
+    <string name="block">Lock</string>
+    <string name="unlock">Unlock</string>
+
+    <string name="bear">Bear</string>
+    <string name="mouse">Mouse</string>
+    <string name="bunny">Bunny</string>
+    <string name="cat">Cat</string>
+    <string name="frog">Frog</string>
+    <string name="piggy">Piggy</string>
+    <string name="dog">Dog</string>
+    <string name="hippo">Hippo</string>
+
+
+    <string name="close">Close</string>
+    <string name="set">Set</string>
+    <string name="cancel">Cancel</string>
+    <string name="hours">Hours</string>
+    <string name="minutes">Minutes</string>
+
+    <string name="disable_ads">Disable ads?</string>
+    <string name="disable_ads_des">After viewing ads, ads will be disabled for two sessions</string>
+    <string name="disable_ads_ses">Sessions without ads:</string>
+
+    <string name="chose_color_nl">Nightlight color</string>
+    <string name="chose_color_nl_des">Set the appropriate nightlight color using the color palette.</string>
+
+    <string name="chose_color_bg">Background color</string>
+    <string name="chose_color_bg_des">Set the appropriate background color using the color picker</string>
+
+    <string name="extra_nl">Extra nightlights</string>
+    <string name="extra_nl_des">Install an extra nightlight from the network. Internet required</string>
+
+    <string name="extra_melody">Extra melodies</string>
+    <string name="extra_melody_des">Install an extra melodies from the network. Internet required</string>
+
+    <string name="more_aps">More apps</string>
+    <string name="more_aps_des">Show a list of similar apps on your phone</string>
+
+    <string name="politick">Privacy Policy</string>
+    <string name="politick_des">Open application policy</string>
+
+    <string name="no_ads_message">The ad has not loaded yet. Wait</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="dont">Do not show notification again</string>
+
+    <string name="selected_button">Ok</string>
+    <string name="dialog_title">Colors</string>
+    <string name="custom_button">Color palette</string>
+    <string name="presets_button">Standard colors</string>
+
+</resources>

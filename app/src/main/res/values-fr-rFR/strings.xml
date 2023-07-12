@@ -1,0 +1,65 @@
+<resources>
+
+    <string name="app_name">Veilleuse 2</string>
+
+    <string name="melodies">Mélodies</string>
+    <string name="color_background">Couleur de larrière plan</string>
+    <string name="color_nl">Couleur veilleuse</string>
+    <string name="background">Arrière-plan</string>
+    <string name="animation">Animation</string>
+    <string name="timer">Minuteur</string>
+    <string name="brightness">Luminosité</string>
+
+    <string name="settings">Paramètres</string>
+    <string name="block">Serrure</string>
+    <string name="unlock">Ouvrir</string>
+
+    <string name="bear">Ourse</string>
+    <string name="mouse">Souris</string>
+    <string name="bunny">Lapine</string>
+    <string name="cat">Chat</string>
+    <string name="frog">Grenouille</string>
+    <string name="piggy">Porcin</string>
+    <string name="dog">Chien</string>
+    <string name="hippo">Hippopotame</string>
+
+
+    <string name="close">Fermer</string>
+    <string name="set">Ensemble</string>
+    <string name="cancel">Annuler</string>
+    <string name="hours">Heures</string>
+    <string name="minutes">Minutes</string>
+
+    <string name="disable_ads">Désactiver les publicités?</string>
+    <string name="disable_ads_des">Après avoir visionné les annonces, les annonces seront désactivées pendant deux sessions</string>
+    <string name="disable_ads_ses">Sessions sans publicité:</string>
+
+    <string name="chose_color_nl">Couleur veilleuse</string>
+    <string name="chose_color_nl_des">Définissez la couleur de veilleuse appropriée à laide de la palette de couleurs.</string>
+
+    <string name="chose_color_bg">Couleur de larrière plan</string>
+    <string name="chose_color_bg_des">Définissez la couleur darrière-plan appropriée à laide du sélecteur de couleurs</string>
+
+    <string name="extra_nl">Veilleuses supplémentaires</string>
+    <string name="extra_nl_des">Installez une veilleuse supplémentaire à partir du réseau. Internet requis</string>
+
+    <string name="extra_melody">Mélodies supplémentaires</string>
+    <string name="extra_melody_des">Installez une mélodie supplémentaire à partir du réseau. Internet requis</string>
+
+    <string name="more_aps">Plus dapplications</string>
+    <string name="more_aps_des">Afficher une liste dapplications similaires sur votre téléphone</string>
+
+    <string name="politick">Politique de confidentialité</string>
+    <string name="politick_des">Ouvrir la politique dapplication</string>
+
+    <string name="no_ads_message">Lannonce na pas encore été chargée. Attendez</string>
+
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="dont">Ne plus afficher la notification</string>
+
+    <string name="selected_button">Daccord</string>
+    <string name="dialog_title">Couleurs</string>
+    <string name="custom_button">Palette de couleurs</string>
+    <string name="presets_button">Couleurs standards</string>
+</resources>

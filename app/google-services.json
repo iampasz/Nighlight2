@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "659206555332",
+    "project_id": "nightlight2",
+    "storage_bucket": "nightlight2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:659206555332:android:27437fe7a9c8e68a192b91",
+        "android_client_info": {
+          "package_name": "com.sarnavsky.pasz.nighlight2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "659206555332-tmul694nupadepjpooqng7uckqmd06hn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3fvivVfVHI1bbz_9ZMEBzCQxmo6oDAho"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "659206555332-tmul694nupadepjpooqng7uckqmd06hn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

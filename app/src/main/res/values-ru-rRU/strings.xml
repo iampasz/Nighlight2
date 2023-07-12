@@ -1,0 +1,66 @@
+<resources>
+
+    <string name="app_name">Ночник 2</string>
+
+    <string name="melodies">Мелодии</string>
+    <string name="color_background">Цвет фона</string>
+    <string name="color_nl">Цвет ночника</string>
+    <string name="background">Фон</string>
+    <string name="animation">Анимация</string>
+    <string name="timer">Таймер</string>
+    <string name="brightness">Яркость</string>
+
+    <string name="settings">Настройки</string>
+    <string name="block">Заблокировать</string>
+    <string name="unlock">Разблокировать</string>
+
+    <string name="bear">Мишка</string>
+    <string name="mouse">Мышка</string>
+    <string name="bunny">Зайчик</string>
+    <string name="cat">Котик</string>
+    <string name="frog">Жабка</string>
+    <string name="piggy">Свинка</string>
+    <string name="dog">Собачка</string>
+    <string name="hippo">Бегемотик</string>
+
+
+    <string name="close">Закрыть</string>
+    <string name="set">Установить</string>
+    <string name="cancel">Отмена</string>
+    <string name="hours">Часы</string>
+    <string name="minutes">Минуты</string>
+
+    <string name="disable_ads">Отключить рекламу</string>
+    <string name="disable_ads_des">После промостра рекламы реклама будет отключена две сесии</string>
+    <string name="disable_ads_ses">Сессий без рекламы:</string>
+
+    <string name="chose_color_nl">Цвет ночника</string>
+    <string name="chose_color_nl_des">Установите подходящий цвет ночника используя палитру цветов</string>
+
+    <string name="chose_color_bg">Цвет фона</string>
+    <string name="chose_color_bg_des">Установите подходящий цвет фона используя палитру цветов</string>
+
+    <string name="extra_nl">Дополнительные ночники</string>
+    <string name="extra_nl_des">Установить дополнительный ночник из сети. Требуется интернет</string>
+
+    <string name="extra_melody">Дополнительные мелодии</string>
+    <string name="extra_melody_des">Установить дополнительные мелодии из сети. Требуется интернет</string>
+
+    <string name="more_aps">Больше приложений</string>
+    <string name="more_aps_des">Смотерть список похожих приложений на телефон</string>
+
+    <string name="politick">Политика конфиденциальности</string>
+    <string name="politick_des">Смотреть политику приложения</string>
+
+    <string name="no_ads_message">Реклама еще не загрузилась. Подождите</string>
+
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="dont">Больше не показывать уведомление</string>
+
+    <string name="selected_button">Ок</string>
+    <string name="dialog_title">Цвета</string>
+    <string name="custom_button">Цветовая палитра</string>
+    <string name="presets_button">Стандартные цвета</string>
+
+</resources>

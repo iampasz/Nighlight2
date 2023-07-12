@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/text1"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:ellipsize="marquee"
+    android:shadowColor="#ccc"
+    android:shadowDx="2"
+
+    android:shadowDy="2"
+    android:shadowRadius="2"
+    android:textColor="#0F953E"
+    android:textSize="24sp"
+    android:textStyle="bold"
+
+    android:textAlignment="center"
+
+    android:singleLine="true" />
+
+    <!--    style="@style/spinnerDropDownItemStyle"-->
+<!--    android:layout_gravity="center"-->
+<!--    android:layout_centerHorizontal="true"-->
+<!--    android:layout_centerVertical="true"-->
+<!--    android:gravity="center"-->
+
+<!--    style="@style/spinnerDropDownItemStyle"-->

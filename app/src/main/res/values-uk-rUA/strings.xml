@@ -1,0 +1,66 @@
+<resources>
+
+    <string name="app_name">Нічник 2</string>
+
+    <string name="melodies">Мелодії</string>
+    <string name="color_background">Колір фону</string>
+    <string name="color_nl">Колір нічнику</string>
+    <string name="background">Фон</string>
+    <string name="animation">Анімація</string>
+    <string name="timer">Таймер</string>
+    <string name="brightness">Яскравість</string>
+
+    <string name="settings">Налаштунки</string>
+    <string name="block">Заблокувати</string>
+    <string name="unlock">Розблокувати</string>
+
+    <string name="bear">Ведмежа</string>
+    <string name="mouse">Мишка</string>
+    <string name="bunny">Зайка</string>
+    <string name="cat">Котик</string>
+    <string name="frog">Жабка</string>
+    <string name="piggy">Свинка</string>
+    <string name="dog">Собачка</string>
+    <string name="hippo">Бегемотик</string>
+
+
+    <string name="close">Закрити</string>
+    <string name="set">Встановити</string>
+    <string name="cancel">Відміна</string>
+    <string name="hours">Години</string>
+    <string name="minutes">Хвилини</string>
+
+    <string name="disable_ads">Відключити рекламу</string>
+    <string name="disable_ads_des">Після перегляду реклами, реклама буде відключена два сеанси</string>
+    <string name="disable_ads_ses">Сеансів без реклами:</string>
+
+    <string name="chose_color_nl">Колір нічника</string>
+    <string name="chose_color_nl_des">Встановіть колір нічнику використовуючи палітру кольорів</string>
+
+    <string name="chose_color_bg">Колір фону</string>
+    <string name="chose_color_bg_des">Встановіть колір фону використовуючи палітру кольорів</string>
+
+    <string name="extra_nl">Додаткові нічники</string>
+    <string name="extra_nl_des">Встановіть додатковий нічник з мережі. Потрібний інтернет</string>
+
+    <string name="extra_melody">Додаткові мелодії</string>
+    <string name="extra_melody_des">Встановіть додаткові мелодії з мережі. Потрібний інтернет</string>
+
+    <string name="more_aps">Більше додатків</string>
+    <string name="more_aps_des">Дивитись список схожих додатків</string>
+
+    <string name="politick">Політика конфіденційності</string>
+    <string name="politick_des">Відкрити політику</string>
+
+    <string name="no_ads_message">Реклама ще не завантажилась. Зачекайте</string>
+
+    <string name="yes">Так</string>
+    <string name="no">Ні</string>
+    <string name="dont">Більше не показувати повідомлення</string>
+
+    <string name="selected_button">Ок</string>
+    <string name="dialog_title">Кольори</string>
+    <string name="custom_button">Палітра кольорів</string>
+    <string name="presets_button">Стандартні кольори</string>
+
+</resources>
