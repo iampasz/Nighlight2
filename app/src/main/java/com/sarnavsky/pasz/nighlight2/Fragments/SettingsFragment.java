@@ -1,12 +1,17 @@
 package com.sarnavsky.pasz.nighlight2.Fragments;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,6 +36,8 @@ public class SettingsFragment extends Fragment {
 
     int adsCounter;
 
+    LinearLayout linear_download;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,6 +53,8 @@ public class SettingsFragment extends Fragment {
         nl_bg = view.findViewById(R.id.nl_bg);
         bg_color = view.findViewById(R.id.bg_color);
         ads_text = view.findViewById(R.id.ads_text);
+
+        linear_download = view.findViewById(R.id.linear_download);
 
 
         adsCounter = ((MainActivity) getActivity()).getSettings();
@@ -92,6 +101,8 @@ public class SettingsFragment extends Fragment {
 
                         if (shown) {
 
+                            //MainFragment.mAdView.setVisibility(View.GONE);
+
                             MainFragment.mAdView.setVisibility(View.GONE);
 
                             adsCounter = ((MainActivity) getActivity()).getSettings();
@@ -119,11 +130,49 @@ public class SettingsFragment extends Fragment {
 
             }
         });
+
+        linear_download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme);
+                LayoutInflater inflater = getLayoutInflater();
+                View dialogLayout = inflater.inflate(R.layout.custom_dialog_layout, null);
+                builder.setView(dialogLayout);
+
+                Button positive_button = dialogLayout.findViewById(R.id.positive_button);
+                Button negative_button = dialogLayout.findViewById(R.id.negative_button);
+
+                // Створіть діалог і покажіть його
+                AlertDialog dialog = builder.create();
+
+                positive_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.appsforkids.pasz.nightlightpromax"));
+                        startActivity(browserIntent);
+
+                        dialog.dismiss();
+
+                    }
+                });
+
+                negative_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+
+                //dialog.getWindow().setBackgroundDrawableResource(R.drawable.shape_menu4c);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+                dialog.show();
+
+
+            }
+        });
     }
-
-    //                    case 8:
-//                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://paszzsap.github.io/nightlight2/politic.html"));
-//                        startActivity(browserIntent);
-//                        break;
-
 }

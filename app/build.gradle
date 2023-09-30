@@ -5,7 +5,6 @@ plugins {
 }
 
 apply plugin: 'com.android.application'
-apply plugin: 'realm-android'
 
 
 
@@ -19,10 +18,11 @@ android {
         minSdkVersion 21
         targetSdkVersion 33
         multiDexEnabled true
-        versionCode 36
-        versionName "4.6"
+        versionCode 50
+        versionName "6.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
 
@@ -48,10 +48,10 @@ repositories {
     maven {
         url 'https://maven.fabric.io/public'
     }
-    maven {
-        name "Chartboost Mediation’s maven repo"
-        url "https://cboost.jfrog.io/artifactory/chartboost-mediation"
-    }
+//    maven {
+//        name "Chartboost Mediation’s maven repo"
+//        url "https://cboost.jfrog.io/artifactory/chartboost-mediation"
+//    }
 
     maven {
         url 'https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea'
@@ -115,7 +115,7 @@ dependencies {
     implementation 'com.adcolony:sdk:4.8.0'
 
 
-    implementation 'com.chartboost:chartboost-mediation-sdk:4.3.0'
+  //  implementation 'com.chartboost:chartboost-mediation-sdk:4.3.0'
 
     implementation "org.greenrobot:eventbus:3.3.1"
 
@@ -123,12 +123,41 @@ dependencies {
     implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
     implementation 'com.google.android.gms:play-services-appset:16.0.2'
 
+//CAS
+  //  implementation 'com.cleveradssolutions:cas:3.1.9'
 
+
+//    implementation 'com.cleveradssolutions:google:22.1.0.1'      // Google Ads | Admob
+//    implementation 'com.cleveradssolutions:unity:4.7.1.0'        // Unity Ads
+//    implementation 'com.cleveradssolutions:ironsource:7.3.0.1'   // IronSource
+//    implementation 'com.cleveradssolutions:adcolony:4.8.0.10'    // AdColony
+
+  //  implementation 'com.cleveradssolutions:kidoz:8.9.7.4'        // Kidoz
+ //   implementation 'com.cleveradssolutions:superawesome:9.1.0.1' // SuperAwesome
+
+//    implementation 'com.cleveradssolutions:vungle:6.12.1.3'      // Vungle
+//    implementation 'com.cleveradssolutions:inmobi:10.1.4.0'      // InMobi
+//    implementation 'com.cleveradssolutions:chartboost:9.3.0.0'   // Chartboost
+//
+//
+//    implementation 'com.cleveradssolutions:facebook:6.14.0.1'    // Meta Audience Network
+//    implementation 'com.cleveradssolutions:applovin:11.10.1.0'   // AppLovin
+//    implementation 'com.cleveradssolutions:mytarget:5.16.5.0'    // MyTarget
+//    implementation 'com.cleveradssolutions:mintegral:16.4.61.1'  // Mintegral
+//    implementation 'com.cleveradssolutions:pangle:5.2.0.8'       // Pangle
+//    implementation 'com.cleveradssolutions:tapjoy:13.0.1.0'      // Tapjoy
+//    implementation 'com.cleveradssolutions:yandex:25.8.0.0'      // Yandex Ads
+ //   implementation 'com.cleveradssolutions:fyber:8.2.3.2'        // DT Exchange
+
+// CAS
+
+
+//My ADMOB MEDIATION
 
     implementation  'com.google.ads.mediation:adcolony:4.8.0.2'
     implementation  'com.google.ads.mediation:applovin:11.10.1.0'
-    implementation  'com.google.ads.mediation:chartboost:9.3.1.0'
-    implementation  'com.google.ads.mediation:ironsource:7.3.1.1'
+   // implementation  'com.google.ads.mediation:chartboost:9.3.1.0'
+ //   implementation  'com.google.ads.mediation:ironsource:7.3.1.1'
    // implementation  'com.google.ads.mediation:fyber:8.2.3.0'
    // implementation  'com.google.ads.mediation:inmobi:10.5.5.0'
    // implementation  'com.google.ads.mediation:facebook:6.14.0.0'
@@ -141,7 +170,10 @@ dependencies {
 
 //    implementation 'com.flurry.android:analytics:14.3.0@aar'
 
+//My ADMOB MEDIATION
 
+//BILLING
+    implementation 'com.android.billingclient:billing:6.0.1'
 
 
 

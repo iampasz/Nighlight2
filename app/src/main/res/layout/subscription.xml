@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/thisis"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:elevation="@dimen/card_elevation"
+    android:padding="@dimen/padding_10">
+
+    <Button
+        android:id="@+id/close"
+        android:layout_width="@dimen/size_30"
+        android:layout_height="@dimen/size_30"
+        android:layout_marginStart="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_10"
+        android:background="@drawable/sub_close_button"
+        android:text="x"
+        android:textColor="@color/sub_button_text"
+        android:textSize="@dimen/text_size_15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/sub_background"
+        app:layout_constraintBottom_toTopOf="@+id/subscribeButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
+
+    <TextView
+
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_5"
+        android:layout_marginEnd="@dimen/margin_20"
+        android:text="@string/subscription"
+        android:textColor="@color/sub_text"
+        android:textSize="@dimen/text_size_20"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/close"
+        app:layout_constraintEnd_toEndOf="@+id/frameLayout2"
+        app:layout_constraintStart_toEndOf="@+id/close"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout2" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/padding_10"
+        android:paddingTop="@dimen/padding_20"
+        android:paddingRight="@dimen/padding_10"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7">
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/benefits"
+            android:textColor="@color/sub_text"
+            android:textSize="@dimen/text_size_15"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_ads"
+            android:textColor="@color/sub_text"
+            android:textSize="@dimen/text_size_15"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+        <TextView
+
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/extra_nl"
+            android:textColor="@color/sub_text"
+            android:textSize="@dimen/text_size_15"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/extra_melody"
+            android:textColor="@color/sub_text"
+            android:textSize="@dimen/text_size_15"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:foregroundGravity="bottom"
+            android:shadowColor="@color/whiteText"
+            android:shadowDx="@dimen/shadowdx"
+            android:shadowDy="@dimen/shadowdy"
+            android:shadowRadius="@dimen/shadow_radius"
+            android:text="-70%"
+            android:textAlignment="center"
+            android:textColor="@color/sub_text"
+            android:textSize="@dimen/text_size_35"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/size_80"
+        android:background="@drawable/sub_button_bottom"
+        app:layout_constraintBottom_toBottomOf="@+id/subscribeButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/subscribeButton"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/subscribe"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/whiteText"
+            android:textSize="@dimen/text_size_20"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/bottom_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10"
+            android:padding="@dimen/padding_5"
+            android:text="@string/subscribe_details"
+            android:textColor="@color/whiteText"
+            android:textSize="@dimen/text_size_10" />
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/motionLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layoutDescription="@xml/motion_scene"
+        app:layout_constraintBottom_toBottomOf="@+id/frameLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        tools:context=".MainActivity">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/padding_10"
+            android:paddingRight="@dimen/padding_10" />
+
+
+        <ImageView
+            android:id="@+id/bear_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/bear_cloud2" />
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

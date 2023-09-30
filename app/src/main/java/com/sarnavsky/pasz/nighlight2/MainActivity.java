@@ -32,29 +32,32 @@ import com.google.android.ump.ConsentRequestParameters;
 import com.google.android.ump.FormError;
 import com.google.android.ump.UserMessagingPlatform;
 import com.sarnavsky.pasz.nighlight2.Fragments.MainFragment;
-import com.sarnavsky.pasz.nighlight2.Fragments.ToastFragment;
 import com.sarnavsky.pasz.nighlight2.Interfaces.MyCallback;
-import com.sarnavsky.pasz.nighlight2.Models.Nightlight;
 
 import java.io.IOException;
 
-import io.realm.Realm;
-import io.realm.RealmResults;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String MY_SETTINGS = "my_settings";
     private ConsentInformation consentInformation;
+
+    //MyADD
     private InterstitialAd mInterstitialAd;
     private RewardedAd rewardedAd;
+
     public int oldLinkId = 0;
 
     FragmentManager fm;
-    Realm realm;
     AdRequest adRequest;
     MediaPlayer mediaPlayer;
     ConsentForm consentForm;
+
+   // public static boolean subscribleStatus;
+
+//    MediationManager manager;
+//    AdCallback callback;
 
 
     @SuppressLint("MissingInflatedId")
@@ -63,27 +66,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-
-
-
-//        new FlurryAgent.Builder()
-//                .withLogEnabled(true)
-//                .build(this, "F5M8TRZ9Q77GS5WBQZY9");
-//
-
-//        new FlurryAgent.Builder()
-//                .withDataSaleOptOut(false) //CCPA - the default value is false
-//                .withCaptureUncaughtExceptions(true)
-//                .withIncludeBackgroundSessionsInMetrics(true)
-//                .withLogLevel(Log.VERBOSE)
-//                .withPerformanceMetrics(FlurryPerformance.ALL)
-//                .build(this, FLURRY_API_KEY);
-
-
-        //Realm connections
-        Realm.init(this);
-        realm = Realm.getDefaultInstance();
-
         //SetFullScrean
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -91,10 +73,11 @@ public class MainActivity extends AppCompatActivity {
 
         Log.i("ADDCOUNTER", getSettings() + " Реклама отключена");
 
+        //My ADMOB
         adRequest = new AdRequest.Builder().build();
-
         loadADS();
         loadAdRequest();
+
         isFirstOpen();
         saveSettings(-1);
 
@@ -103,21 +86,11 @@ public class MainActivity extends AppCompatActivity {
         MainFragment mainFragment = new MainFragment();
         fm.beginTransaction().replace(R.id.container, mainFragment, "main_fragment").commit();
 
+
         //showGDPR
         showGDPR();
     }
 
-    private void addToReallm() {
-        realm.beginTransaction();
-        for (int i = 400; i <= 600; i++) {
-            Nightlight nightlights = realm.createObject(Nightlight.class); // Create managed objects directly
-            nightlights.setNumber(i);
-            nightlights.setTimer(60000);
-        }
-        realm.commitTransaction();
-        RealmResults<Nightlight> realmResults = realm.where(Nightlight.class).findAll();
-        //Toast.makeText(this, "Первый запуск"+realm.where(Nightlight.class).findAll().size(), Toast.LENGTH_LONG).show();
-    }
 
     private void showGDPR() {
         ConsentDebugSettings debugSettings = new ConsentDebugSettings.Builder(this)
@@ -196,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences.Editor e = sp.edit();
             e.putBoolean("hasVisited", true);
             e.commit(); // не забудьте подтвердить изменения
-            addToReallm();
+
         }
     }
 
@@ -273,6 +246,8 @@ public class MainActivity extends AppCompatActivity {
         return current_item;
     }
 
+    //My ADD ADMOB
+
     private void loadADS() {
         InterstitialAd.load(this, "ca-app-pub-1237459888817948/7124868163", adRequest,
                 new InterstitialAdLoadCallback() {
@@ -293,6 +268,7 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+    //
     public void showAlertADS() {
         if (getSettings() > 0) {
         } else {
@@ -313,13 +289,13 @@ public class MainActivity extends AppCompatActivity {
 
                         resumeMediaPlayer();
                         SharedPreferences newShPref = getSharedPreferences(MY_SETTINGS, 0);
-                        boolean answer = newShPref.getBoolean("NOADS", false);
-
-                        if (answer) {
-
-                        } else {
-                            getSupportFragmentManager().beginTransaction().add(R.id.mainContainer, new ToastFragment(), "TOAST_FRAGMENT").commit();
-                        }
+//                        boolean answer = newShPref.getBoolean("NOADS", false);
+//
+//                        if (answer) {
+//
+//                        } else {
+//                            getSupportFragmentManager().beginTransaction().add(R.id.mainContainer, new ToastFragment(), "TOAST_FRAGMENT").commit();
+//                        }
                     }
 
                     @Override
@@ -381,6 +357,7 @@ public class MainActivity extends AppCompatActivity {
                     pauseMediaPlayer();
                 }
             });
+
 
             rewardedAd.setFullScreenContentCallback(new FullScreenContentCallback() {
                 @Override
@@ -455,6 +432,7 @@ public class MainActivity extends AppCompatActivity {
         System.exit(0);
 
     }
+
 
 }
 

@@ -1,0 +1,41 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="indicator_scale">0</dimen>
+
+    <item name="match_parent" format="integer" type="dimen">-1</item>
+    <item name="wrap_content" format="integer" type="dimen">-2</item>
+
+    <dimen name="margin_5">5dp</dimen>
+    <dimen name="margin_10">10dp</dimen>
+    <dimen name="margin_15">15dp</dimen>
+    <dimen name="margin_20">20dp</dimen>
+
+    <dimen name="text_size_10">10sp</dimen>
+    <dimen name="text_size_15">15sp</dimen>
+    <dimen name="text_size_20">20sp</dimen>
+    <dimen name="text_size_25">25sp</dimen>
+    <dimen name="text_size_35">35sp</dimen>
+
+    <dimen name="padding_5">5dp</dimen>
+    <dimen name="padding_10">10dp</dimen>
+    <dimen name="padding_20">20dp</dimen>
+
+    <dimen name="size_20">20dp</dimen>
+    <dimen name="size_30">30dp</dimen>
+    <dimen name="size_50">50dp</dimen>
+    <dimen name="size_75">75dp</dimen>
+    <dimen name="size_80">80dp</dimen>
+    <dimen name="size_100">100dp</dimen>
+    <dimen name="size_150">@dimen/wrap_content</dimen>
+
+
+    <dimen name="card_elevation"> 5dp</dimen>
+    <dimen name="corner_radius"> 5dp</dimen>
+    <dimen name="layout_editor"> 20dp</dimen>
+    <dimen name="shadowdx"> -2</dimen>
+    <dimen name="shadowdy"> 2</dimen>
+    <dimen name="shadow_radius"> 1</dimen>
+
+    <dimen name="scale">2.0f</dimen>
+
+</resources>

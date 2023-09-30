@@ -63,4 +63,21 @@
     <string name="custom_button">Цветовая палитра</string>
     <string name="presets_button">Стандартные цвета</string>
 
+    <string name="subscription">Подписка</string>
+    <string name="benefits">Приемущества подписки: </string>
+    <string name="no_ads">- БЕЗ рекламы;</string>
+    <string name="month1">1 месяц</string>
+    <string name="month3">3 месяца</string>
+    <string name="month12">12 месяцев</string>
+    <string name="subscribe">Подписатся</string>
+    <string name="subscribe_details">** You can cancel your
+        subscription at any time.</string>
+
+    <string name="topic_nl2">Попробуй бессплатно. Цветная версия, без рекламы, больше ночников и мелодий</string>
+    <string name="button_nl2">Скачать</string>
+
+    <string name="button_question">Скачать??</string>
+    <string name="nl2_descriptions">Загрузи другую версию с Google Play.Больше животных, больше мелодий, меньше рекламы
+    </string>
+
 </resources>

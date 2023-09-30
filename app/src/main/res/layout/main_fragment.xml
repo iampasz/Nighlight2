@@ -6,7 +6,7 @@
     android:id="@+id/mainBg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#06023E">
+    android:background="@color/black">
 
 
     <ImageView
@@ -39,10 +39,10 @@
         android:id="@+id/bottom_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="@dimen/margin_10"
         android:textAlignment="center"
-        android:textColor="#fff"
-        android:textSize="24sp"
+        android:textColor="@color/whiteText"
+        android:textSize="@dimen/text_size_25"
         ads:layout_constraintBottom_toTopOf="@+id/rv"
         app:layout_constraintBottom_toBottomOf="@+id/pager"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,12 +52,14 @@
         android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="@dimen/margin_5"
         android:layout_weight="1"
         ads:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+
+<!--    //MyADMOB ADD-->
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="match_parent"
@@ -81,10 +83,10 @@
 
     <ImageView
         android:id="@+id/lock_button"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
+        android:layout_width="@dimen/size_50"
+        android:layout_height="@dimen/size_50"
+        android:layout_marginTop="@dimen/margin_20"
+        android:layout_marginEnd="@dimen/margin_10"
         android:alpha="0.5"
         android:contentDescription="@string/image_des"
         ads:layout_constraintEnd_toEndOf="parent"
@@ -94,10 +96,10 @@
     <ImageView
 
         android:id="@+id/settings_button"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="@dimen/size_50"
+        android:layout_height="@dimen/size_50"
+        android:layout_marginStart="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_20"
         android:alpha="0.5"
         android:contentDescription="@string/image_des"
         ads:layout_constraintStart_toStartOf="parent"

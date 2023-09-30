@@ -7,7 +7,7 @@
       android:pathData="M9.94,17.416L9.42,16.012L6.93,16.012L6.412,17.416L5.121,17.415L7.473,11.182L8.942,11.182L9.751,13.325L11.294,17.416L9.94,17.416ZM9.021,14.935L8.175,12.648L7.329,14.935L9.021,14.935Z"
       android:strokeLineJoin="miter"
       android:strokeWidth="0.5"
-      android:fillColor="@color/grayText"
+      android:fillColor="@color/greenText"
       android:strokeColor="#00000000"
       android:fillType="evenOdd"
       android:strokeLineCap="round"/>
@@ -15,7 +15,7 @@
       android:pathData="M15.018,17.4L12.056,17.381L12.056,11.193L15.017,11.175C18.026,11.287 18.027,17.537 15.018,17.4ZM14.829,12.187L13.293,12.199L13.293,16.337L14.829,16.35C16.389,16.441 16.389,12.262 14.829,12.187Z"
       android:strokeLineJoin="miter"
       android:strokeWidth="0.5"
-      android:fillColor="@color/grayText"
+      android:fillColor="@color/greenText"
       android:strokeColor="#00000000"
       android:fillType="evenOdd"
       android:strokeLineCap="round"/>
@@ -23,7 +23,7 @@
       android:pathData="M21.72,13.04L22.967,12.993C22.668,10.014 18.068,10.744 18.242,12.862C18.432,15.167 21.946,14.466 21.823,15.694C21.729,16.632 19.891,17.016 19.198,15.298L18.036,15.448C18.329,18.691 22.937,18.286 23.079,15.599C23.205,13.212 19.169,13.714 19.573,12.562C19.824,11.845 21.581,11.961 21.72,13.04Z"
       android:strokeLineJoin="miter"
       android:strokeWidth="0.5"
-      android:fillColor="@color/grayText"
+      android:fillColor="@color/greenText"
       android:strokeColor="#00000000"
       android:fillType="evenOdd"
       android:strokeLineCap="round"/>
@@ -31,7 +31,7 @@
       android:pathData="M2.426,14.698C2.291,8.167 7.479,2.755 14.009,2.617C20.542,2.481 25.954,7.669 26.09,14.2C26.227,20.73 21.038,26.142 14.507,26.281C7.977,26.418 2.565,21.228 2.426,14.698ZM15.048,24.15C17.636,23.944 19.908,22.74 21.516,20.946L5.782,9.715C4.876,11.337 4.422,13.234 4.581,15.224C5.006,20.578 9.697,24.574 15.048,24.15ZM23.972,13.683C23.548,8.329 18.857,4.332 13.505,4.757C10.917,4.963 8.645,6.167 7.035,7.96L22.771,19.191C23.678,17.57 24.131,15.672 23.972,13.683Z"
       android:strokeLineJoin="miter"
       android:strokeWidth="0.5"
-      android:fillColor="@color/grayText"
+      android:fillColor="@color/greenText"
       android:strokeColor="#00000000"
       android:fillType="evenOdd"
       android:strokeLineCap="round"/>

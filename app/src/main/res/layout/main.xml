@@ -5,7 +5,7 @@
     android:id="@+id/constrain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000"
+    android:background="@color/black"
     tools:context=".MainActivity">
 
 
@@ -19,17 +19,5 @@
         ads:layout_constraintTop_toTopOf="parent">
 
     </FrameLayout>
-
-    <!--    <com.cleversolutions.ads.android.CASBannerView-->
-    <!--        android:id="@+id/bannerView"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:gravity="center"-->
-    <!--        android:visibility="visible"-->
-    <!--        ads:bannerSize="Standard320x50"-->
-    <!--        ads:layout_constraintEnd_toEndOf="parent"-->
-    <!--        ads:layout_constraintStart_toStartOf="parent"-->
-    <!--        ads:layout_constraintTop_toTopOf="parent" />-->
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

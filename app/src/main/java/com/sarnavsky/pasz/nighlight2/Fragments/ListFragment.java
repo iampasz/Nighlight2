@@ -24,9 +24,7 @@ public class ListFragment extends Fragment {
 
     RecyclerView rv;
     Button close;
-
     ListMusicAdapter myListAdapter;
-
     int currentMusicPosition;
 
     @Nullable
@@ -95,9 +93,6 @@ public class ListFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 getParentFragmentManager().beginTransaction().remove(ListFragment.this).commit();
-
-                //SHOW ALERT ADS
-                ((MainActivity) getActivity()).showAlertADS();
             }
         });
     }

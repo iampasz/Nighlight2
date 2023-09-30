@@ -67,4 +67,24 @@
     <string name="custom_button">Color palette</string>
     <string name="presets_button">Standard colors</string>
 
+
+    <string name="subscription">Subscription</string>
+    <string name="benefits">Benefits of subscription: </string>
+    <string name="no_ads">- no advertising;</string>
+    <string name="month1">1 month</string>
+    <string name="month3">3 month</string>
+    <string name="month12">12 month</string>
+    <string name="subscribe">Subscribe</string>
+    <string name="subscribe_details">**You can cancel your
+        subscription at any time. </string>
+
+
+    <string name="topic_nl2">Try it for free. Color version. No ads, more melodies and nightlighters</string>
+    <string name="button_nl2">DOWNLOAD</string>
+
+    <string name="button_question">DOWNLOAD?</string>
+    <string name="nl2_descriptions">Download another version from Google Play. More animals, more melodies. less or no ads
+    </string>
+
+
 </resources>

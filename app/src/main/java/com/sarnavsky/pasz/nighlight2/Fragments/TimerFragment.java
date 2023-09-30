@@ -14,7 +14,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.sarnavsky.pasz.nighlight2.MainActivity;
 import com.sarnavsky.pasz.nighlight2.R;
 
 
@@ -73,13 +72,10 @@ public class TimerFragment extends Fragment {
             public void onClick(View view) {
                 MainFragment mainFragment = (MainFragment) getParentFragmentManager().findFragmentByTag("main_fragment");
 
-
                 if(mainFragment!=null){
                     mainFragment.startTimer((int)spinner_hours.getSelectedItem(), (int) spinner_minutes.getSelectedItem());
                     removeThisFragment();
                 }
-                //SHOW ALERT ADS
-                ((MainActivity)getActivity()).showAlertADS();
             }
         });
 

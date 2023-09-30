@@ -68,17 +68,13 @@ public class ColorPicker extends Fragment implements ColorPickerDialogListener {
     @Override
     public void onColorSelected(int dialogId, int color) {
         Log.d("TAG", "onColorSelected() called with: dialogId = [" + dialogId + "], color = [" + color + "]");
-        switch (dialogId) {
-            case 0:
-                // We got result from the dialog that is shown when clicking on the icon in the action bar.
+        if (dialogId == 0) {// We got result from the dialog that is shown when clicking on the icon in the action bar.
 
-                if (getArguments().getInt("id") == 0) {
-                    underImg.setColorFilter(color);
-                } else {
-                    mainBg.setBackgroundColor(color);
-                }
-
-                break;
+            if (getArguments().getInt("id") == 0) {
+                underImg.setColorFilter(color);
+            } else {
+                mainBg.setBackgroundColor(color);
+            }
         }
     }
 

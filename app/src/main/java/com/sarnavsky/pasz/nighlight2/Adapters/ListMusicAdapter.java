@@ -1,6 +1,5 @@
 package com.sarnavsky.pasz.nighlight2.Adapters;//package com.appsforkids.pasz.lullabies;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +23,10 @@ public class ListMusicAdapter extends RecyclerView.Adapter<ListMusicAdapter.List
 
     ArrayList<MyAudio> arrayList;
 
-    public ListMusicAdapter(PlayMyMusic playMyMusic, ArrayList<MyAudio> arrayList){
+    public ListMusicAdapter(PlayMyMusic playMyMusic, ArrayList<MyAudio> arrayList) {
         this.playMyMusic = playMyMusic;
         this.arrayList = arrayList;
-    };
+    }
 
     @NonNull
     @Override
@@ -41,49 +40,36 @@ public class ListMusicAdapter extends RecyclerView.Adapter<ListMusicAdapter.List
     @Override
     public void onBindViewHolder(@NonNull final ListMusicHolder holder, int position) {
 
-        //holder.play_item.setTag(UUID.randomUUID().toString());
-        holder.music_name.setText(arrayList.get(holder.getAdapterPosition()).getName());
-        holder.music_author.setText(arrayList.get(holder.getAdapterPosition()).getAuth());
+        int pos = position;
 
-
-
+        holder.music_name.setText(arrayList.get(pos).getName());
+        holder.music_author.setText(arrayList.get(pos).getAuth());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                currentMusicPosition = -1;
 
-                //Log.i("Play", position +" it is i, and  listMusicHolder.getAdapterPosition() " +holder.getAdapterPosition());
-                currentMusicPosition=-1;
-
-                if(pressedPosition==holder.getAdapterPosition()){
-                    //holder.play_item.setImageResource(R.drawable.bt_play);
-                    Log.i("Play", pressedPosition+ " тут должен плей поставить " +  holder.getAdapterPosition());
-                    playMyMusic.pressPosition(holder.getAdapterPosition(), false);
-                    pressedPosition=-1;
-
-                }else{
-                    playMyMusic.pressPosition(holder.getAdapterPosition(), true);
-                    //holder.play_item.setImageResource(R.drawable.bt_pause);
-                    Log.i("Play", pressedPosition+ " тут должен стоп поставить " +  holder.getAdapterPosition());
-                    pressedPosition =  holder.getAdapterPosition();
+                if (pressedPosition == pos) {
+                    playMyMusic.pressPosition(pos, false);
+                    pressedPosition = -1;
+                } else {
+                    playMyMusic.pressPosition(pos, true);
+                    pressedPosition = pos;
                 }
                 notifyDataSetChanged();
             }
         });
-        //Log.i("Play", pressedPosition +" presed and new " +holder.getAdapterPosition());
-        if(holder.getAdapterPosition()==pressedPosition){
+
+        if (pos == pressedPosition) {
             holder.play_item.setImageResource(R.drawable.pausa);
 
-        }else{
+        } else {
             holder.play_item.setImageResource(R.drawable.play);
         }
 
-        Log.i("ListMusicAdapter", currentMusicPosition+" currentMusicPosition and holder.getAdapterPosition() "+ holder.getAdapterPosition());
-
-        if(holder.getAdapterPosition()==currentMusicPosition && currentMusicPosition!=-1){
+        if (pos == currentMusicPosition && currentMusicPosition != -1) {
             holder.play_item.setImageResource(R.drawable.pausa);
-            Log.i("ListMusicAdapter", currentMusicPosition+" we are here");
-
         }
     }
 
@@ -94,9 +80,9 @@ public class ListMusicAdapter extends RecyclerView.Adapter<ListMusicAdapter.List
 
     public class ListMusicHolder extends RecyclerView.ViewHolder {
 
-        private ImageView play_item;
-        private TextView music_name;
-        private TextView music_author;
+        private final ImageView play_item;
+        private final TextView music_name;
+        private final TextView music_author;
 
         public ListMusicHolder(@NonNull View itemView) {
             super(itemView);
@@ -104,8 +90,6 @@ public class ListMusicAdapter extends RecyclerView.Adapter<ListMusicAdapter.List
             play_item = itemView.findViewById(R.id.image);
             music_name = itemView.findViewById(R.id.name);
             music_author = itemView.findViewById(R.id.author);
-
         }
     }
-
 }

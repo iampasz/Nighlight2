@@ -1,6 +1,5 @@
 package com.sarnavsky.pasz.nighlight2.Fragments;
 
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,13 +18,10 @@ import com.sarnavsky.pasz.nighlight2.R;
 import java.util.ArrayList;
 import java.util.Random;
 
-import io.realm.Realm;
-
 
 public class PagerFragment extends Fragment {
 
     Nightlighter myNightlighter;
-    Realm realm;
     Context ctx;
 
     public static PagerFragment newInt(Nightlighter nightlighter) {
@@ -88,9 +84,5 @@ public class PagerFragment extends Fragment {
                         .playOn(underImg);
             }
         });
-
-        Realm.init(ctx);
-        realm = Realm.getDefaultInstance();
-
     }
 }

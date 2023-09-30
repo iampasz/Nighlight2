@@ -63,4 +63,21 @@
     <string name="custom_button">Farbpalette</string>
     <string name="presets_button">Standardfarben</string>
 
+    <string name="subscription">Subscription</string>
+    <string name="benefits">Benefits of subscription: </string>
+    <string name="no_ads">- no advertising;</string>
+    <string name="month1">1 month</string>
+    <string name="month3">3 month</string>
+    <string name="month12">12 month</string>
+    <string name="subscribe">Subscribe</string>
+    <string name="subscribe_details">** You can cancel your
+        subscription at any time.  </string>
+
+    <string name="topic_nl2">Probieren Sie es kostenlos aus. Farbversion. Keine Werbung, mehr Melodien und Nachtlichter</string>
+    <string name="button_nl2">HERUNTERLADEN</string>
+
+    <string name="button_question">HERUNTERLADEN?</string>
+    <string name="nl2_descriptions">Laden Sie eine andere Version von Google Play herunter. Mehr Tiere, mehr Melodien. weniger oder keine Werbung
+    </string>
+
 </resources>

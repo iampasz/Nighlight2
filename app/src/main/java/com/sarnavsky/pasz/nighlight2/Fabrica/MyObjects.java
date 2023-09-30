@@ -97,7 +97,8 @@ public class MyObjects {
                 R.drawable.stars_grey,
                 R.drawable.bg_animal,
                 R.drawable.bg_flowers,
-                R.drawable.bg_stars3
+                R.drawable.bg_stars3,
+                0
         };
 
         return bgArray;

@@ -4,20 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:ellipsize="marquee"
-    android:shadowColor="#7E7E7E"
-    android:shadowDx="2"
-    android:shadowDy="2"
-    android:shadowRadius="2"
-    android:textColor="#0A6A2C"
+    android:shadowColor="@color/shadowColor"
+    android:shadowDx="@dimen/shadowdx"
+    android:shadowDy="@dimen/shadowdy"
+    android:shadowRadius="@dimen/shadow_radius"
+    android:textColor="@color/greenText"
     android:textAlignment="center"
-
-    android:textSize="36sp"
+    android:textSize="@dimen/text_size_35"
     android:textStyle="bold"
-    android:layout_marginEnd="20dp"
-    android:layout_marginBottom="20dp"
-
+    android:layout_marginEnd="@dimen/margin_20"
+    android:layout_marginBottom="@dimen/margin_20"
     android:singleLine="true" />
-
-<!--    android:layout_gravity="center"-->
-<!--    android:layout_centerHorizontal="true"-->
-<!--    android:layout_centerVertical="true"-->

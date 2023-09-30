@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,6 +36,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.RequestConfiguration;
 import com.google.android.gms.ads.initialization.AdapterStatus;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -51,12 +53,15 @@ import com.sarnavsky.pasz.nighlight2.R;
 import java.util.ArrayList;
 import java.util.Map;
 
-import io.realm.Realm;
 
-public class MainFragment extends Fragment  {
+public class MainFragment extends Fragment {
 
+    //MyADD
     public static AdView mAdView;
     AdRequest adRequest;
+
+//CAS
+    // public static CASBannerView bannerView;
 
     FrameLayout lock_frame;
     FragmentManager fm;
@@ -64,7 +69,6 @@ public class MainFragment extends Fragment  {
     CountDownTimer cdt;
     CountDownTimer globalTimer;
     ConstraintLayout mainBg;
-    Realm realm;
     RecyclerViewAdapter adapter;
     RecyclerView rv;
     Context ctx;
@@ -92,13 +96,6 @@ public class MainFragment extends Fragment  {
     ImageView settings_button;
     ImageView animateBg;
 
-
-//    private String unityGameID = "5333517";
-//    private Boolean testMode = false;
-//    private String adUnitId = "Interstitial_Android_dc5fc1ff_7b40_4b32_adcd_faa0adc6b6fd";
-//
-//    String topAdUnitId = "Banner_Android_e4d8d10e_6daa_4118_926a_ca9380c8485b";
-
     // View objects to display banners:
     RelativeLayout topBannerView;
     RelativeLayout bottomBannerView;
@@ -124,25 +121,89 @@ public class MainFragment extends Fragment  {
         FragmentActivity main = getActivity();
         fm = getParentFragmentManager();
 
+
+
+        //chekSubscription
+//        Log.i("TESTSUB", " chekSubscription");
+//        PurchasesUpdatedListener purchasesUpdatedListener = new PurchasesUpdatedListener() {
+//            @Override
+//            public void onPurchasesUpdated(@NonNull BillingResult billingResult, @Nullable List<Purchase> list) {
+//            }
+//        };
+//        BillingClient bc = BillingClient.newBuilder(getContext()).enablePendingPurchases().setListener(purchasesUpdatedListener).build();
+//        bc.startConnection(new BillingClientStateListener() {
+//            @Override
+//            public void onBillingServiceDisconnected() {
+//            }
+//
+//            @Override
+//            public void onBillingSetupFinished(@NonNull BillingResult billingResult) {
+//
+//                Log.i("TESTSUB", billingResult + " billingResult");
+//
+//                QueryPurchasesParams queryPurchasesParams = QueryPurchasesParams
+//                        .newBuilder()
+//                        .setProductType(BillingClient.ProductType.SUBS)
+//                        .build();
+//
+//                bc.queryPurchasesAsync(queryPurchasesParams, new PurchasesResponseListener() {
+//                    @Override
+//                    public void onQueryPurchasesResponse(@NonNull BillingResult billingResult, @NonNull List<Purchase> list) {
+//
+//
+//                        Log.i("TESTSUB", list.size() + " TestMy");
+//
+//                        getActivity().runOnUiThread(new Runnable() {
+//
+//                            @Override
+//                            public void run() {
+//
+//                                if (billingResult.getResponseCode() == 0) {
+//                                    if (list.size() > 0) {
+//                                        mAdView.setVisibility(View.GONE);
+//                                    } else {
+//                                        mAdView.loadAd(adRequest);
+//                                        getParentFragmentManager().beginTransaction().add(R.id.container, new Subscription(), "subscription").commit();
+//                                    }
+//                                }
+//
+//                            }
+//                        });
+//
+//
+//                    }
+//                });
+//            }
+ //       });
+
+
+        //end chekSubscription
+
         //Start Global Itmer. Make all invisible exept nightlighter.
         startGlobalTimer();
 
-
-
         //UnityAds.SetC("privacy.consent", true);
 
+        //MyADMOB ADD
         //findAdsView
         mAdView = view.findViewById(R.id.adView);
 
 
+
+        //MyADMOB ADD
         //Use ADDS
         setAdsSetting();
+        //MyADMOB ADD
         adRequest = new AdRequest.Builder().build();
+
 
         int addCounter = ((MainActivity) getActivity()).getSettings();
         if (addCounter > 0) {
+            //MyADMOB ADD
             mAdView.setVisibility(View.GONE);
+
         } else {
+            //MyADMOB ADD
             mAdView.loadAd(adRequest);
         }
 
@@ -217,10 +278,6 @@ public class MainFragment extends Fragment  {
                 lockButton();
             }
         });
-
-
-        Realm.init(ctx);
-        realm = Realm.getDefaultInstance();
 
         openMenu(menuItems.getMenuButtons(colors));
     }
@@ -311,19 +368,14 @@ public class MainFragment extends Fragment  {
 
         switch (brights) {
             case 0:
-                //showToastFragment(R.drawable.ic_light, "10%");
                 layout.screenBrightness = 0.1F;
-
                 brights++;
                 break;
             case 1:
-                //showToastFragment(R.drawable.ic_light, "50%");
                 layout.screenBrightness = 0.5F;
-
                 brights++;
                 break;
             case 2:
-                //showToastFragment(R.drawable.ic_light, "100%");
                 layout.screenBrightness = 1F;
 
                 brights = 0;
@@ -335,10 +387,11 @@ public class MainFragment extends Fragment  {
 
     public void startAnimation() {
 
-        animateBg.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        animateBg.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
-        if (chekAnim == false) {
-            RotateAnimation rotate = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f); //8
+        if (!chekAnim) {
+            RotateAnimation rotate = new RotateAnimation(0f, 360f,
+                    Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f); //8
             rotate.setDuration(100000);
             rotate.setRepeatCount(Animation.INFINITE);
             rotate.setInterpolator(new LinearInterpolator());
@@ -348,15 +401,20 @@ public class MainFragment extends Fragment  {
             animateBg.startAnimation(set);
             chekAnim = true;
 
-            ScaleAnimation scale = new ScaleAnimation(2.0f, 2.0f, 2.0f, 2.0f,
+            //float mySacele = (float) getResources().getDimension(R.dimen.scale);
+           // Log.i("DIMEN", mySacele+"ddd");
+
+            TypedValue outValue = new TypedValue();
+            getResources().getValue(R.dimen.scale, outValue, true);
+            float value = outValue.getFloat();
+            Log.i("DSSD",value+"  d");
+
+            ScaleAnimation scale = new ScaleAnimation(1f, value, 1f, value,
                     Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
             scale.setDuration(1000);
             animateBg.startAnimation(scale);
 
             set.addAnimation(scale);
-//            Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.rotate);
-//            animation.setRepeatCount(Animation.INFINITE);
-
             animateBg.startAnimation(set);
 
 
@@ -392,6 +450,7 @@ public class MainFragment extends Fragment  {
             if (showAdd > 0) {
 
             } else {
+                //MyADMOB ADD
                 mAdView.setVisibility(View.INVISIBLE);
             }
 
@@ -409,6 +468,7 @@ public class MainFragment extends Fragment  {
             if (showAdd > 0) {
 
             } else {
+                //MyADMOB ADD
                 mAdView.setVisibility(View.VISIBLE);
             }
 
@@ -417,9 +477,6 @@ public class MainFragment extends Fragment  {
             lock_frame.setClickable(false);
             chekMenu = true;
             show = true;
-
-            //SHOW ALERT ADS
-            ((MainActivity) getActivity()).showAlertADS();
         }
 
     }
@@ -428,12 +485,9 @@ public class MainFragment extends Fragment  {
         bottom_text.setVisibility(View.VISIBLE);
         int mySeconds = (((hours * 60 * 60) + (60 * minutes)) * 1000);
         closeApp(mySeconds);
-        //sendAnalystics("timer", "timer is: " + hours +" and " + minutes);
-
     }
 
     public void closeApp(int mySeconds) {
-
 
         if (cdt != null) {
             timerStatus = false;
@@ -452,11 +506,11 @@ public class MainFragment extends Fragment  {
                 @Override
                 public void onFinish() {
 
-                    if(cdt!=null){
+                    if (cdt != null) {
                         cdt.cancel();
                     }
 
-                    if(globalTimer!=null){
+                    if (globalTimer != null) {
                         globalTimer.cancel();
                     }
 
@@ -468,44 +522,12 @@ public class MainFragment extends Fragment  {
             };
             cdt.start();
         } else {
+            bottom_text.setText("");
             bottom_text.setVisibility(View.INVISIBLE);
         }
     }
 
     private void setAdsSetting() {
-
-//        UnityAds.initialize(getContext(), unityGameID, testMode, new IUnityAdsInitializationListener() {
-//            @Override
-//            public void onInitializationComplete() {
-//                Log.i("UNITY", "onInitializationComplete");
-//            }
-//
-//            @Override
-//            public void onInitializationFailed(UnityAds.UnityAdsInitializationError error, String message) {
-//                Log.i("UNITY", "onInitializationFailed");
-//            }
-//        });
-//
-//        //Load Aplovin SDK
-//        AppLovinSdk.getInstance(getContext()).setMediationProvider("max");
-//        AppLovinSdk.initializeSdk(getContext(), new AppLovinSdk.SdkInitializationListener() {
-//            @Override
-//            public void onSdkInitialized(final AppLovinSdkConfiguration configuration) {
-//                Log.i("AppLovinSdk", " // AppLovin SDK is initialized, start loading ads");
-//            }
-//        });
-
-
-        //Реклама
-//        RequestConfiguration requestConfiguration = MobileAds.getRequestConfiguration()
-//                .toBuilder()
-//                //.setTestDeviceIds(Arrays.asList("E0935214FE561DA3BC3339B2BC22329A"))
-//                //.setTestDeviceIds(Arrays.asList("DCCF5D3E5E3AFB3F9195DAAFD5EDEEC6"))
-//                //.setTagForChildDirectedTreatment(RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE)
-//                //.setMaxAdContentRating(RequestConfiguration.MAX_AD_CONTENT_RATING_G)
-//                .build();
-//        MobileAds.setRequestConfiguration(requestConfiguration);
-
         // Initialize the Mobile Ads SDK.
         MobileAds.initialize(getContext(), new OnInitializationCompleteListener() {
             @Override
@@ -518,25 +540,22 @@ public class MainFragment extends Fragment  {
                             adapterClass, status.getDescription(), status.getLatency()));
                 }
 
-
-                Log.i("MyApp", "HELLO");
-
                 // Start loading ads here...
-
-
             }
         });
-    }
 
-    public void onAdLoaded() {
-        //Log.d("Banner adapter class name: " + onAdLoaded().getResponseInfo().getMediationAdapterClassName());
+        RequestConfiguration requestConfiguration = MobileAds.getRequestConfiguration()
+                .toBuilder()
+                .setTagForChildDirectedTreatment(RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE)
+                .build();
+        MobileAds.setRequestConfiguration(requestConfiguration);
+
     }
 
     private void changeBgColor() {
 
         currentBgColor++;
         currentBgImage++;
-
 
         if (currentBgImage >= menuItems.getBgArray().length) {
             currentBgImage = 0;
@@ -562,10 +581,10 @@ public class MainFragment extends Fragment  {
         underImg.setColorFilter(Color.parseColor(bgNlColors[currentNLColor]));
     }
 
-    private void startGlobalTimer(){
-        if(globalTimer!=null){
+    private void startGlobalTimer() {
+        if (globalTimer != null) {
             globalTimer.start();
-        }else{
+        } else {
             globalTimer = new CountDownTimer(5000, 1000) {
                 @Override
                 public void onTick(long l) {
@@ -575,32 +594,32 @@ public class MainFragment extends Fragment  {
                 @Override
                 public void onFinish() {
 
-                    if(lock_button!=null){
+                    if (lock_button != null) {
                         lock_button.setVisibility(View.INVISIBLE);
                     }
-                    if(bottom_text!=null){
+                    if (bottom_text != null) {
                         bottom_text.setVisibility(View.INVISIBLE);
                     }
-                    if(settings_button!=null){
+                    if (settings_button != null) {
                         settings_button.setVisibility(View.INVISIBLE);
                     }
-                    if(rv!=null){
+                    if (rv != null) {
                         rv.setVisibility(View.INVISIBLE);
                     }
                 }
             }.start();
         }
-    };
+    }
 
-    private void showButtons(){
-        if(chekMenu){
+    private void showButtons() {
+        if (chekMenu) {
             lock_button.setVisibility(View.VISIBLE);
             bottom_text.setVisibility(View.VISIBLE);
             settings_button.setVisibility(View.VISIBLE);
             rv.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             lock_button.setVisibility(View.VISIBLE);
             bottom_text.setVisibility(View.VISIBLE);
         }
-    };
+    }
 }

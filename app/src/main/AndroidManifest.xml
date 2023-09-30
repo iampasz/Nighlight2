@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
+    <uses-permission android:name="com.android.vending.BILLING"/>
 
     <uses-permission
         android:name="android.permission.WRITE_SETTINGS"
@@ -12,13 +13,15 @@
 
     <application
         android:allowBackup="true"
+        android:screenOrientation="portrait"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:name="androidx.multidex.MultiDexApplication"
-        tools:ignore="AllowBackup">
+        tools:ignore="AllowBackup"
+        android:networkSecurityConfig="@xml/network_security_config">
 
         <meta-data
             android:name="com.google.android.gms.ads.DELAY_APP_MEASUREMENT_INIT"
@@ -32,6 +35,13 @@
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
             android:value="true"/>
 
+
+<!--        <meta-data-->
+<!--            android:name="com.google.android.gms.ads.APPLICATION_ID"-->
+<!--            android:value="ca-app-pub-8858162097015410~9621706430"-->
+<!--            />-->
+
+<!--        My ADMOB IDENTIFICATOR-->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-1237459888817948~7720722245"
@@ -41,8 +51,9 @@
             android:value="CsFdIcdy3bb1MbtM1t5hX2BTt0Tg2EgFikbct_BERtiD3xwGLQOITnXILFrgwgUOetkDZeilCI0eGkvI_QTfuG"  />
 
         <activity
-            android:name="com.sarnavsky.pasz.nighlight2.Splash.SplashActivity"
+            android:name="com.sarnavsky.pasz.nighlight2.MainActivity"
             android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -50,9 +61,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity"
-            android:screenOrientation="portrait">
-        </activity>
     </application>
 
 </manifest>

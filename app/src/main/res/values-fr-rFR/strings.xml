@@ -62,4 +62,22 @@
     <string name="dialog_title">Couleurs</string>
     <string name="custom_button">Palette de couleurs</string>
     <string name="presets_button">Couleurs standards</string>
+
+    <string name="subscription">Subscription</string>
+    <string name="benefits">Benefits of subscription: </string>
+    <string name="no_ads">- no advertising;</string>
+    <string name="month1">1 month</string>
+    <string name="month3">3 month</string>
+    <string name="month12">12 month</string>
+    <string name="subscribe">Subscribe</string>
+    <string name="subscribe_details">**You can cancel your
+        subscription at any time.</string>
+
+    <string name="topic_nl2">Essayez-le gratuitement. Version couleur. Pas de publicité, plus de mélodies et de veilleuses</string>
+    <string name="button_nl2">TÉLÉCHARGER</string>
+
+    <string name="button_question">TÉLÉCHARGER?</string>
+    <string name="nl2_descriptions">Téléchargez une autre version depuis Google Play. Plus danimaux, plus de mélodies. moins ou pas de publicité
+    </string>
+
 </resources>

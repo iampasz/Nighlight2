@@ -6,13 +6,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="10dp"
+    android:layout_marginLeft="@dimen/margin_10"
     android:gravity="center"
     android:orientation="vertical">
 
     <FrameLayout
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/size_50"
+        android:layout_height="@dimen/size_50"
         android:layout_weight="1"
         android:background="@drawable/shape_oval">
 
@@ -40,8 +40,8 @@
         android:gravity="center_horizontal"
         android:text="TextViewTextView"
         android:textAlignment="center"
-        android:textColor="#fff"
-        android:textSize="10sp" />
+        android:textColor="@color/whiteText"
+        android:textSize="@dimen/text_size_10" />
 </LinearLayout>
 
 

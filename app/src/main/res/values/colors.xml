@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="grayText">#404040</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="blask">#0b0000</color>
@@ -68,6 +67,18 @@
 
     </string-array>
 
+
+    <color name="sub_button">#432267</color>
+    <color name="sub_button_text">#fff</color>
+    <color name="sub_text">#432267</color>
+    <color name="sub_passive">#818181</color>
+
+    <color name="greenText">#0A6A2C</color>
+    <color name="whiteText">#fff</color>
+    <color name="darkBlueText">#0E1B61</color>
+    <color name="cardBackground">#ECFFD7</color>
+    <color name="shadowColor">#4A000000</color>
+    <color name="black">#000</color>
 
 
 </resources>

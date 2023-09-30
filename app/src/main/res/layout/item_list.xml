@@ -7,13 +7,13 @@
     android:id="@+id/showAdd"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="5dp"
-    app:cardBackgroundColor="#ECFFD7"
-    card_view:cardCornerRadius="6dp"
-    card_view:cardElevation="2dp"
-    card_view:cardMaxElevation="4dp"
-    tools:layout_editor_absoluteX="20dp"
-    tools:layout_editor_absoluteY="20dp">
+    android:layout_marginBottom="@dimen/margin_5"
+    app:cardBackgroundColor="@color/cardBackground"
+    card_view:cardCornerRadius="@dimen/corner_radius"
+    card_view:cardElevation="@dimen/card_elevation"
+    card_view:cardMaxElevation="@dimen/card_elevation"
+    tools:layout_editor_absoluteX="@dimen/layout_editor"
+    tools:layout_editor_absoluteY="@dimen/layout_editor">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,9 +22,9 @@
 
         <ImageView
             android:id="@+id/image"
-            android:layout_width="50dp"
+            android:layout_width="@dimen/size_50"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/margin_5"
             android:contentDescription="@string/image_des"
             app:srcCompat="@drawable/play" />
 
@@ -37,16 +37,19 @@
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="@dimen/margin_5"
                 android:text="Отключить рекламу"
-                android:textSize="20sp" />
+                android:textColor="@color/greenText"
+                android:textSize="@dimen/text_size_20" />
 
             <TextView
                 android:id="@+id/author"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="После просмотра рекламы с вознаграждением реклама будет отключена две сесии" />
+                android:layout_margin="@dimen/margin_5"
+                android:text="После просмотра рекламы с вознаграждением реклама будет отключена две сесии"
+                android:textColor="@color/greenText"
+                android:textSize="@dimen/text_size_15" />
 
         </LinearLayout>
 
