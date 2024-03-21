@@ -174,7 +174,7 @@ public class MainFragment extends Fragment {
 //                    }
 //                });
 //            }
- //       });
+        //       });
 
 
         //end chekSubscription
@@ -402,7 +402,7 @@ public class MainFragment extends Fragment {
             chekAnim = true;
 
             //float mySacele = (float) getResources().getDimension(R.dimen.scale);
-           // Log.i("DIMEN", mySacele+"ddd");
+            // Log.i("DIMEN", mySacele+"ddd");
 
             TypedValue outValue = new TypedValue();
             getResources().getValue(R.dimen.scale, outValue, true);

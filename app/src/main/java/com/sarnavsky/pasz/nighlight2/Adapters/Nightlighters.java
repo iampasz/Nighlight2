@@ -45,7 +45,6 @@ public class Nightlighters extends RecyclerView.Adapter<Nightlighters.Nightlight
         int color = random.nextInt(bgNlColors.length);
         holder.underImg.setColorFilter(Color.parseColor(bgNlColors[color]));
 
-
         final ArrayList<Techniques> techniques = new ArrayList<>();
         techniques.add(Techniques.Bounce);
         techniques.add(Techniques.BounceIn);

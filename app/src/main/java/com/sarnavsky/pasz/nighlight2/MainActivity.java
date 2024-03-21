@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     MediaPlayer mediaPlayer;
     ConsentForm consentForm;
 
-   // public static boolean subscribleStatus;
+    // public static boolean subscribleStatus;
 
 //    MediationManager manager;
 //    AdCallback callback;
@@ -435,4 +435,3 @@ public class MainActivity extends AppCompatActivity {
 
 
 }
-
