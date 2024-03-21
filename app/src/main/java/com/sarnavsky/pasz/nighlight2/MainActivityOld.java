@@ -38,7 +38,7 @@ import java.io.IOException;
 
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivityOld extends AppCompatActivity {
 
     private static final String MY_SETTINGS = "my_settings";
     private ConsentInformation consentInformation;
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         consentInformation = UserMessagingPlatform.getConsentInformation(this);
-        consentInformation.requestConsentInfoUpdate(MainActivity.this, params, inform, infoFaild);
+        consentInformation.requestConsentInfoUpdate(MainActivityOld.this, params, inform, infoFaild);
 
         // consentInformation.reset();
     }
@@ -130,10 +130,10 @@ public class MainActivity extends AppCompatActivity {
                 new UserMessagingPlatform.OnConsentFormLoadSuccessListener() {
                     @Override
                     public void onConsentFormLoadSuccess(ConsentForm consentForm) {
-                        MainActivity.this.consentForm = consentForm;
+                        MainActivityOld.this.consentForm = consentForm;
                         if (consentInformation.getConsentStatus() == ConsentInformation.ConsentStatus.REQUIRED) {
                             consentForm.show(
-                                    MainActivity.this,
+                                    MainActivityOld.this,
                                     new ConsentForm.OnConsentFormDismissedListener() {
                                         @Override
                                         public void onConsentFormDismissed(@Nullable FormError formError) {
@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
         mediaPlayer = new MediaPlayer();
         try {
             // mediaPlayer.setDataSource(String.valueOf(myUri));
-            mediaPlayer.setDataSource(MainActivity.this, Uri.parse(link));
+            mediaPlayer.setDataSource(MainActivityOld.this, Uri.parse(link));
         } catch (IOException e) {
             e.printStackTrace();
         }
