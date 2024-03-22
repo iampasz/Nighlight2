@@ -20,9 +20,9 @@ import com.google.android.ump.ConsentInformation.OnConsentInfoUpdateFailureListe
 import com.google.android.ump.ConsentInformation.OnConsentInfoUpdateSuccessListener
 import com.google.android.ump.ConsentRequestParameters
 import com.google.android.ump.UserMessagingPlatform
-import com.sarnavsky.pasz.nighlight2.Fragments.MainFragment
 import com.sarnavsky.pasz.nighlight2.Interfaces.MyCallback
 import com.sarnavsky.pasz.nighlight2.databinding.MainBinding
+import com.sarnavsky.pasz.nighlight2.fragments.MainFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -55,7 +55,8 @@ class MainActivity : AppCompatActivity() {
 
         //loadMainFragment
         val fm = supportFragmentManager
-        val mainFragment = MainFragment()
+        val mainFragment =
+            MainFragment()
         fm.beginTransaction().replace(R.id.container, mainFragment, "main_fragment").commit()
 
         //showGDPR

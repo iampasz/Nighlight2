@@ -1,4 +1,4 @@
-package com.sarnavsky.pasz.nighlight2.Fragments;
+package com.sarnavsky.pasz.nighlight2.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -103,7 +103,7 @@ public class SettingsFragment extends Fragment {
 
                             //MainFragment.mAdView.setVisibility(View.GONE);
 
-                            MainFragment.mAdView.setVisibility(View.GONE);
+                            //MainFragmentOld.mAdView.setVisibility(View.GONE);
 
                             adsCounter = ((MainActivity) getActivity()).getSettings();
                             ads_text.setText("No ADS less: " + adsCounter);

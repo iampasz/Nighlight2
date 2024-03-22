@@ -1,4 +1,4 @@
-package com.sarnavsky.pasz.nighlight2.Fragments;
+package com.sarnavsky.pasz.nighlight2.fragments;
 
 import android.content.Context;
 import android.os.Bundle;

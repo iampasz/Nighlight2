@@ -1,4 +1,4 @@
-package com.sarnavsky.pasz.nighlight2.Fragments;
+package com.sarnavsky.pasz.nighlight2.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -58,8 +58,8 @@ public class ColorPicker extends Fragment implements ColorPickerDialogListener {
 
         MainFragment main_fragment = (MainFragment) getParentFragmentManager().findFragmentByTag("main_fragment");
         if(main_fragment!=null){
-            mainBg =  main_fragment.mainBg;
-            underImg =  main_fragment.underImg;
+           // mainBg =  main_fragment.mainBg;
+            //underImg =  main_fragment.underImg;
         }
 
     }

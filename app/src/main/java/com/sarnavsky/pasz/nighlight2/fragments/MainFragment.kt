@@ -1,0 +1,413 @@
+package com.sarnavsky.pasz.nighlight2.fragments
+
+
+import android.annotation.SuppressLint
+import android.graphics.Color
+import android.os.Bundle
+import android.os.CountDownTimer
+import android.util.Log
+import android.util.TypedValue
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationSet
+import android.view.animation.LinearInterpolator
+import android.view.animation.RotateAnimation
+import android.view.animation.ScaleAnimation
+import android.widget.ImageView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
+import com.sarnavsky.pasz.nighlight2.Adapters.Nightlighters
+import com.sarnavsky.pasz.nighlight2.Adapters.RecyclerViewAdapter
+import com.sarnavsky.pasz.nighlight2.Fabrica.MyObjects
+import com.sarnavsky.pasz.nighlight2.MainActivity
+import com.sarnavsky.pasz.nighlight2.Objects.MenuButton
+import com.sarnavsky.pasz.nighlight2.Objects.Nightlighter
+import com.sarnavsky.pasz.nighlight2.R
+import com.sarnavsky.pasz.nighlight2.databinding.MainFragmentBinding
+
+class MainFragment : Fragment() {
+
+    lateinit var binding: MainFragmentBinding
+
+    private lateinit var colors: Array<String>
+    private lateinit var bgColors: Array<String>
+    private lateinit var bgNlColors: Array<String>
+    private lateinit var menuColors: Array<String>
+
+    private var underImg: ImageView? = null
+
+    private var adapter: RecyclerViewAdapter? = null
+
+    private var adRequest: AdRequest? = null
+
+    private var menuItems: MyObjects? = null
+    private var checkMenu = true
+    private var show = true
+    private var checkAnim = false
+
+    private var currentBgColor = 0
+    private var currentBgImage = 0
+    private var currentNLColor = 0
+    private var brights = 0
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = MainFragmentBinding
+            .inflate(inflater, container, false)
+        return binding.root
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+        underImg = binding.pager.findViewById(R.id.underImg)
+
+        startGlobalTimer()
+
+
+        setAdsSetting()
+
+        adRequest = AdRequest.Builder().build()
+
+
+        val addCounter = (activity as MainActivity?)!!.getSettings()
+        if (addCounter > 0) {
+            binding.adView.visibility = View.GONE
+        } else {
+            adRequest?.let {
+                binding.adView.loadAd(it)
+            }
+
+        }
+        menuItems = MyObjects()
+
+        binding.settingsButton.setOnClickListener {
+            val settingsFragment =
+                parentFragmentManager.findFragmentByTag("SETTINGS_FRAGMENT") as SettingsFragment?
+            if (settingsFragment == null) {
+                parentFragmentManager
+                    .beginTransaction()
+                    .setCustomAnimations(R.anim.from_left, R.anim.disepire)
+                    .replace(R.id.mainContainer, SettingsFragment(), "SETTINGS_FRAGMENT")
+                    .commit()
+            }
+        }
+
+
+        binding.lockFrame.setOnTouchListener { _, _ ->
+            showButtons()
+            startGlobalTimer()
+            false
+        }
+
+        val llm = LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, false)
+        binding.rv.layoutManager = llm
+        val res = resources
+        colors = res.getStringArray(R.array.myColors)
+        bgColors = res.getStringArray(R.array.bgColors)
+        bgNlColors = res.getStringArray(R.array.bgNlColors)
+        menuColors = res.getStringArray(R.array.menuColors)
+
+        val arrayList = ArrayList<Nightlighter>()
+        val myMenuItems = MyObjects()
+        arrayList.addAll(myMenuItems.nightlighters)
+
+        binding.pager.adapter = Nightlighters(arrayList, bgNlColors)
+        binding.pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                binding.bottomText.setText(arrayList[binding.pager.currentItem].name)
+            }
+
+        })
+
+        binding.lockButton.setOnClickListener { lockButton() }
+
+        openMenu(menuItems?.getMenuButtons(colors))
+    }
+
+    private var globalTimer: CountDownTimer? = null
+    private fun startGlobalTimer() {
+        if (globalTimer != null) {
+            globalTimer?.start()
+        } else {
+            globalTimer = object : CountDownTimer(5000, 1000) {
+                override fun onTick(l: Long) {}
+                override fun onFinish() {
+                    binding.lockButton.visibility = View.INVISIBLE
+                    binding.bottomText.visibility = View.INVISIBLE
+                    binding.settingsButton.visibility = View.INVISIBLE
+                    binding.rv.visibility = View.INVISIBLE
+                }
+            }.start()
+        }
+    }
+
+    private fun setAdsSetting() {
+        // Initialize the Mobile Ads SDK.
+        MobileAds.initialize(
+            requireContext()
+        ) { initializationStatus ->
+            val statusMap = initializationStatus.adapterStatusMap
+            for (adapterClass in statusMap.keys) {
+                val status = statusMap[adapterClass]
+                Log.d(
+                    "MyApp", String.format(
+                        "Adapter name: %s, Description: %s, Latency: %d",
+                        adapterClass, status!!.description, status.latency
+                    )
+                )
+            }
+
+            // Start loading ads here...
+        }
+        val requestConfiguration = MobileAds.getRequestConfiguration()
+            .toBuilder()
+            .setTagForChildDirectedTreatment(RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE)
+            .build()
+        MobileAds.setRequestConfiguration(requestConfiguration)
+    }
+
+    private fun showButtons() {
+        if (checkMenu) {
+            binding.lockButton.visibility = View.VISIBLE
+            binding.bottomText.visibility = View.VISIBLE
+            binding.settingsButton.visibility = View.VISIBLE
+            binding.rv.visibility = View.VISIBLE
+        } else {
+            binding.lockButton.visibility = View.VISIBLE
+            binding.bottomText.visibility = View.VISIBLE
+        }
+    }
+
+    private fun lockButton() {
+        val showAdd = (activity as MainActivity?)!!.getSettings()
+        if (checkMenu) {
+            binding.lockFrame.isClickable = true
+            openMenu(menuItems?.getMenuButtons(colors))
+            binding.rv.visibility = View.INVISIBLE
+            binding.bottomText.visibility = View.GONE
+            binding.settingsButton.visibility = View.GONE
+            val frCount = childFragmentManager.fragments.size
+            //Toast.makeText(ctx, frCount+" ddd", Toast.LENGTH_SHORT).show();
+            if (frCount > 0) {
+                for (i in 0 until frCount) {
+                    val fragment = childFragmentManager.fragments[i]
+                    childFragmentManager.beginTransaction().remove(fragment).commit()
+                }
+            }
+            binding.lockButton.setImageResource(R.drawable.ic_lock)
+            if (showAdd < 0) {
+                binding.adView.visibility = View.INVISIBLE
+            }
+            binding.lockFrame.isClickable = true
+            checkMenu = false
+            show = false
+        } else {
+            binding.lockFrame.isClickable = false
+            binding.rv.visibility = View.VISIBLE
+            binding.bottomText.visibility = View.VISIBLE
+            binding.lockButton.setImageResource(R.drawable.ic_unlock)
+            if (showAdd < 0) {
+                binding.adView.visibility = View.VISIBLE
+            }
+            binding.settingsButton.visibility = View.VISIBLE
+            binding.lockFrame.isClickable = false
+            checkMenu = true
+            show = true
+        }
+    }
+
+    private fun openMenu(menuButtons: java.util.ArrayList<MenuButton?>?) {
+        adapter = RecyclerViewAdapter(menuButtons, menuColors)
+        adapter?.MyOnclick { button ->
+            when (button) {
+                1 -> {
+                    val listFragment =
+                        childFragmentManager.findFragmentByTag("LIST_FRAGMENT") as ListFragment?
+                    if (listFragment == null) {
+                        parentFragmentManager
+                            .beginTransaction()
+                            .setCustomAnimations(R.anim.from_bottom, R.anim.disepire)
+                            .replace(R.id.mainContainer, ListFragment(), "LIST_FRAGMENT")
+                            .commit()
+                    }
+                }
+
+                2 -> showBgColorMenu()
+                3 -> changeNLColor()
+                4 -> startAnimation()
+                6 -> changeBgColor()
+                5 -> {
+                    val timerFragment =
+                        childFragmentManager.findFragmentByTag("TIMER_FRAGMENT") as TimerFragment?
+                    if (timerFragment == null) {
+                        parentFragmentManager
+                            .beginTransaction()
+                            .setCustomAnimations(R.anim.from_bottom, R.anim.disepire)
+                            .replace(R.id.mainContainer, TimerFragment(), "TIMER_FRAGMENT")
+                            .commit()
+                    }
+                }
+
+                7 -> changeBrightest()
+            }
+        }
+        adapter?.MyOnLongclick { button ->
+            when (button) {
+                3 -> parentFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.mainContainer, ColorPicker.init(0), "ColorPicker")
+                    .commit()
+
+                2 -> parentFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.mainContainer, ColorPicker.init(1), "ColorPicker")
+                    .commit()
+            }
+        }
+        binding.rv.adapter = adapter
+    }
+
+    private fun showBgColorMenu() {
+        currentBgColor++
+        if (currentBgColor == bgColors.size) {
+            currentBgColor = 0
+        }
+        binding.mainBg.setBackgroundColor(Color.parseColor(bgColors[currentBgColor]))
+    }
+
+    private fun changeNLColor() {
+        currentNLColor++
+        if (currentNLColor >= bgNlColors.size) {
+            currentNLColor = 0
+        }
+        underImg?.setColorFilter(Color.parseColor(bgNlColors[currentNLColor]))
+    }
+
+    private fun startAnimation() {
+        binding.animateBg.scaleType = ImageView.ScaleType.FIT_CENTER
+        if (!checkAnim) {
+            val rotate = RotateAnimation(
+                0f, 360f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f
+            ) //8
+            rotate.duration = 100000
+            rotate.repeatCount = Animation.INFINITE
+            rotate.interpolator = LinearInterpolator()
+            val set = AnimationSet(false) //10
+            set.addAnimation(rotate)
+            binding.animateBg.startAnimation(set)
+            checkAnim = true
+
+            val outValue = TypedValue()
+            resources.getValue(R.dimen.scale, outValue, true)
+            val value = outValue.float
+            val scale = ScaleAnimation(
+                1f, value, 1f, value,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f
+            )
+            scale.duration = 1000
+            binding.animateBg.startAnimation(scale)
+            set.addAnimation(scale)
+            binding.animateBg.startAnimation(set)
+        } else {
+            binding.animateBg.clearAnimation()
+            binding.animateBg.scaleType = ImageView.ScaleType.CENTER_CROP
+            checkAnim = false
+        }
+    }
+
+    private fun changeBgColor() {
+        currentBgColor++
+        currentBgImage++
+        if (currentBgImage >= menuItems!!.bgArray.size) {
+            currentBgImage = 0
+            currentBgColor = 0
+        }
+        if (currentBgColor >= bgColors.size) {
+            currentBgColor = 0
+        }
+        binding.mainBg.setBackgroundColor(Color.parseColor(bgColors[currentBgColor]))
+        binding.animateBg.setImageResource(menuItems!!.bgArray[currentBgImage])
+    }
+
+    private fun changeBrightest() {
+        val layout = activity?.window?.attributes
+        when (brights) {
+            0 -> {
+                layout?.screenBrightness = 0.1f
+                brights++
+            }
+
+            1 -> {
+                layout?.screenBrightness = 0.5f
+                brights++
+            }
+
+            2 -> {
+                layout?.screenBrightness = 1f
+                brights = 0
+            }
+        }
+        activity?.window?.attributes = layout
+    }
+
+    fun startTimer(hours: Int, minutes: Int) {
+        binding.bottomText.visibility = View.VISIBLE
+        val mySeconds = (hours * 60 * 60 + 60 * minutes) * 1000
+        closeApp(mySeconds)
+    }
+
+    var cdt: CountDownTimer? = null
+    private var timerStatus = false
+
+    private fun closeApp(mySeconds: Int) {
+        if (cdt != null) {
+            timerStatus = false
+            cdt?.cancel()
+            cdt = null
+        }
+        if (mySeconds > 0) {
+            timerStatus = true
+            cdt = object : CountDownTimer(mySeconds.toLong(), 1000) {
+                @SuppressLint("DefaultLocale")
+                override fun onTick(l: Long) {
+                    binding.bottomText.text = String.format(
+                        "%02d:%02d:%02d",
+                        l / 1000 / 3600,
+                        l / 1000 % 3600 / 60,
+                        l / 1000 % 60
+                    )
+                }
+
+                override fun onFinish() {
+                    if (cdt != null) {
+                        cdt?.cancel()
+                    }
+                    if (globalTimer != null) {
+                        globalTimer!!.cancel()
+                    }
+                    (activity as MainActivity?)!!.finishMedia()
+                    Log.i("FINISH", "App is OFF")
+                    activity!!.finish()
+                }
+            }
+            cdt?.start()
+        } else {
+            binding.bottomText.text = ""
+            binding.bottomText.visibility = View.INVISIBLE
+        }
+    }
+}

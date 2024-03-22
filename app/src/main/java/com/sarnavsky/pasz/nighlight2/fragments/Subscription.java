@@ -1,4 +1,4 @@
-package com.sarnavsky.pasz.nighlight2.Fragments;
+package com.sarnavsky.pasz.nighlight2.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

@@ -1,4 +1,4 @@
-package com.sarnavsky.pasz.nighlight2.Fragments;
+package com.sarnavsky.pasz.nighlight2.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -54,7 +54,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 
-public class MainFragment extends Fragment {
+public class MainFragmentOld extends Fragment {
 
     //MyADD
     public static AdView mAdView;
@@ -121,93 +121,22 @@ public class MainFragment extends Fragment {
         FragmentActivity main = getActivity();
         fm = getParentFragmentManager();
 
-
-
-        //chekSubscription
-//        Log.i("TESTSUB", " chekSubscription");
-//        PurchasesUpdatedListener purchasesUpdatedListener = new PurchasesUpdatedListener() {
-//            @Override
-//            public void onPurchasesUpdated(@NonNull BillingResult billingResult, @Nullable List<Purchase> list) {
-//            }
-//        };
-//        BillingClient bc = BillingClient.newBuilder(getContext()).enablePendingPurchases().setListener(purchasesUpdatedListener).build();
-//        bc.startConnection(new BillingClientStateListener() {
-//            @Override
-//            public void onBillingServiceDisconnected() {
-//            }
-//
-//            @Override
-//            public void onBillingSetupFinished(@NonNull BillingResult billingResult) {
-//
-//                Log.i("TESTSUB", billingResult + " billingResult");
-//
-//                QueryPurchasesParams queryPurchasesParams = QueryPurchasesParams
-//                        .newBuilder()
-//                        .setProductType(BillingClient.ProductType.SUBS)
-//                        .build();
-//
-//                bc.queryPurchasesAsync(queryPurchasesParams, new PurchasesResponseListener() {
-//                    @Override
-//                    public void onQueryPurchasesResponse(@NonNull BillingResult billingResult, @NonNull List<Purchase> list) {
-//
-//
-//                        Log.i("TESTSUB", list.size() + " TestMy");
-//
-//                        getActivity().runOnUiThread(new Runnable() {
-//
-//                            @Override
-//                            public void run() {
-//
-//                                if (billingResult.getResponseCode() == 0) {
-//                                    if (list.size() > 0) {
-//                                        mAdView.setVisibility(View.GONE);
-//                                    } else {
-//                                        mAdView.loadAd(adRequest);
-//                                        getParentFragmentManager().beginTransaction().add(R.id.container, new Subscription(), "subscription").commit();
-//                                    }
-//                                }
-//
-//                            }
-//                        });
-//
-//
-//                    }
-//                });
-//            }
-        //       });
-
-
-        //end chekSubscription
-
-        //Start Global Itmer. Make all invisible exept nightlighter.
         startGlobalTimer();
 
-        //UnityAds.SetC("privacy.consent", true);
-
-        //MyADMOB ADD
-        //findAdsView
         mAdView = view.findViewById(R.id.adView);
 
-
-
-        //MyADMOB ADD
-        //Use ADDS
         setAdsSetting();
-        //MyADMOB ADD
+
         adRequest = new AdRequest.Builder().build();
 
 
         int addCounter = ((MainActivity) getActivity()).getSettings();
         if (addCounter > 0) {
-            //MyADMOB ADD
             mAdView.setVisibility(View.GONE);
 
         } else {
-            //MyADMOB ADD
             mAdView.loadAd(adRequest);
         }
-
-
         mainBg = (ConstraintLayout) view.findViewById(R.id.mainBg);
         menuItems = new MyObjects();
         lock_button = view.findViewById(R.id.lock_button);
