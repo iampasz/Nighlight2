@@ -95,7 +95,7 @@ class MainFragment : Fragment() {
         }
         binding.lockFrame.setOnTouchListener { _, _ ->
             showButtons()
-            startGlobalTimer()
+            //startGlobalTimer()
             false
         }
         val llm = LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, false)
@@ -135,21 +135,21 @@ class MainFragment : Fragment() {
     }
 
     private var globalTimer: CountDownTimer? = null
-    private fun startGlobalTimer() {
-        if (globalTimer != null) {
-            globalTimer?.start()
-        } else {
-            globalTimer = object : CountDownTimer(5000, 1000) {
-                override fun onTick(l: Long) {}
-                override fun onFinish() {
-                    binding.lockButton.visibility = View.INVISIBLE
-                    binding.bottomText.visibility = View.INVISIBLE
-                    binding.settingsButton.visibility = View.INVISIBLE
-                    binding.rv.visibility = View.INVISIBLE
-                }
-            }.start()
-        }
-    }
+//    private fun startGlobalTimer() {
+//        if (globalTimer != null) {
+//            globalTimer?.start()
+//        } else {
+//            globalTimer = object : CountDownTimer(5000, 1000) {
+//                override fun onTick(l: Long) {}
+//                override fun onFinish() {
+//                    binding.lockButton.visibility = View.INVISIBLE
+//                    binding.bottomText.visibility = View.INVISIBLE
+//                    binding.settingsButton.visibility = View.INVISIBLE
+//                    binding.rv.visibility = View.INVISIBLE
+//                }
+//            }.start()
+//        }
+//    }
 
     private fun setAdsSetting() {
         // Initialize the Mobile Ads SDK.
