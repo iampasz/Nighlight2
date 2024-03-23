@@ -2,16 +2,25 @@ plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
+    id 'org.jetbrains.kotlin.android'
+    //id 'org.jetbrains.kotlin.android'
+//    id 'org.jetbrains.kotlin.kapt'
 }
 
 apply plugin: 'com.android.application'
 
+apply(plugin: "com.android.application")
+apply(plugin: "kotlin-android")
+
 
 
 android {
-    compileSdk 34
 
+    kotlinOptions {
+        jvmTarget = "17"
+    }
 
+    compileSdkVersion(34)
     //noinspection GradleCompatible
     defaultConfig {
         applicationId "com.sarnavsky.pasz.nighlight2"
@@ -24,29 +33,44 @@ android {
     }
 
     buildTypes {
-        release {
 
-            minifyEnabled true
-            shrinkResources true
+        getByName("release") {
+            minifyEnabled = true
+            shrinkResources = true
+
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             multiDexKeepFile file('multidex-config.txt')
-
-
         }
+        getByName("debug") {
+            debuggable = true
+        }
+
     }
 
     buildFeatures {
         viewBinding = true
     }
 
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
+
     buildToolsVersion "30.0.3"
 
     namespace 'com.sarnavsky.pasz.nighlight2'
+
+//    kapt {
+//        generateStubs = true
+//    }
+
+//    kotlinOptions {
+//        jvmTarget = '17'
+//    }
 }
+
+
 
 repositories {
     maven {
@@ -151,6 +175,14 @@ dependencies {
 //BILLING
     implementation 'com.android.billingclient:billing:6.2.0'
 
+    implementation "androidx.core:core-ktx:1.12.0"
 
+
+    //Jetbrains Kotlin
+   // implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.0"
+
+    //Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2'
 
 }

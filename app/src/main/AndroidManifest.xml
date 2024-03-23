@@ -52,7 +52,7 @@
             android:value="CsFdIcdy3bb1MbtM1t5hX2BTt0Tg2EgFikbct_BERtiD3xwGLQOITnXILFrgwgUOetkDZeilCI0eGkvI_QTfuG"  />
 
         <activity
-            android:name="com.sarnavsky.pasz.nighlight2.MainActivity"
+            android:name=".MainActivity"
             android:theme="@style/SplashTheme"
             android:screenOrientation="fullSensor"
             android:exported="true">

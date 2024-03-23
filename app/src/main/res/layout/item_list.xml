@@ -34,11 +34,11 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/name"
+                android:id="@+id/textMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_5"
-                android:text="Отключить рекламу"
+                android:text="@string/colon"
                 android:textColor="@color/greenText"
                 android:textSize="@dimen/text_size_20" />
 
@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_5"
-                android:text="После просмотра рекламы с вознаграждением реклама будет отключена две сесии"
+                android:text="@string/colon"
                 android:textColor="@color/greenText"
                 android:textSize="@dimen/text_size_15" />
 

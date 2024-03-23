@@ -5,6 +5,14 @@
     <color name="colorAccent">#FF4081</color>
     <color name="blask">#0b0000</color>
 
+    <color name="red">#ff2f2f</color>
+    <color name="orange">#ff8737</color>
+    <color name="yellow">#ffe14e</color>
+    <color name="green">#82ff41</color>
+    <color name="blue">#3cffe8</color>
+    <color name="darkBlue">#4753ff</color>
+    <color name="violet">#ac44ff</color>
+
     <string-array name="myColors" translatable="false">
         <item>#ff4040</item>
         <item>#ff4040</item>
@@ -54,18 +62,6 @@
         <item>#F2F2F2</item>
     </string-array>
 
-
-
-    <string-array name="menuColors" translatable="false">
-        <item>#ff2f2f</item>
-        <item>#ff8737</item>
-        <item>#ffe14e</item>
-        <item>#82ff41</item>
-        <item>#3cffe8</item>
-        <item>#4753ff</item>
-        <item>#ac44ff</item>
-
-    </string-array>
 
 
     <color name="sub_button">#432267</color>
