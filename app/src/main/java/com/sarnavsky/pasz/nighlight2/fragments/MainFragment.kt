@@ -19,6 +19,7 @@ import com.sarnavsky.pasz.nighlight2.MainActivity
 import com.sarnavsky.pasz.nighlight2.NightlightHelper
 import com.sarnavsky.pasz.nighlight2.R
 import com.sarnavsky.pasz.nighlight2.adapters.MainMenuAdapter
+import com.sarnavsky.pasz.nighlight2.adapters.NightlightersAdapter
 import com.sarnavsky.pasz.nighlight2.databinding.MainFragmentBinding
 import com.sarnavsky.pasz.nighlight2.objects.Nightlighter
 
@@ -29,6 +30,10 @@ class MainFragment : Fragment() {
 
     private val mainMenuAdapter = MainMenuAdapter {
       it.button
+    }
+
+    private val nightlightersAdapter = NightlightersAdapter {
+
     }
 
     private lateinit var colors: Array<String>
@@ -129,8 +134,12 @@ class MainFragment : Fragment() {
 
     private fun initAdapter() {
         binding.rv.adapter = mainMenuAdapter
-        val list = NightlightHelper.getMenuButtons(resources)
-        mainMenuAdapter.list.submitList(list)
+        val listMenu = NightlightHelper.getMenuButtons(resources)
+        mainMenuAdapter.list.submitList(listMenu)
+
+        binding.pager.adapter = nightlightersAdapter
+        val listNightlighters = NightlightHelper.getNightlighters()
+        nightlightersAdapter.list.submitList(listNightlighters)
 
     }
 

@@ -7,19 +7,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
-import com.sarnavsky.pasz.nighlight2.databinding.PagerFragmentBinding
+import com.sarnavsky.pasz.nighlight2.databinding.NightlightFragmentBinding
 import java.util.Random
 
 class PagerFragment : Fragment() {
 
-    lateinit var binding: PagerFragmentBinding
+    lateinit var binding: NightlightFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = PagerFragmentBinding
+        binding = NightlightFragmentBinding
             .inflate(inflater, container, false)
         return binding.root
     }
