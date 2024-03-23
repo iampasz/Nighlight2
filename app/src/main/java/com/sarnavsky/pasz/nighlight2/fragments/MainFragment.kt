@@ -66,7 +66,7 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         underImg = binding.pager.findViewById(R.id.underImg)
-        startGlobalTimer()
+        //startGlobalTimer()
         setAdsSetting()
         adRequest = AdRequest.Builder().build()
         val addCounter = (activity as MainActivity?)!!.getSettings()
