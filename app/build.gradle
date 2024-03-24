@@ -34,14 +34,14 @@ android {
 
     buildTypes {
 
-        getByName("release") {
+        release {
             minifyEnabled = true
             shrinkResources = true
 
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             multiDexKeepFile file('multidex-config.txt')
         }
-        getByName("debug") {
+        debug {
             debuggable = true
         }
 
@@ -184,5 +184,32 @@ dependencies {
     //Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2'
+
+    //Koin
+
+
+    //implementation(platform("io.insert-koin:koin-bom:3.6.0"))
+    implementation("io.insert-koin:koin-core:3.4.0")
+    implementation("io.insert-koin:koin-android:3.4.0")
+
+    // Declare koin-bom version
+  //  implementation platform("io.insert-koin:koin-bom:3.6.0")
+
+    // Declare the koin dependencies that you need
+    implementation("io.insert-koin:koin-android")
+    //implementation("io.insert-koin:koin-core-coroutines")
+   // implementation("io.insert-koin:koin-androidx-workmanager")
+
+    // If you need specify some version it's just point to desired version
+   // implementation("io.insert-koin:koin-androidx-navigation:1.2.3-alpha03")
+
+    // Works with test libraries too!
+    //testImplementation("io.insert-koin:koin-test-junit4")
+    //testImplementation("io.insert-koin:koin-android-test")
+
+   // implementation "org.koin:koin-androidx-viewmodel:3.6.0"
+
+    implementation("io.insert-koin:koin-androidx-compose:3.4.0")
+
 
 }

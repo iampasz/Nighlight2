@@ -7,10 +7,13 @@ import androidx.fragment.app.Fragment
 import com.sarnavsky.pasz.nighlight2.databinding.MainBinding
 import com.sarnavsky.pasz.nighlight2.fragments.MainFragment
 import com.sarnavsky.pasz.nighlight2.util.MY_SETTINGS
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: MainBinding
+
+    private val mediaPlayerViewModel: MediaPlayerViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         //TODO SET RIGHT GDPR
         //GDPRHelper.showGDPR(this)
 
+        mediaPlayerViewModel.initializeMediaPlayer()
     }
 
 
@@ -67,5 +71,11 @@ class MainActivity : AppCompatActivity() {
     private fun initView(){
         binding = MainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Зупинити медіаплеєр і вивільнити ресурси при завершенні активності
+        mediaPlayerViewModel.stopMediaPlayer()
     }
 }

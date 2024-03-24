@@ -18,15 +18,19 @@ class AudioHelper {
             myAudio0.linkId = R.raw.detskaya
             myAudio0.audioName = "Dream flight"
             myAudio0.audioAuth = "Lullaby"
+
             myAudio1.linkId = R.raw.eho
             myAudio1.audioName = "Cristal Rain"
             myAudio1.audioAuth = "Xu King-Yuan"
+
             myAudio2.linkId = R.raw.nostalgi
             myAudio2.audioName = "The Scents of Nostalgia"
             myAudio2.audioAuth = "Xu King-Yuan"
+
             myAudio3.linkId = R.raw.sound
             myAudio3.audioName = "Shout To The Lord"
             myAudio3.audioAuth = "Judson Mancebo"
+
             arrayList.add(myAudio0)
             arrayList.add(myAudio1)
             arrayList.add(myAudio2)

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.sarnavsky.pasz.nighlight2.R
 import com.sarnavsky.pasz.nighlight2.databinding.ItemAudioBinding
 import com.sarnavsky.pasz.nighlight2.objects.AudioItem
 
@@ -60,6 +61,10 @@ class MusicListAdapter(
         ItemAudioBinding.bind(holder.itemView).apply {
             audioName.text = item.audioName
             audioAuthor.text = item.audioAuth
+
+            if(item.status){
+                image.setImageResource(R.drawable.begemot2)
+            }
         }
     }
 

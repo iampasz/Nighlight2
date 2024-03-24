@@ -1,8 +1,8 @@
-//package com.sarnavsky.pasz.nighlight2
+//package com.sarnavsky.pasz.nighlight2.util
 //
 //import android.media.MediaPlayer
 //
-//class classMediaPlayerController {
+//class MediaPlayerController {
 //
 //    private var oldLinkId = 0
 //    private var mediaPlayer: MediaPlayer? = null
