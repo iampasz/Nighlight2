@@ -1,13 +1,13 @@
-package com.sarnavsky.pasz.nighlight2
+package com.sarnavsky.pasz.nighlight2.util
 
 const val MY_SETTINGS = "my_settings"
 
-// const val SOUNDS = 1
-// const val BGCOLOR = 2
-// const val NLCOLOR = 3
-// const val NIGHTLIGHT = 4
-// const val TIMER = 5
-// const val BRIGHTS = 6
+ const val SOUNDS_BUTTON = 1
+ const val BG_COLOR_BUTTON = 2
+ const val NL_COLOR_BUTTON = 3
+ const val NIGHTLIGHT_BUTTON = 4
+// const val TIMER_BUTTON = 5
+// const val BRIGHTS_BUTTON = 6
 //
 // const val EMPTY_SOUND = 7
 // const val FIRST_SOUND = 8

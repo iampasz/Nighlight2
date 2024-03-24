@@ -34,7 +34,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textMenu"
+                android:id="@+id/audioName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_5"
@@ -43,7 +43,7 @@
                 android:textSize="@dimen/text_size_20" />
 
             <TextView
-                android:id="@+id/author"
+                android:id="@+id/audioAuthor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_5"

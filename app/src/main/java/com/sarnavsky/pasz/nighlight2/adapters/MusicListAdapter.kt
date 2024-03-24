@@ -7,28 +7,28 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.sarnavsky.pasz.nighlight2.databinding.ItemMenuBinding
-import com.sarnavsky.pasz.nighlight2.objects.MenuItem
+import com.sarnavsky.pasz.nighlight2.databinding.ItemAudioBinding
+import com.sarnavsky.pasz.nighlight2.objects.AudioItem
 
 
-class MainMenuAdapter(
-    private val itemSelected: (MenuItem) -> Unit
-) : RecyclerView.Adapter<MainMenuAdapter.TypeOfActivityVH>() {
+class MusicListAdapter(
+    private val itemSelected: (AudioItem) -> Unit
+) : RecyclerView.Adapter<MusicListAdapter.TypeOfActivityVH>() {
 
-    class TypeOfActivityVH(binding: ItemMenuBinding) :
+    class TypeOfActivityVH(binding: ItemAudioBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    private val callback = object : DiffUtil.ItemCallback<MenuItem>() {
+    private val callback = object : DiffUtil.ItemCallback<AudioItem>() {
         override fun areItemsTheSame(
-            oldItem: MenuItem,
-            newItem: MenuItem
+            oldItem: AudioItem,
+            newItem: AudioItem
         ): Boolean {
             return oldItem == newItem
         }
 
         override fun areContentsTheSame(
-            oldItem: MenuItem,
-            newItem: MenuItem
+            oldItem: AudioItem,
+            newItem: AudioItem
         ): Boolean {
             return false
         }
@@ -39,7 +39,7 @@ class MainMenuAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TypeOfActivityVH {
         return TypeOfActivityVH(
-            ItemMenuBinding.inflate(
+            ItemAudioBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -57,10 +57,9 @@ class MainMenuAdapter(
             itemSelected(item)
         }
 
-        ItemMenuBinding.bind(holder.itemView).apply {
-            textMenu.text = item.name
-            colorShape.setColorFilter(item.color)
-            iconImage.setImageResource(item.iconImage)
+        ItemAudioBinding.bind(holder.itemView).apply {
+            audioName.text = item.audioName
+            audioAuthor.text = item.audioAuth
         }
     }
 

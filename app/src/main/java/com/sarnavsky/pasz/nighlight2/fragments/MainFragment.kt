@@ -16,8 +16,9 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
 import com.sarnavsky.pasz.nighlight2.MainActivity
-import com.sarnavsky.pasz.nighlight2.NightlightHelper
+import com.sarnavsky.pasz.nighlight2.util.NightlightHelper
 import com.sarnavsky.pasz.nighlight2.R
+import com.sarnavsky.pasz.nighlight2.util.SOUNDS_BUTTON
 import com.sarnavsky.pasz.nighlight2.adapters.MainMenuAdapter
 import com.sarnavsky.pasz.nighlight2.adapters.NightlightersAdapter
 import com.sarnavsky.pasz.nighlight2.databinding.MainFragmentBinding
@@ -27,9 +28,11 @@ class MainFragment : Fragment() {
 
     lateinit var binding: MainFragmentBinding
 
-
     private val mainMenuAdapter = MainMenuAdapter {
-      it.button
+
+        when(it.button){
+            SOUNDS_BUTTON ->(requireActivity() as MainActivity).openFragment(MusicListFragment())
+        }
     }
 
     private val nightlightersAdapter = NightlightersAdapter {

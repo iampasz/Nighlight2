@@ -1,6 +1,7 @@
-package com.sarnavsky.pasz.nighlight2
+package com.sarnavsky.pasz.nighlight2.util
 
 import android.content.res.Resources
+import com.sarnavsky.pasz.nighlight2.R
 import com.sarnavsky.pasz.nighlight2.objects.MenuItem
 import com.sarnavsky.pasz.nighlight2.objects.Nightlighter
 
@@ -77,7 +78,7 @@ class NightlightHelper {
                     res.getColor(R.color.red),
                     R.drawable.ic_sound,
                     res.getString(R.string.melodies),
-                    1
+                    SOUNDS_BUTTON
                 )
             )
             menuButtons.add(
@@ -85,7 +86,7 @@ class NightlightHelper {
                     res.getColor(R.color.orange),
                     R.drawable.ic_paint,
                     res.getString(R.string.color_background),
-                    2
+                    BG_COLOR_BUTTON
                 )
             )
             menuButtons.add(
@@ -93,7 +94,7 @@ class NightlightHelper {
                     res.getColor(R.color.yellow),
                     R.drawable.ic_bear,
                     res.getString(R.string.color_nl),
-                    3
+                    NL_COLOR_BUTTON
                 )
             )
             menuButtons.add(
@@ -101,7 +102,7 @@ class NightlightHelper {
                     res.getColor(R.color.green),
                     R.drawable.ic_stsrs,
                     res.getString(R.string.background),
-                    6
+                    NIGHTLIGHT_BUTTON
                 )
             )
             menuButtons.add(

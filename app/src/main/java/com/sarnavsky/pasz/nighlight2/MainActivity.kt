@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.sarnavsky.pasz.nighlight2.databinding.MainBinding
 import com.sarnavsky.pasz.nighlight2.fragments.MainFragment
+import com.sarnavsky.pasz.nighlight2.util.MY_SETTINGS
 
 class MainActivity : AppCompatActivity() {
 
