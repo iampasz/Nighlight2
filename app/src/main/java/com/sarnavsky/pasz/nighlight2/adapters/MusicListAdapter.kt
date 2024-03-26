@@ -16,6 +16,8 @@ class MusicListAdapter(
     private val itemSelected: (AudioItem) -> Unit
 ) : RecyclerView.Adapter<MusicListAdapter.TypeOfActivityVH>() {
 
+    var oldPostition = 0
+
     class TypeOfActivityVH(binding: ItemAudioBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -54,18 +56,40 @@ class MusicListAdapter(
     override fun onBindViewHolder(holder: TypeOfActivityVH, position: Int) {
         val item = list.currentList[position]
 
-        holder.itemView.setOnClickListener{
-            itemSelected(item)
-        }
 
         ItemAudioBinding.bind(holder.itemView).apply {
+
             audioName.text = item.audioName
             audioAuthor.text = item.audioAuth
+            holder.itemView.setOnClickListener {
 
-            if(item.status){
-                image.setImageResource(R.drawable.begemot2)
+                val oldItem = list.currentList[oldPostition]
+
+                if (oldPostition != position) {
+                    oldItem.status = false
+                }
+                item.status = !item.status
+
+                notifyItemChanged(position, image)
+                notifyItemChanged(oldPostition, image)
+
+
+
+                oldPostition = position
+                itemSelected(item)
             }
+
+            if (item.status) {
+                image.setImageResource(R.drawable.pausa)
+            } else {
+                image.setImageResource(R.drawable.play)
+            }
+
         }
     }
+
+//    private fun ItemCheckMarkBinding.setSelected() {
+//
+//    }
 
 }

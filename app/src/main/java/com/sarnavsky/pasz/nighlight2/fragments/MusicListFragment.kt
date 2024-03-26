@@ -19,13 +19,19 @@ class MusicListFragment : Fragment() {
     private lateinit var binding: ListFragmentBinding
     private val musicListAdapter = MusicListAdapter {
 
-        if (mediaPlayerViewModel.isPlaying()) {
+
+        Log.i("OLDPSSSS", "${it.status}")
+        if(it.status){
+
             mediaPlayerViewModel.stopMediaPlayer()
-        } else {
             mediaPlayerViewModel.startMediaPlayer(requireContext(), it.linkId)
+            Log.i("OLDPSSSS", "play")
+        }else{
+            mediaPlayerViewModel.stopMediaPlayer()
+            Log.i("OLDPSSSS", "stop")
         }
 
-        mediaPlayerViewModel.currentAudioItem.value = it.audioName
+       // mediaPlayerViewModel.currentAudioItem.value = it.audioName
     }
 
     override fun onCreateView(
@@ -73,4 +79,5 @@ class MusicListFragment : Fragment() {
 //            }
 //        }
     }
+    
 }
