@@ -26,12 +26,13 @@ class MusicListFragment : Fragment() {
             mediaPlayerViewModel.stopMediaPlayer()
             mediaPlayerViewModel.startMediaPlayer(requireContext(), it.linkId)
             Log.i("OLDPSSSS", "play")
+        // mediaPlayerViewModel.currentAudioItem.value = it.audioName
         }else{
             mediaPlayerViewModel.stopMediaPlayer()
             Log.i("OLDPSSSS", "stop")
         }
 
-       // mediaPlayerViewModel.currentAudioItem.value = it.audioName
+        mediaPlayerViewModel.currentAudioItem.value = it.audioName
     }
 
     override fun onCreateView(
