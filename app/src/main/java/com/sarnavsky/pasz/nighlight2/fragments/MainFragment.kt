@@ -2,6 +2,7 @@ package com.sarnavsky.pasz.nighlight2.fragments
 
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
@@ -23,6 +24,7 @@ import com.sarnavsky.pasz.nighlight2.adapters.MainMenuAdapter
 import com.sarnavsky.pasz.nighlight2.adapters.NightlightersAdapter
 import com.sarnavsky.pasz.nighlight2.databinding.MainFragmentBinding
 import com.sarnavsky.pasz.nighlight2.objects.Nightlighter
+import com.sarnavsky.pasz.nighlight2.util.BG_COLOR_BUTTON
 
 class MainFragment : Fragment() {
 
@@ -32,6 +34,8 @@ class MainFragment : Fragment() {
 
         when(it.button){
             SOUNDS_BUTTON ->(requireActivity() as MainActivity).openFragment(MusicListFragment())
+            BG_COLOR_BUTTON -> changeBackgroundColor()
+
         }
     }
 
@@ -55,7 +59,7 @@ class MainFragment : Fragment() {
     private var show = true
 //    private var checkAnim = false
 //
-//    private var currentBgColor = 0
+    private var currentBgColor = 0
 //    private var currentBgImage = 0
 //    private var currentNLColor = 0
 //    private var brights = 0
@@ -295,13 +299,13 @@ class MainFragment : Fragment() {
 //        //      binding.rv.adapter = adapter
 //    }
 
-//    private fun showBgColorMenu() {
-//        currentBgColor++
-//        if (currentBgColor == bgColors.size) {
-//            currentBgColor = 0
-//        }
-//        binding.mainBg.setBackgroundColor(Color.parseColor(bgColors[currentBgColor]))
-//    }
+    private fun changeBackgroundColor() {
+        currentBgColor++
+        if (currentBgColor == bgColors.size) {
+            currentBgColor = 0
+        }
+        binding.mainBg.setBackgroundColor(Color.parseColor(bgColors[currentBgColor]))
+    }
 
 //    private fun changeNLColor() {
 //        currentNLColor++
