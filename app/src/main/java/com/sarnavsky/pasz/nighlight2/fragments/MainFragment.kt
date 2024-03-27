@@ -16,28 +16,45 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
+import com.jaredrummler.android.colorpicker.ColorPickerDialog
+import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import com.sarnavsky.pasz.nighlight2.MainActivity
 import com.sarnavsky.pasz.nighlight2.util.NightlightHelper
 import com.sarnavsky.pasz.nighlight2.R
+import com.sarnavsky.pasz.nighlight2.SettingsViewModel
 import com.sarnavsky.pasz.nighlight2.util.SOUNDS_BUTTON
 import com.sarnavsky.pasz.nighlight2.adapters.MainMenuAdapter
 import com.sarnavsky.pasz.nighlight2.adapters.NightlightersAdapter
+import com.sarnavsky.pasz.nighlight2.data.db.entity.Settings
 import com.sarnavsky.pasz.nighlight2.databinding.MainFragmentBinding
 import com.sarnavsky.pasz.nighlight2.objects.Nightlighter
 import com.sarnavsky.pasz.nighlight2.util.BG_COLOR_BUTTON
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class MainFragment : Fragment() {
 
     lateinit var binding: MainFragmentBinding
 
-    private val mainMenuAdapter = MainMenuAdapter {
+    private val viewModel: SettingsViewModel by activityViewModel()
 
-        when(it.button){
-            SOUNDS_BUTTON ->(requireActivity() as MainActivity).openFragment(MusicListFragment())
-            BG_COLOR_BUTTON -> changeBackgroundColor()
 
+    private lateinit var mySetting: Settings
+
+    private val mainMenuAdapter = MainMenuAdapter { menuItem, longClick ->
+
+        if (longClick) {
+            when (menuItem.button) {
+                BG_COLOR_BUTTON -> showColorPicker()
+            }
+        } else {
+            when (menuItem.button) {
+                SOUNDS_BUTTON -> (requireActivity() as MainActivity).openFragment(MusicListFragment())
+                BG_COLOR_BUTTON -> changeBackgroundColor()
+            }
         }
+
     }
+
 
     private val nightlightersAdapter = NightlightersAdapter {
 
@@ -57,7 +74,8 @@ class MainFragment : Fragment() {
     // private var menuItems: MyObjects? = null
     private var checkMenu = true
     private var show = true
-//    private var checkAnim = false
+
+    //    private var checkAnim = false
 //
     private var currentBgColor = 0
 //    private var currentBgImage = 0
@@ -137,6 +155,7 @@ class MainFragment : Fragment() {
 
 
         initAdapter()
+        observer()
     }
 
     private fun initAdapter() {
@@ -305,6 +324,9 @@ class MainFragment : Fragment() {
             currentBgColor = 0
         }
         binding.mainBg.setBackgroundColor(Color.parseColor(bgColors[currentBgColor]))
+        mySetting.backgroundColor = Color.parseColor(bgColors[currentBgColor])
+        viewModel.updateSettings(mySetting)
+
     }
 
 //    private fun changeNLColor() {
@@ -428,5 +450,45 @@ class MainFragment : Fragment() {
             binding.bottomText.text = ""
             binding.bottomText.visibility = View.INVISIBLE
         }
+    }
+
+    private fun observer() {
+
+        viewModel.getSettings()
+
+        viewModel.settingsLiveData.observe(viewLifecycleOwner) {
+            if (it == null) {
+                viewModel.insertItem()
+            } else {
+                mySetting = it
+                Log.i("GHGFRTYHG", "${it.backgroundColor}")
+                binding.mainBg.setBackgroundColor(it.backgroundColor)
+            }
+        }
+    }
+
+    private fun showColorPicker() {
+        val colorPickerDialog = ColorPickerDialog
+            .newBuilder()
+            .setSelectedButtonText(android.R.string.selectTextMode)
+            .setDialogTitle(android.R.string.selectTextMode)
+            .setCustomButtonText(android.R.string.selectTextMode)
+            .setPresetsButtonText(android.R.string.selectTextMode)
+            .setColor(Color.RED)
+            .create()
+        colorPickerDialog.show(parentFragmentManager, "")
+
+        colorPickerDialog.setColorPickerDialogListener(
+            object : ColorPickerDialogListener {
+                override fun onColorSelected(dialogId: Int, color: Int) {
+
+                    mySetting.backgroundColor = color
+                    viewModel.updateSettings(mySetting)
+                    binding.mainBg.setBackgroundColor(color)
+                }
+
+                override fun onDialogDismissed(dialogId: Int) {
+                }
+            })
     }
 }

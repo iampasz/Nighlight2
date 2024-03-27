@@ -12,7 +12,7 @@ import com.sarnavsky.pasz.nighlight2.objects.MenuItem
 
 
 class MainMenuAdapter(
-    private val itemSelected: (MenuItem) -> Unit
+    private val itemSelected: (MenuItem, isLongClick: Boolean) -> Unit
 ) : RecyclerView.Adapter<MainMenuAdapter.TypeOfActivityVH>() {
 
     class TypeOfActivityVH(binding: ItemMenuBinding) :
@@ -54,8 +54,15 @@ class MainMenuAdapter(
         val item = list.currentList[position]
 
         holder.itemView.setOnClickListener{
-            itemSelected(item)
+            itemSelected(item,false)
         }
+
+        holder.itemView.setOnLongClickListener {
+            itemSelected(item,true)
+            true
+        }
+
+            //itemSelected(item)
 
         ItemMenuBinding.bind(holder.itemView).apply {
             textMenu.text = item.name
