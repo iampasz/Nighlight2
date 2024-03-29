@@ -7,11 +7,19 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import com.sarnavsky.pasz.nighlight2.R
+import com.sarnavsky.pasz.nighlight2.SettingsViewModel
+import com.sarnavsky.pasz.nighlight2.data.db.entity.Settings
 import com.sarnavsky.pasz.nighlight2.databinding.TimerFragmentBinding
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class TimerFragment : Fragment() {
 
     private lateinit var binding: TimerFragmentBinding
+
+    private lateinit var mySetting: Settings
+
+
+    private val viewModel: SettingsViewModel by activityViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,6 +34,7 @@ class TimerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         val itemsHours = arrayOf(0, 1, 2, 3, 4, 6)
         val adapterHours = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, itemsHours)
         adapterHours.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
@@ -38,21 +47,64 @@ class TimerFragment : Fragment() {
         binding.spinnerMinutes.adapter = adapterMinutes
         binding.spinnerMinutes.setSelection(0)
         binding.noButton.setOnClickListener { removeThisFragment() }
-        binding.yesButton.setOnClickListener {
+
+        binding.setButton.setOnClickListener {
+            val timerMilliseconds = convertHoursAndMinutesToMilliseconds(
+                binding.spinnerHours.selectedItem as Int,
+                binding.spinnerMinutes.selectedItem as Int
+            )
+
+            if (timerMilliseconds > 0) {
+                mySetting.timerDuration = timerMilliseconds
+                mySetting.timerStatus = true
+                mySetting.lastTimerHour = binding.spinnerHours.selectedItemPosition
+                mySetting.lastTimerMinute = binding.spinnerMinutes.selectedItemPosition
+
+                viewModel.updateSettings(mySetting)
+            }
+
+
             val mainFragment =
                 parentFragmentManager.findFragmentByTag("main_fragment") as MainFragment?
             if (mainFragment != null) {
-                mainFragment.startTimer(
-                    binding.spinnerHours.selectedItem as Int,
-                    binding.spinnerMinutes.selectedItem as Int
-                )
+//                mainFragment.startTimer(
+//                    binding.spinnerHours.selectedItem as Int,
+//                    binding.spinnerMinutes.selectedItem as Int
+//                )
                 removeThisFragment()
             }
         }
+
+        observer()
     }
 
     private fun removeThisFragment() {
         val fm = parentFragmentManager
         fm.beginTransaction().remove(this@TimerFragment).commit()
+    }
+
+    private fun observer() {
+
+        viewModel.getSettings()
+
+        viewModel.settingsLiveData.observe(viewLifecycleOwner) {
+            if (it == null) {
+                viewModel.insertItem()
+            } else {
+                mySetting = it
+
+                //binding.mainBg.setBackgroundColor(it.backgroundColor)
+                //binding.pager.currentItem = it.currentNightlight
+            }
+
+            binding.spinnerHours.setSelection(it.lastTimerHour)
+            binding.spinnerMinutes.setSelection(it.lastTimerMinute)
+        }
+    }
+
+
+    fun convertHoursAndMinutesToMilliseconds(hours: Int, minutes: Int): Int {
+        val totalMinutes = hours * 60 + minutes
+        return totalMinutes * 60 * 1000 // Переводимо в мілісекунди
     }
 }

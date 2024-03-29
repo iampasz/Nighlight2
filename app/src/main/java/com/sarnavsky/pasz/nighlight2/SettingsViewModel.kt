@@ -17,15 +17,17 @@ class SettingsViewModel(private val settingsDao: SettingsDao) : ViewModel() {
     val settingsLiveData: LiveData<Settings> = settingsDao.getSettingsLiveData()
 
 
-
-
     fun insertItem() {
         viewModelScope.launch {
             val newItem = Settings(
                 currentNightlight = 0,
                 backgroundColor = Color.BLACK,
                 nightlightColor = Color.BLACK,
-                )
+                timerStatus = false,
+                timerDuration = 999,
+                lastTimerHour = 0,
+                lastTimerMinute = 0
+            )
             settingsDao.insert(newItem)
         }
     }

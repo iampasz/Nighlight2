@@ -9,6 +9,10 @@ data class Settings(
     val id: Int = 1,
     var currentNightlight: Int,
     var backgroundColor: Int,
-    var nightlightColor: Int
+    var nightlightColor: Int,
+    var timerStatus: Boolean,
+    var timerDuration: Int,
+    var lastTimerHour: Int,
+    var lastTimerMinute: Int
 
 )

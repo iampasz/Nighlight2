@@ -6,9 +6,15 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationSet
+import android.view.animation.LinearInterpolator
+import android.view.animation.RotateAnimation
+import android.view.animation.ScaleAnimation
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,7 +34,9 @@ import com.sarnavsky.pasz.nighlight2.adapters.NightlightersAdapter
 import com.sarnavsky.pasz.nighlight2.data.db.entity.Settings
 import com.sarnavsky.pasz.nighlight2.databinding.MainFragmentBinding
 import com.sarnavsky.pasz.nighlight2.objects.Nightlighter
+import com.sarnavsky.pasz.nighlight2.util.ANIMATION_BUTTON
 import com.sarnavsky.pasz.nighlight2.util.BG_COLOR_BUTTON
+import com.sarnavsky.pasz.nighlight2.util.TIMER_BUTTON
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class MainFragment : Fragment() {
@@ -50,6 +58,14 @@ class MainFragment : Fragment() {
             when (menuItem.button) {
                 SOUNDS_BUTTON -> (requireActivity() as MainActivity).openFragment(MusicListFragment())
                 BG_COLOR_BUTTON -> changeBackgroundColor()
+                ANIMATION_BUTTON -> startAnimation()
+                TIMER_BUTTON ->{
+                    closeApp(0)
+                    (requireActivity() as MainActivity).openFragment(TimerFragment())
+                }
+
+
+
             }
         }
 
@@ -75,7 +91,7 @@ class MainFragment : Fragment() {
     private var checkMenu = true
     private var show = true
 
-    //    private var checkAnim = false
+        private var checkAnim = false
 //
     private var currentBgColor = 0
 //    private var currentBgImage = 0
@@ -153,7 +169,7 @@ class MainFragment : Fragment() {
         binding.lockButton.setOnClickListener { lockButton() }
         // openMenu(NightlightHelper.getMenuButtons(colors))
 
-
+        closeApp(0)
         initAdapter()
         observer()
     }
@@ -286,16 +302,7 @@ class MainFragment : Fragment() {
 ////                4 -> startAnimation()
 ////                6 -> changeBgColor()
 ////                5 -> {
-////                    val timerFragment =
-////                        childFragmentManager.findFragmentByTag("TIMER_FRAGMENT") as TimerFragmentOld?
-////                    if (timerFragment == null) {
-////                        parentFragmentManager
-////                            .beginTransaction()
-////                            .setCustomAnimations(R.anim.from_bottom, R.anim.disepire)
-////                            .replace(R.id.mainContainer,
-////                                TimerFragment(), "TIMER_FRAGMENT")
-////                            .commit()
-////                    }
+
 ////                }
 ////
 ////                7 -> changeBrightest()
@@ -325,7 +332,7 @@ class MainFragment : Fragment() {
         }
         binding.mainBg.setBackgroundColor(Color.parseColor(bgColors[currentBgColor]))
         mySetting.backgroundColor = Color.parseColor(bgColors[currentBgColor])
-        viewModel.updateSettings(mySetting)
+        //viewModel.updateSettings(mySetting)
 
     }
 
@@ -337,38 +344,38 @@ class MainFragment : Fragment() {
 //        underImg?.setColorFilter(Color.parseColor(bgNlColors[currentNLColor]))
 //    }
 
-//    private fun startAnimation() {
-//        binding.animateBg.scaleType = ImageView.ScaleType.FIT_CENTER
-//        if (!checkAnim) {
-//            val rotate = RotateAnimation(
-//                0f, 360f,
-//                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f
-//            ) //8
-//            rotate.duration = 100000
-//            rotate.repeatCount = Animation.INFINITE
-//            rotate.interpolator = LinearInterpolator()
-//            val set = AnimationSet(false) //10
-//            set.addAnimation(rotate)
-//            binding.animateBg.startAnimation(set)
-//            checkAnim = true
-//
-//            val outValue = TypedValue()
-//            resources.getValue(R.dimen.scale, outValue, true)
-//            val value = outValue.float
-//            val scale = ScaleAnimation(
-//                1f, value, 1f, value,
-//                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f
-//            )
-//            scale.duration = 1000
-//            binding.animateBg.startAnimation(scale)
-//            set.addAnimation(scale)
-//            binding.animateBg.startAnimation(set)
-//        } else {
-//            binding.animateBg.clearAnimation()
-//            binding.animateBg.scaleType = ImageView.ScaleType.CENTER_CROP
-//            checkAnim = false
-//        }
-//    }
+    private fun startAnimation() {
+        binding.animateBg.scaleType = ImageView.ScaleType.FIT_CENTER
+        if (!checkAnim) {
+            val rotate = RotateAnimation(
+                0f, 360f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f
+            ) //8
+            rotate.duration = 100000
+            rotate.repeatCount = Animation.INFINITE
+            rotate.interpolator = LinearInterpolator()
+            val set = AnimationSet(false) //10
+            set.addAnimation(rotate)
+            binding.animateBg.startAnimation(set)
+            checkAnim = true
+
+            val outValue = TypedValue()
+            resources.getValue(R.dimen.scale, outValue, true)
+            val value = outValue.float
+            val scale = ScaleAnimation(
+                1f, value, 1f, value,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f
+            )
+            scale.duration = 1000
+            binding.animateBg.startAnimation(scale)
+            set.addAnimation(scale)
+            binding.animateBg.startAnimation(set)
+        } else {
+            binding.animateBg.clearAnimation()
+            binding.animateBg.scaleType = ImageView.ScaleType.CENTER_CROP
+            checkAnim = false
+        }
+    }
 //
 //    private fun changeBgColor() {
 //        currentBgColor++
@@ -405,11 +412,7 @@ class MainFragment : Fragment() {
 //        activity?.window?.attributes = layout
 //    }
 
-    fun startTimer(hours: Int, minutes: Int) {
-        binding.bottomText.visibility = View.VISIBLE
-        val mySeconds = (hours * 60 * 60 + 60 * minutes) * 1000
-        closeApp(mySeconds)
-    }
+
 
     var cdt: CountDownTimer? = null
     private var timerStatus = false
@@ -441,6 +444,8 @@ class MainFragment : Fragment() {
                         globalTimer!!.cancel()
                     }
                     //(activity as MainActivity?)!!.finishMedia()
+
+                    //viewModel.updateSettings(mySetting)
                     Log.i("FINISH", "App is OFF")
                     activity!!.finish()
                 }
@@ -461,8 +466,16 @@ class MainFragment : Fragment() {
                 viewModel.insertItem()
             } else {
                 mySetting = it
-                Log.i("GHGFRTYHG", "${it.backgroundColor}")
                 binding.mainBg.setBackgroundColor(it.backgroundColor)
+                binding.pager.currentItem = it.currentNightlight
+
+                if(it.timerStatus){
+
+                    binding.bottomText.visibility = View.VISIBLE
+                    closeApp(it.timerDuration)
+                }
+
+
             }
         }
     }
@@ -483,7 +496,6 @@ class MainFragment : Fragment() {
                 override fun onColorSelected(dialogId: Int, color: Int) {
 
                     mySetting.backgroundColor = color
-                    viewModel.updateSettings(mySetting)
                     binding.mainBg.setBackgroundColor(color)
                 }
 
@@ -491,4 +503,12 @@ class MainFragment : Fragment() {
                 }
             })
     }
+
+    override fun onStop() {
+        super.onStop()
+        mySetting.currentNightlight = binding.pager.currentItem
+        mySetting.timerStatus = false
+        viewModel.updateSettings(mySetting)
+    }
+
 }

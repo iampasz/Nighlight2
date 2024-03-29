@@ -110,7 +110,7 @@ class NightlightHelper {
                     res.getColor(R.color.blue),
                     R.drawable.ic_anim,
                     res.getString(R.string.animation),
-                    4
+                    ANIMATION_BUTTON
                 )
             )
             menuButtons.add(
@@ -119,7 +119,7 @@ class NightlightHelper {
                     R.drawable.ic_time,
                     res.getString(R.string.timer),
 
-                    5
+                    TIMER_BUTTON
                 )
             )
             menuButtons.add(
@@ -127,7 +127,7 @@ class NightlightHelper {
                     res.getColor(R.color.violet),
                     R.drawable.ic_light,
                     res.getString(R.string.brightness),
-                    7
+                     BRIGHTS_BUTTON
                 )
             )
             // menuButtons.add(new MenuButton(Color.parseColor(colors[0]), R.drawable.politic_button, R.string.politica, 8));
