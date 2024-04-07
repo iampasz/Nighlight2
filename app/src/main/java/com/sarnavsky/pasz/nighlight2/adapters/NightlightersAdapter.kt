@@ -1,6 +1,7 @@
 package com.sarnavsky.pasz.nighlight2.adapters
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -31,7 +32,6 @@ class NightlightersAdapter(
         ): Boolean {
             return false
         }
-
     }
 
     val list = AsyncListDiffer(this, callback)
@@ -48,15 +48,34 @@ class NightlightersAdapter(
 
     override fun getItemCount() = list.currentList.size
 
+    private var color: Int = Color.argb(255, 255, 0, 0)
+
     @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: TypeOfActivityVH, position: Int) {
         val item = list.currentList[position]
         NightlightFragmentBinding.bind(holder.itemView).apply {
 
-            underImg.setImageResource(item.downImg)
+
             upImg.setImageResource(item.upImg)
 
+            underImg.setImageResource(item.downImg)
+
+            underImg.setColorFilter(color)
+
+            holder.itemView.setOnClickListener{
+                itemSelected(item)
+            }
+
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateImageColorsWithColor(newColor: Int) {
+        color = newColor
+        notifyDataSetChanged()
+//        notifyItemChanged(position-1)
+//        notifyItemChanged(position)
+//        notifyItemChanged(position+1)
     }
 
 }

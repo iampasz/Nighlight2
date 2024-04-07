@@ -102,7 +102,7 @@ class NightlightHelper {
                     res.getColor(R.color.green),
                     R.drawable.ic_stsrs,
                     res.getString(R.string.background),
-                    NIGHTLIGHT_BUTTON
+                    ANIMATION_TYPE_BUTTON
                 )
             )
             menuButtons.add(
@@ -208,20 +208,20 @@ class NightlightHelper {
 //            return bgColors
 //        }
 
-//        fun getBgArray(): IntArray {
-//            return intArrayOf(
-//                R.drawable.light_blue,
-//                R.drawable.light_canian,
-//                R.drawable.light_gray,
-//                R.drawable.light_green,
-//                R.drawable.light_orange,
-//                R.drawable.light_violet,
-//                R.drawable.stars_grey,
-//                R.drawable.bg_animal,
-//                R.drawable.bg_flowers,
-//                R.drawable.bg_stars3,
-//                0
-//            )
-//        }
+        fun getBgArray(): IntArray {
+            return intArrayOf(
+                R.drawable.light_blue,
+                R.drawable.light_canian,
+                R.drawable.light_gray,
+                R.drawable.light_green,
+                R.drawable.light_orange,
+                R.drawable.light_violet,
+                R.drawable.stars_grey,
+                R.drawable.bg_animal,
+                R.drawable.bg_flowers,
+                R.drawable.bg_stars3,
+                0
+            )
+        }
     }
 }

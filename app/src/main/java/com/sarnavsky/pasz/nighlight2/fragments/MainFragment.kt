@@ -36,6 +36,9 @@ import com.sarnavsky.pasz.nighlight2.databinding.MainFragmentBinding
 import com.sarnavsky.pasz.nighlight2.objects.Nightlighter
 import com.sarnavsky.pasz.nighlight2.util.ANIMATION_BUTTON
 import com.sarnavsky.pasz.nighlight2.util.BG_COLOR_BUTTON
+import com.sarnavsky.pasz.nighlight2.util.ANIMATION_TYPE_BUTTON
+import com.sarnavsky.pasz.nighlight2.util.BRIGHTS_BUTTON
+import com.sarnavsky.pasz.nighlight2.util.NL_COLOR_BUTTON
 import com.sarnavsky.pasz.nighlight2.util.TIMER_BUTTON
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
@@ -52,20 +55,33 @@ class MainFragment : Fragment() {
 
         if (longClick) {
             when (menuItem.button) {
-                BG_COLOR_BUTTON -> showColorPicker()
+                BG_COLOR_BUTTON -> showColorPicker(BG_COLOR_BUTTON)
+                NL_COLOR_BUTTON -> showColorPicker(NL_COLOR_BUTTON)
             }
         } else {
             when (menuItem.button) {
                 SOUNDS_BUTTON -> (requireActivity() as MainActivity).openFragment(MusicListFragment())
                 BG_COLOR_BUTTON -> changeBackgroundColor()
                 ANIMATION_BUTTON -> startAnimation()
-                TIMER_BUTTON ->{
+                TIMER_BUTTON -> {
                     closeApp(0)
                     (requireActivity() as MainActivity).openFragment(TimerFragment())
                 }
 
+                NL_COLOR_BUTTON -> {
+                    currentNLColor++
+                    if (currentNLColor >= bgNlColors.size) {
+                        currentNLColor = 0
+                    }
 
+                    val color = Color.parseColor(bgNlColors[currentNLColor])
+                    changeNLColor(color)
 
+                }
+
+                ANIMATION_TYPE_BUTTON -> changeAnimationType()
+
+                BRIGHTS_BUTTON -> changeBrightest()
             }
         }
 
@@ -73,13 +89,13 @@ class MainFragment : Fragment() {
 
 
     private val nightlightersAdapter = NightlightersAdapter {
-
+        Log.i("GHFHFHF", "deeuneuneunfue")
     }
 
     private lateinit var colors: Array<String>
     private lateinit var bgColors: Array<String>
     private lateinit var bgNlColors: Array<String>
-    //private lateinit var menuColors: Array<String>
+
 
     private var underImg: ImageView? = null
 
@@ -91,12 +107,14 @@ class MainFragment : Fragment() {
     private var checkMenu = true
     private var show = true
 
-        private var checkAnim = false
-//
+    private var checkAnim = false
+
+    //
     private var currentBgColor = 0
-//    private var currentBgImage = 0
-//    private var currentNLColor = 0
-//    private var brights = 0
+
+    private var currentBgImage = 0
+    private var currentNLColor = 0
+    private var brights = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -336,13 +354,10 @@ class MainFragment : Fragment() {
 
     }
 
-//    private fun changeNLColor() {
-//        currentNLColor++
-//        if (currentNLColor >= bgNlColors.size) {
-//            currentNLColor = 0
-//        }
-//        underImg?.setColorFilter(Color.parseColor(bgNlColors[currentNLColor]))
-//    }
+    private fun changeNLColor(color: Int) {
+        nightlightersAdapter.updateImageColorsWithColor(color)
+        mySetting.nightlightColor = color
+    }
 
     private fun startAnimation() {
         binding.animateBg.scaleType = ImageView.ScaleType.FIT_CENTER
@@ -370,48 +385,52 @@ class MainFragment : Fragment() {
             binding.animateBg.startAnimation(scale)
             set.addAnimation(scale)
             binding.animateBg.startAnimation(set)
+            mySetting.animationStatus = true
         } else {
             binding.animateBg.clearAnimation()
             binding.animateBg.scaleType = ImageView.ScaleType.CENTER_CROP
             checkAnim = false
+            mySetting.animationStatus = false
         }
     }
-//
-//    private fun changeBgColor() {
-//        currentBgColor++
-//        currentBgImage++
-//        if (currentBgImage >= NightlightHelper.getBgArray().size) {
-//            currentBgImage = 0
-//            currentBgColor = 0
-//        }
-//        if (currentBgColor >= bgColors.size) {
-//            currentBgColor = 0
-//        }
-//        binding.mainBg.setBackgroundColor(Color.parseColor(bgColors[currentBgColor]))
-//        binding.animateBg.setImageResource(NightlightHelper.getBgArray()[currentBgImage])
-//    }
-//
-//    private fun changeBrightest() {
-//        val layout = activity?.window?.attributes
-//        when (brights) {
-//            0 -> {
-//                layout?.screenBrightness = 0.1f
-//                brights++
-//            }
-//
-//            1 -> {
-//                layout?.screenBrightness = 0.5f
-//                brights++
-//            }
-//
-//            2 -> {
-//                layout?.screenBrightness = 1f
-//                brights = 0
-//            }
-//        }
-//        activity?.window?.attributes = layout
-//    }
 
+    //
+    private fun changeAnimationType() {
+        currentBgColor++
+        currentBgImage++
+        if (currentBgImage >= NightlightHelper.getBgArray().size) {
+            currentBgImage = 0
+            currentBgColor = 0
+        }
+        if (currentBgColor >= bgColors.size) {
+            currentBgColor = 0
+        }
+
+        binding.animateBg.setImageResource(NightlightHelper.getBgArray()[currentBgImage])
+        mySetting.animationType = NightlightHelper.getBgArray()[currentBgImage]
+    }
+
+    //
+    private fun changeBrightest() {
+        val layout = activity?.window?.attributes
+        when (brights) {
+            0 -> {
+                layout?.screenBrightness = 0.1f
+                brights++
+            }
+
+            1 -> {
+                layout?.screenBrightness = 0.5f
+                brights++
+            }
+
+            2 -> {
+                layout?.screenBrightness = 1f
+                brights = 0
+            }
+        }
+        activity?.window?.attributes = layout
+    }
 
 
     var cdt: CountDownTimer? = null
@@ -467,20 +486,29 @@ class MainFragment : Fragment() {
             } else {
                 mySetting = it
                 binding.mainBg.setBackgroundColor(it.backgroundColor)
+                changeNLColor(it.nightlightColor)
                 binding.pager.currentItem = it.currentNightlight
 
-                if(it.timerStatus){
+                if (it.timerStatus) {
 
                     binding.bottomText.visibility = View.VISIBLE
                     closeApp(it.timerDuration)
                 }
 
 
+
+                binding.animateBg
+                    .setImageResource(it.animationType)
+
+                if(it.animationStatus){
+                    startAnimation()
+                }
+
             }
         }
     }
 
-    private fun showColorPicker() {
+    private fun showColorPicker(type: Int) {
         val colorPickerDialog = ColorPickerDialog
             .newBuilder()
             .setSelectedButtonText(android.R.string.selectTextMode)
@@ -495,8 +523,17 @@ class MainFragment : Fragment() {
             object : ColorPickerDialogListener {
                 override fun onColorSelected(dialogId: Int, color: Int) {
 
-                    mySetting.backgroundColor = color
-                    binding.mainBg.setBackgroundColor(color)
+                    when (type) {
+                        BG_COLOR_BUTTON -> {
+                            mySetting.backgroundColor = color
+                            binding.mainBg.setBackgroundColor(color)
+                        }
+
+                        NL_COLOR_BUTTON -> {
+                            mySetting.nightlightColor = color
+                            changeNLColor(color)
+                        }
+                    }
                 }
 
                 override fun onDialogDismissed(dialogId: Int) {

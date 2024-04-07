@@ -13,6 +13,8 @@ data class Settings(
     var timerStatus: Boolean,
     var timerDuration: Int,
     var lastTimerHour: Int,
-    var lastTimerMinute: Int
+    var lastTimerMinute: Int,
+    var animationType: Int,
+    var animationStatus: Boolean
 
 )

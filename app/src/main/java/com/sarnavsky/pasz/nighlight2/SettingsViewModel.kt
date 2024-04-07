@@ -26,7 +26,9 @@ class SettingsViewModel(private val settingsDao: SettingsDao) : ViewModel() {
                 timerStatus = false,
                 timerDuration = 999,
                 lastTimerHour = 0,
-                lastTimerMinute = 0
+                lastTimerMinute = 0,
+                animationType = R.drawable.bg_flowers,
+                animationStatus = false
             )
             settingsDao.insert(newItem)
         }
