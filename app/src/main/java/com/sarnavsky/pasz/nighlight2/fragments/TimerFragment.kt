@@ -15,10 +15,7 @@ import org.koin.androidx.viewmodel.ext.android.activityViewModel
 class TimerFragment : Fragment() {
 
     private lateinit var binding: TimerFragmentBinding
-
     private lateinit var mySetting: Settings
-
-
     private val viewModel: SettingsViewModel by activityViewModel()
 
     override fun onCreateView(
@@ -64,15 +61,15 @@ class TimerFragment : Fragment() {
             }
 
 
-            val mainFragment =
-                parentFragmentManager.findFragmentByTag("main_fragment") as MainFragment?
-            if (mainFragment != null) {
+            //val mainFragment =
+              //  parentFragmentManager.findFragmentByTag("main_fragment") as MainFragment?
+           // if (mainFragment != null) {
 //                mainFragment.startTimer(
 //                    binding.spinnerHours.selectedItem as Int,
 //                    binding.spinnerMinutes.selectedItem as Int
 //                )
                 removeThisFragment()
-            }
+           // }
         }
 
         observer()
