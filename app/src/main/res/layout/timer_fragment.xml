@@ -10,7 +10,9 @@
     android:layout_marginRight="@dimen/margin_10"
     android:layout_marginBottom="@dimen/margin_5"
     android:background="@drawable/shape_menu"
-    android:padding="@dimen/padding_20">
+    android:clickable="true"
+    android:padding="@dimen/padding_20"
+    android:focusable="true">
 
 
     <Button

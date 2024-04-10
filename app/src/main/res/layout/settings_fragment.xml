@@ -8,8 +8,10 @@
     android:layout_marginRight="@dimen/margin_5"
     android:layout_marginBottom="@dimen/margin_5"
     android:background="@drawable/shape_menu"
+    android:clickable="true"
     android:elevation="2dp"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:focusable="true">
 
     <Button
         android:id="@+id/close2"
@@ -77,11 +79,11 @@
 
                 <ImageView
                     android:id="@+id/imageView3"
-                    android:contentDescription="@string/image_des"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:background="#ccc"
+                    android:contentDescription="@string/image_des"
                     android:scaleType="fitCenter"
                     card_view:srcCompat="@drawable/nlpm" />
 
