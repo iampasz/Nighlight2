@@ -16,6 +16,7 @@ import com.sarnavsky.pasz.nighlight2.MainActivity
 import com.sarnavsky.pasz.nighlight2.R
 import com.sarnavsky.pasz.nighlight2.databinding.SettingsFragmentBinding
 import com.sarnavsky.pasz.nighlight2.util.BG_COLOR_BUTTON
+import com.sarnavsky.pasz.nighlight2.util.NL_COLOR_BUTTON
 
 class SettingsFragment : Fragment() {
 
@@ -48,7 +49,7 @@ class SettingsFragment : Fragment() {
 
             val fragment = ColorPickerFragment().apply {
                 arguments = Bundle().apply {
-                    putInt("type", BG_COLOR_BUTTON) // Ваше int значення
+                    putInt("type", NL_COLOR_BUTTON) // Ваше int значення
                 }
             }
 
@@ -60,7 +61,7 @@ class SettingsFragment : Fragment() {
         binding.bgColor.setOnClickListener {
             val fragment = ColorPickerFragment().apply {
                 arguments = Bundle().apply {
-                    putInt("type", BG_COLOR_BUTTON) // Ваше int значення
+                    putInt("type", BG_COLOR_BUTTON ) // Ваше int значення
                 }
             }
 

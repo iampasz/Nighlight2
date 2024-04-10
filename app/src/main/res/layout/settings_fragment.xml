@@ -65,7 +65,8 @@
                 android:layout_marginBottom="@dimen/margin_5"
                 android:background="@drawable/button_nl2"
                 android:elevation="@dimen/card_elevation"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/textView10"
