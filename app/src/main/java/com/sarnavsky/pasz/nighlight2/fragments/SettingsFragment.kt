@@ -15,14 +15,12 @@ import androidx.fragment.app.Fragment
 import com.sarnavsky.pasz.nighlight2.MainActivity
 import com.sarnavsky.pasz.nighlight2.R
 import com.sarnavsky.pasz.nighlight2.databinding.SettingsFragmentBinding
+import com.sarnavsky.pasz.nighlight2.util.BG_COLOR_BUTTON
 
 class SettingsFragment : Fragment() {
 
     private lateinit var binding: SettingsFragmentBinding
-
-
     private var adsCounter = 0
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,15 +45,28 @@ class SettingsFragment : Fragment() {
             binding.adsText.setTextColor(Color.parseColor("#2C8005"))
         }
         binding.nlBg.setOnClickListener {
+
+            val fragment = ColorPickerFragment().apply {
+                arguments = Bundle().apply {
+                    putInt("type", BG_COLOR_BUTTON) // Ваше int значення
+                }
+            }
+
             parentFragmentManager
                 .beginTransaction()
-                .replace(R.id.mainContainer, ColorPickerFragment(), "ColorPicker")
+                .replace(R.id.mainContainer, fragment)
                 .commit()
         }
         binding.bgColor.setOnClickListener {
+            val fragment = ColorPickerFragment().apply {
+                arguments = Bundle().apply {
+                    putInt("type", BG_COLOR_BUTTON) // Ваше int значення
+                }
+            }
+
             parentFragmentManager
                 .beginTransaction()
-                .replace(R.id.mainContainer, ColorPickerFragment(), "ColorPicker")
+                .replace(R.id.mainContainer, fragment)
                 .commit()
         }
         binding.showAdd.setOnClickListener {

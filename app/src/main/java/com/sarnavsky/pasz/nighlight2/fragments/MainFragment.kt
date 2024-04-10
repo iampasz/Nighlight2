@@ -144,18 +144,7 @@ class MainFragment : Fragment() {
         }
         // menuItems = MyObjects()
         binding.settingsButton.setOnClickListener {
-            val settingsFragment =
-                parentFragmentManager.findFragmentByTag("SETTINGS_FRAGMENT") as SettingsFragment?
-            if (settingsFragment == null) {
-                parentFragmentManager
-                    .beginTransaction()
-                    .setCustomAnimations(R.anim.from_left, R.anim.disepire)
-                    .replace(
-                        R.id.mainContainer,
-                        SettingsFragment(), "SETTINGS_FRAGMENT"
-                    )
-                    .commit()
-            }
+            (requireActivity() as MainActivity).openFragment(SettingsFragment())
         }
         binding.lockFrame.setOnTouchListener { _, _ ->
             showButtons()
@@ -500,7 +489,7 @@ class MainFragment : Fragment() {
                 binding.animateBg
                     .setImageResource(it.animationType)
 
-                if(it.animationStatus){
+                if (it.animationStatus) {
                     startAnimation()
                 }
 
@@ -508,7 +497,7 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun showColorPicker(type: Int) {
+    fun showColorPicker(type: Int) {
         val colorPickerDialog = ColorPickerDialog
             .newBuilder()
             .setSelectedButtonText(android.R.string.selectTextMode)

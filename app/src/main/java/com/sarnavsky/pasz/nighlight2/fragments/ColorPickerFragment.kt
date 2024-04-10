@@ -9,11 +9,20 @@ import androidx.fragment.app.Fragment
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import com.sarnavsky.pasz.nighlight2.R
+import com.sarnavsky.pasz.nighlight2.SettingsViewModel
+import com.sarnavsky.pasz.nighlight2.data.db.entity.Settings
 import com.sarnavsky.pasz.nighlight2.databinding.ColorPickerBinding
+import com.sarnavsky.pasz.nighlight2.util.BG_COLOR_BUTTON
+import com.sarnavsky.pasz.nighlight2.util.NL_COLOR_BUTTON
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class ColorPickerFragment : Fragment(), ColorPickerDialogListener {
 
     lateinit var binding: ColorPickerBinding
+
+    private val viewModel: SettingsViewModel by activityViewModel()
+
+    private lateinit var mySetting: Settings
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,19 +52,39 @@ class ColorPickerFragment : Fragment(), ColorPickerDialogListener {
 //            // mainBg =  main_fragment.mainBg;
 //            //underImg =  main_fragment.underImg;
 //        }
+
+        observer()
     }
 
     override fun onColorSelected(dialogId: Int, color: Int) {
-//        if (dialogId == 0) { // We got result from the dialog that is shown when clicking on the icon in the action bar.
-////            if (arguments!!.getInt("id") == 0) {
-////                underImg.setColorFilter(color)
-////            } else {
-////                mainBg.setBackgroundColor(color)
-////            }
-//        }
+        when (arguments?.getInt("type")) {
+            BG_COLOR_BUTTON -> {
+                mySetting.backgroundColor = color
+
+            }
+
+            NL_COLOR_BUTTON -> {
+                mySetting.nightlightColor = color
+
+            }
+        }
+        viewModel.updateSettings(mySetting)
     }
 
     override fun onDialogDismissed(dialogId: Int) {
     }
 
+
+    private fun observer() {
+
+        viewModel.getSettings()
+
+        viewModel.settingsLiveData.observe(viewLifecycleOwner) {
+            if (it == null) {
+                viewModel.insertItem()
+            } else {
+                mySetting = it
+            }
+        }
+    }
 }
