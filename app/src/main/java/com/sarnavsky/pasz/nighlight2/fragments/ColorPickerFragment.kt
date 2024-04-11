@@ -60,12 +60,10 @@ class ColorPickerFragment : Fragment(), ColorPickerDialogListener {
         when (arguments?.getInt("type")) {
             BG_COLOR_BUTTON -> {
                 mySetting.backgroundColor = color
-
             }
 
             NL_COLOR_BUTTON -> {
                 mySetting.nightlightColor = color
-
             }
         }
         viewModel.updateSettings(mySetting)

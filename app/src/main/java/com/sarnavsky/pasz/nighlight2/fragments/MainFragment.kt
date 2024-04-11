@@ -106,15 +106,13 @@ class MainFragment : Fragment() {
     // private var menuItems: MyObjects? = null
     private var checkMenu = true
     private var show = true
-
     private var checkAnim = false
-
-    //
     private var currentBgColor = 0
 
     private var currentBgImage = 0
     private var currentNLColor = 0
     private var brights = 0
+    private var settingsIsLoaded = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -169,7 +167,15 @@ class MainFragment : Fragment() {
         binding.pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
+
                 binding.bottomText.setText(arrayList[binding.pager.currentItem].name)
+
+                if (settingsIsLoaded) {
+                    val updatedSettings = mySetting.copy(currentNightlight = position)
+                    viewModel.updateSettings(updatedSettings)
+                }
+
+
             }
 
         })
@@ -474,6 +480,8 @@ class MainFragment : Fragment() {
                 viewModel.insertItem()
             } else {
                 mySetting = it
+                settingsIsLoaded = true
+
                 binding.mainBg.setBackgroundColor(it.backgroundColor)
                 changeNLColor(it.nightlightColor)
                 binding.pager.currentItem = it.currentNightlight
@@ -497,7 +505,7 @@ class MainFragment : Fragment() {
         }
     }
 
-    fun showColorPicker(type: Int) {
+    private fun showColorPicker(type: Int) {
         val colorPickerDialog = ColorPickerDialog
             .newBuilder()
             .setSelectedButtonText(android.R.string.selectTextMode)

@@ -89,6 +89,7 @@ class SettingsFragment : Fragment() {
         }
         val close2 = view.findViewById<Button>(R.id.close2)
         close2.setOnClickListener {
+
             parentFragmentManager.beginTransaction().remove(this@SettingsFragment).commit()
         }
        binding.linearDownload.setOnClickListener {
