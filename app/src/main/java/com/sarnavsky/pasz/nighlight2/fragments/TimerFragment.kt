@@ -56,9 +56,12 @@ class TimerFragment : Fragment() {
                 mySetting.timerStatus = true
                 mySetting.lastTimerHour = binding.spinnerHours.selectedItemPosition
                 mySetting.lastTimerMinute = binding.spinnerMinutes.selectedItemPosition
-
-
-
+                viewModel.updateSettings(mySetting)
+            }else{
+                mySetting.timerDuration = 0
+                mySetting.timerStatus = false
+                mySetting.lastTimerHour = binding.spinnerHours.selectedItemPosition
+                mySetting.lastTimerMinute = binding.spinnerMinutes.selectedItemPosition
 
                 viewModel.updateSettings(mySetting)
             }
