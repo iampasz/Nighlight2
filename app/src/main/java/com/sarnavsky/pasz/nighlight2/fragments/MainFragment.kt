@@ -19,6 +19,8 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
+import com.daimajia.androidanimations.library.Techniques
+import com.daimajia.androidanimations.library.YoYo
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
@@ -41,6 +43,7 @@ import com.sarnavsky.pasz.nighlight2.util.BRIGHTS_BUTTON
 import com.sarnavsky.pasz.nighlight2.util.NL_COLOR_BUTTON
 import com.sarnavsky.pasz.nighlight2.util.TIMER_BUTTON
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
+import java.util.Random
 
 class MainFragment : Fragment() {
 
@@ -84,9 +87,26 @@ class MainFragment : Fragment() {
 
     }
 
-
     private val nightlightersAdapter = NightlightersAdapter {
-        Log.i("GHFHFHF", "deeuneuneunfue")
+
+        val techniques: ArrayList<Techniques> = ArrayList()
+        techniques.add(Techniques.Bounce)
+        techniques.add(Techniques.BounceIn)
+        techniques.add(Techniques.FadeIn)
+        techniques.add(Techniques.DropOut)
+        techniques.add(Techniques.Shake)
+        techniques.add(Techniques.Flash)
+        techniques.add(Techniques.SlideInLeft)
+        techniques.add(Techniques.Swing)
+        techniques.add(Techniques.FlipInY)
+
+        val random = Random()
+        val i = random.nextInt (techniques.size)
+
+        YoYo.with(techniques[i])
+            .duration(700)
+            .playOn(binding.pager)
+
     }
 
     private lateinit var colors: Array<String>
