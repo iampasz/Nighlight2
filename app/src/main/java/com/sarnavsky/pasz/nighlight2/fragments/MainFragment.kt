@@ -45,10 +45,7 @@ import org.koin.androidx.viewmodel.ext.android.activityViewModel
 class MainFragment : Fragment() {
 
     lateinit var binding: MainFragmentBinding
-
     private val viewModel: SettingsViewModel by activityViewModel()
-
-
     private lateinit var mySetting: Settings
 
     private val mainMenuAdapter = MainMenuAdapter { menuItem, longClick ->
@@ -99,11 +96,8 @@ class MainFragment : Fragment() {
 
     private var underImg: ImageView? = null
 
-    //private var adapter: RecyclerViewAdapter? = null
-
     private var adRequest: AdRequest? = null
 
-    // private var menuItems: MyObjects? = null
     private var checkMenu = true
     private var show = true
     private var checkAnim = false
@@ -128,7 +122,6 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         underImg = binding.pager.findViewById(R.id.underImg)
-        //startGlobalTimer()
         setAdsSetting()
         adRequest = AdRequest.Builder().build()
         val addCounter = (activity as MainActivity?)!!.getSettings()
@@ -140,13 +133,12 @@ class MainFragment : Fragment() {
             }
 
         }
-        // menuItems = MyObjects()
+
         binding.settingsButton.setOnClickListener {
             (requireActivity() as MainActivity).openFragment(SettingsFragment())
         }
         binding.lockFrame.setOnTouchListener { _, _ ->
             showButtons()
-            //startGlobalTimer()
             false
         }
         val llm = LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, false)
@@ -159,11 +151,7 @@ class MainFragment : Fragment() {
         val arrayList = ArrayList<Nightlighter>()
         // val myMenuItems = MyObjects()
         arrayList.addAll(NightlightHelper.getNightlighters())
-//        binding.pager.adapter =
-//            Nightlighters(
-//                arrayList,
-//                bgNlColors
-//            )
+
         binding.pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
@@ -174,13 +162,9 @@ class MainFragment : Fragment() {
                     val updatedSettings = mySetting.copy(currentNightlight = position)
                     viewModel.updateSettings(updatedSettings)
                 }
-
-
             }
-
         })
         binding.lockButton.setOnClickListener { lockButton() }
-        // openMenu(NightlightHelper.getMenuButtons(colors))
 
         closeApp(0)
         initAdapter()
@@ -197,23 +181,6 @@ class MainFragment : Fragment() {
         nightlightersAdapter.list.submitList(listNightlighters)
 
     }
-
-    private var globalTimer: CountDownTimer? = null
-//    private fun startGlobalTimer() {
-//        if (globalTimer != null) {
-//            globalTimer?.start()
-//        } else {
-//            globalTimer = object : CountDownTimer(5000, 1000) {
-//                override fun onTick(l: Long) {}
-//                override fun onFinish() {
-//                    binding.lockButton.visibility = View.INVISIBLE
-//                    binding.bottomText.visibility = View.INVISIBLE
-//                    binding.settingsButton.visibility = View.INVISIBLE
-//                    binding.rv.visibility = View.INVISIBLE
-//                }
-//            }.start()
-//        }
-//    }
 
     private fun setAdsSetting() {
         // Initialize the Mobile Ads SDK.
@@ -290,54 +257,6 @@ class MainFragment : Fragment() {
         }
     }
 
-//    private fun openMenu(menuButtons: ArrayList<MenuItem>) {
-//        adapter = RecyclerViewAdapter(
-//            //menuButtons,
-//            //menuColors
-//        )
-////        adapter?.MyOnclick { button ->
-////            when (button) {
-////                1 -> {
-////                    val listFragment =
-////                        childFragmentManager.findFragmentByTag("LIST_FRAGMENT") as ListFragment?
-////                    if (listFragment == null) {
-////                        parentFragmentManager
-////                            .beginTransaction()
-////                            .setCustomAnimations(R.anim.from_bottom, R.anim.disepire)
-////                            .replace(R.id.mainContainer,
-////                                ListFragment(), "LIST_FRAGMENT")
-////                            .commit()
-////                    }
-////                }
-////
-////                2 -> showBgColorMenu()
-////                3 -> changeNLColor()
-////                4 -> startAnimation()
-////                6 -> changeBgColor()
-////                5 -> {
-
-////                }
-////
-////                7 -> changeBrightest()
-////            }
-////        }
-////        adapter?.MyOnLongclick { button ->
-////            when (button) {
-////                3 -> parentFragmentManager
-////                    .beginTransaction()
-////                    .replace(R.id.mainContainer, ColorPickerFragment(), "ColorPicker")
-////                    .commit()
-////
-////                2 -> parentFragmentManager
-////                    .beginTransaction()
-////                    .replace(R.id.mainContainer, ColorPickerFragment(), "ColorPicker")
-////                    .commit()
-////            }
-////        }
-//
-//        //      binding.rv.adapter = adapter
-//    }
-
     private fun changeBackgroundColor() {
         currentBgColor++
         if (currentBgColor == bgColors.size) {
@@ -389,7 +308,6 @@ class MainFragment : Fragment() {
         }
     }
 
-    //
     private fun changeAnimationType() {
         currentBgColor++
         currentBgImage++
@@ -405,7 +323,6 @@ class MainFragment : Fragment() {
         mySetting.animationType = NightlightHelper.getBgArray()[currentBgImage]
     }
 
-    //
     private fun changeBrightest() {
         val layout = activity?.window?.attributes
         when (brights) {
@@ -427,8 +344,8 @@ class MainFragment : Fragment() {
         activity?.window?.attributes = layout
     }
 
-
     var cdt: CountDownTimer? = null
+
     private var timerStatus = false
 
     private fun closeApp(mySeconds: Int) {
@@ -453,9 +370,6 @@ class MainFragment : Fragment() {
                 override fun onFinish() {
                     if (cdt != null) {
                         cdt?.cancel()
-                    }
-                    if (globalTimer != null) {
-                        globalTimer!!.cancel()
                     }
                     //(activity as MainActivity?)!!.finishMedia()
 
