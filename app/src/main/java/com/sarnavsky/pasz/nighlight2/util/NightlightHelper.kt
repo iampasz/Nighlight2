@@ -10,7 +10,6 @@ import com.sarnavsky.pasz.nighlight2.objects.Nightlighter
 @Suppress("DEPRECATION")
 class NightlightHelper {
     companion object {
-
         fun getNightlighters(): ArrayList<Nightlighter> {
             val list = ArrayList<Nightlighter>()
             list.add(
@@ -131,83 +130,8 @@ class NightlightHelper {
                      BRIGHTS_BUTTON
                 )
             )
-            // menuButtons.add(new MenuButton(Color.parseColor(colors[0]), R.drawable.politic_button, R.string.politica, 8));
-            return menuButtons
+           return menuButtons
         }
-
-//        fun getSoundsButtons(): ArrayList<MenuButton> {
-//            val soundsButtons = ArrayList<MenuButton>()
-//            soundsButtons.add(
-//                MenuButton(
-//                    Color.YELLOW,
-//                    R.drawable.none,
-//                    R.string.brightness,
-//                    EMPTY_SOUND
-//                )
-//            )
-//            soundsButtons.add(
-//                MenuButton(
-//                    Color.GREEN,
-//                    R.drawable.sounds,
-//                    R.string.brightness,
-//                    FIRST_SOUND
-//                )
-//            )
-//            soundsButtons.add(
-//                MenuButton(
-//                    Color.BLUE,
-//                    R.drawable.sounds,
-//                    R.string.brightness,
-//                    SECOND_SOUND
-//                )
-//            )
-//            return soundsButtons
-//        }
-//
-//        fun getBgColorsButtons(colors: Array<String?>): ArrayList<MenuButton> {
-//            val bgColors = ArrayList<MenuButton>()
-//            bgColors.add(MenuButton(Color.parseColor(colors[0]), 0, R.string.color_nl, RED_COLOR))
-//            bgColors.add(
-//                MenuButton(
-//                    Color.parseColor(colors[1]),
-//                    0,
-//                    R.string.color_nl,
-//                    ORANGE_COLOR
-//                )
-//            )
-//            bgColors.add(
-//                MenuButton(
-//                    Color.parseColor(colors[2]),
-//                    0,
-//                    R.string.color_nl,
-//                    YELLOW_COLOR
-//                )
-//            )
-//            bgColors.add(MenuButton(Color.parseColor(colors[3]), 0, R.string.color_nl, GREEN_COLOR))
-//            bgColors.add(
-//                MenuButton(
-//                    Color.parseColor(colors[4]),
-//                    0,
-//                    R.string.color_nl,
-//                    CANYAN_COLOR
-//                )
-//            )
-//            bgColors.add(MenuButton(Color.parseColor(colors[5]), 0, R.string.color_nl, BLUE_COLOR))
-//            bgColors.add(MenuButton(Color.parseColor(colors[6]), 0, R.string.color_nl, MOOD_COLOR))
-//            bgColors.add(MenuButton(Color.parseColor(colors[7]), 0, R.string.color_nl, BLACK_COLOR))
-//            bgColors.add(MenuButton(Color.parseColor(colors[8]), 0, R.string.color_nl, BLACK_COLOR))
-//            bgColors.add(MenuButton(Color.parseColor(colors[9]), 0, R.string.color_nl, BLACK_COLOR))
-//            bgColors.add(
-//                MenuButton(
-//                    Color.parseColor(colors[10]),
-//                    0,
-//                    R.string.color_nl,
-//                    BLACK_COLOR
-//                )
-//            )
-//            // bgColors.add(new MenuButton(Color.parseColor(colors[11]), 0, R.string.ng_color, BLACK_COLOR));
-//            return bgColors
-//        }
 
         fun getBgArray(): IntArray {
             return intArrayOf(
