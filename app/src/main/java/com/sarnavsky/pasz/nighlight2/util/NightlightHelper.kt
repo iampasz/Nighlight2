@@ -6,7 +6,6 @@ import com.sarnavsky.pasz.nighlight2.R
 import com.sarnavsky.pasz.nighlight2.objects.MenuItem
 import com.sarnavsky.pasz.nighlight2.objects.Nightlighter
 
-
 @Suppress("DEPRECATION")
 class NightlightHelper {
     companion object {
