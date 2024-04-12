@@ -17,7 +17,6 @@ import android.view.animation.RotateAnimation
 import android.view.animation.ScaleAnimation
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
@@ -27,10 +26,8 @@ import com.google.android.gms.ads.RequestConfiguration
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import com.sarnavsky.pasz.nighlight2.MainActivity
-import com.sarnavsky.pasz.nighlight2.util.NightlightHelper
 import com.sarnavsky.pasz.nighlight2.R
 import com.sarnavsky.pasz.nighlight2.SettingsViewModel
-import com.sarnavsky.pasz.nighlight2.util.SOUNDS_BUTTON
 import com.sarnavsky.pasz.nighlight2.adapters.MainMenuAdapter
 import com.sarnavsky.pasz.nighlight2.adapters.NightlightersAdapter
 import com.sarnavsky.pasz.nighlight2.data.db.entity.Settings
@@ -38,10 +35,12 @@ import com.sarnavsky.pasz.nighlight2.data.db.entity.Timer
 import com.sarnavsky.pasz.nighlight2.databinding.MainFragmentBinding
 import com.sarnavsky.pasz.nighlight2.objects.Nightlighter
 import com.sarnavsky.pasz.nighlight2.util.ANIMATION_BUTTON
-import com.sarnavsky.pasz.nighlight2.util.BG_COLOR_BUTTON
 import com.sarnavsky.pasz.nighlight2.util.ANIMATION_TYPE_BUTTON
+import com.sarnavsky.pasz.nighlight2.util.BG_COLOR_BUTTON
 import com.sarnavsky.pasz.nighlight2.util.BRIGHTS_BUTTON
 import com.sarnavsky.pasz.nighlight2.util.NL_COLOR_BUTTON
+import com.sarnavsky.pasz.nighlight2.util.NightlightHelper
+import com.sarnavsky.pasz.nighlight2.util.SOUNDS_BUTTON
 import com.sarnavsky.pasz.nighlight2.util.TIMER_BUTTON
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import java.util.Random
@@ -52,7 +51,8 @@ class MainFragment : Fragment() {
     private val viewModel: SettingsViewModel by activityViewModel()
     private lateinit var mySetting: Settings
     private lateinit var myTimer: Timer
-
+    var cdt: CountDownTimer? = null
+    private var timerStatus = false
     private val mainMenuAdapter = MainMenuAdapter { menuItem, longClick ->
 
         if (longClick) {
@@ -78,17 +78,14 @@ class MainFragment : Fragment() {
 
                     val color = Color.parseColor(bgNlColors[currentNLColor])
                     changeNLColor(color)
-
                 }
 
                 ANIMATION_TYPE_BUTTON -> changeAnimationType()
-
                 BRIGHTS_BUTTON -> changeBrightest()
             }
         }
 
     }
-
     private val nightlightersAdapter = NightlightersAdapter {
 
         val techniques: ArrayList<Techniques> = ArrayList()
@@ -110,21 +107,15 @@ class MainFragment : Fragment() {
             .playOn(binding.pager)
 
     }
-
     private lateinit var colors: Array<String>
     private lateinit var bgColors: Array<String>
     private lateinit var bgNlColors: Array<String>
-
-
     private var underImg: ImageView? = null
-
     private var adRequest: AdRequest? = null
-
     private var checkMenu = true
     private var show = true
     private var checkAnim = false
     private var currentBgColor = 0
-
     private var currentBgImage = 0
     private var currentNLColor = 0
     private var brights = 0
@@ -143,8 +134,8 @@ class MainFragment : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        underImg = binding.pager.findViewById(R.id.underImg)
-        setAdsSetting()
+
+
         adRequest = AdRequest.Builder().build()
         val addCounter = (activity as MainActivity?)!!.getSettings()
         if (addCounter > 0) {
@@ -153,25 +144,12 @@ class MainFragment : Fragment() {
             adRequest?.let {
                 binding.adView.loadAd(it)
             }
-
         }
 
-        binding.settingsButton.setOnClickListener {
-            (requireActivity() as MainActivity).openFragment(SettingsFragment())
-        }
-        binding.lockFrame.setOnTouchListener { _, _ ->
-            showButtons()
-            false
-        }
-        val llm = LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, false)
-        binding.rv.layoutManager = llm
-        val res = resources
-        colors = res.getStringArray(R.array.myColors)
-        bgColors = res.getStringArray(R.array.bgColors)
-        bgNlColors = res.getStringArray(R.array.bgNlColors)
-        //menuColors = res.getStringArray(R.array.menuColors)
+        colors = resources.getStringArray(R.array.myColors)
+        bgColors = resources.getStringArray(R.array.bgColors)
+        bgNlColors = resources.getStringArray(R.array.bgNlColors)
         val arrayList = ArrayList<Nightlighter>()
-        // val myMenuItems = MyObjects()
         arrayList.addAll(NightlightHelper.getNightlighters())
 
         binding.pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -189,11 +167,13 @@ class MainFragment : Fragment() {
                 }
             }
         })
-        binding.lockButton.setOnClickListener { lockButton() }
 
+        setAdsSetting()
         closeApp(0)
         initAdapter()
+        initListener()
         observer()
+        initView()
     }
 
     private fun initAdapter() {
@@ -369,10 +349,6 @@ class MainFragment : Fragment() {
         activity?.window?.attributes = layout
     }
 
-    var cdt: CountDownTimer? = null
-
-    private var timerStatus = false
-
     private fun closeApp(mySeconds: Int) {
         if (cdt != null) {
             timerStatus = false
@@ -491,6 +467,23 @@ class MainFragment : Fragment() {
         mySetting.currentNightlight = binding.pager.currentItem
         myTimer.timerStatus = false
         viewModel.updateSettings(mySetting)
+        viewModel.updateTimer(myTimer)
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun initListener(){
+        binding.settingsButton.setOnClickListener {
+            (requireActivity() as MainActivity).openFragment(SettingsFragment())
+        }
+        binding.lockFrame.setOnTouchListener { _, _ ->
+            showButtons()
+            false
+        }
+        binding.lockButton.setOnClickListener { lockButton() }
+    }
+
+    private fun initView(){
+        underImg = binding.pager.findViewById(R.id.underImg)
     }
 
 }
