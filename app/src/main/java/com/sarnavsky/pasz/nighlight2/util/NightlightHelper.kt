@@ -1,6 +1,7 @@
 package com.sarnavsky.pasz.nighlight2.util
 
 import android.content.res.Resources
+import com.daimajia.androidanimations.library.Techniques
 import com.sarnavsky.pasz.nighlight2.R
 import com.sarnavsky.pasz.nighlight2.objects.MenuItem
 import com.sarnavsky.pasz.nighlight2.objects.Nightlighter
@@ -222,6 +223,20 @@ class NightlightHelper {
                 R.drawable.bg_stars3,
                 0
             )
+        }
+
+        fun getTechniquesArray(): ArrayList<Techniques>{
+            val techniques: ArrayList<Techniques> = ArrayList()
+            techniques.add(Techniques.Bounce)
+            techniques.add(Techniques.BounceIn)
+            techniques.add(Techniques.FadeIn)
+            techniques.add(Techniques.DropOut)
+            techniques.add(Techniques.Shake)
+            techniques.add(Techniques.Flash)
+            techniques.add(Techniques.SlideInLeft)
+            techniques.add(Techniques.Swing)
+            techniques.add(Techniques.FlipInY)
+            return techniques
         }
     }
 }
