@@ -8,14 +8,14 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import com.sarnavsky.pasz.nighlight2.R
 import com.sarnavsky.pasz.nighlight2.SettingsViewModel
-import com.sarnavsky.pasz.nighlight2.data.db.entity.Settings
+import com.sarnavsky.pasz.nighlight2.data.db.entity.Timer
 import com.sarnavsky.pasz.nighlight2.databinding.TimerFragmentBinding
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class TimerFragment : Fragment() {
 
     private lateinit var binding: TimerFragmentBinding
-    private lateinit var mySetting: Settings
+    private lateinit var myTimer: Timer
     private val viewModel: SettingsViewModel by activityViewModel()
 
     override fun onCreateView(
@@ -30,7 +30,6 @@ class TimerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         val itemsHours = arrayOf(0, 1, 2, 3, 4, 6)
         val adapterHours = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, itemsHours)
@@ -52,18 +51,18 @@ class TimerFragment : Fragment() {
             )
 
             if (timerMilliseconds > 0) {
-                mySetting.timerDuration = timerMilliseconds
-                mySetting.timerStatus = true
-                mySetting.lastTimerHour = binding.spinnerHours.selectedItemPosition
-                mySetting.lastTimerMinute = binding.spinnerMinutes.selectedItemPosition
-                viewModel.updateSettings(mySetting)
+                myTimer.timerDuration = timerMilliseconds
+                myTimer.timerStatus = true
+                myTimer.lastTimerHour = binding.spinnerHours.selectedItemPosition
+                myTimer.lastTimerMinute = binding.spinnerMinutes.selectedItemPosition
+                viewModel.updateTimer(myTimer)
             }else{
-                mySetting.timerDuration = 0
-                mySetting.timerStatus = false
-                mySetting.lastTimerHour = binding.spinnerHours.selectedItemPosition
-                mySetting.lastTimerMinute = binding.spinnerMinutes.selectedItemPosition
+                myTimer.timerDuration = 0
+                myTimer.timerStatus = false
+                myTimer.lastTimerHour = binding.spinnerHours.selectedItemPosition
+                myTimer.lastTimerMinute = binding.spinnerMinutes.selectedItemPosition
 
-                viewModel.updateSettings(mySetting)
+                viewModel.updateTimer(myTimer)
             }
 
 
@@ -88,13 +87,13 @@ class TimerFragment : Fragment() {
 
     private fun observer() {
 
-        viewModel.getSettings()
+        viewModel.getTimer()
 
-        viewModel.settingsLiveData.observe(viewLifecycleOwner) {
+        viewModel.timerLiveData.observe(viewLifecycleOwner) {
             if (it == null) {
-                viewModel.insertItem()
+                viewModel.insertTimer()
             } else {
-                mySetting = it
+                myTimer = it
 
                 //binding.mainBg.setBackgroundColor(it.backgroundColor)
                 //binding.pager.currentItem = it.currentNightlight

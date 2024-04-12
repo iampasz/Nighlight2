@@ -1,7 +1,7 @@
 package com.sarnavsky.pasz.nighlight2.di
 
 import androidx.room.Room
-import com.kokooko.easylight.data.AppDatabase
+import com.sarnavsky.pasz.nighlight2.data.AppDatabase
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
@@ -17,6 +17,7 @@ val dbModule = module {
 
 
    single { get<AppDatabase>().settingsDao() }
+   single { get<AppDatabase>().timerDao() }
 
 
 

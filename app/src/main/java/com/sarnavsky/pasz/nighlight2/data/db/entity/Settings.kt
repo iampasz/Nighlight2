@@ -10,11 +10,6 @@ data class Settings(
     var currentNightlight: Int,
     var backgroundColor: Int,
     var nightlightColor: Int,
-    var timerStatus: Boolean,
-    var timerDuration: Int,
-    var lastTimerHour: Int,
-    var lastTimerMinute: Int,
     var animationType: Int,
     var animationStatus: Boolean
-
 )

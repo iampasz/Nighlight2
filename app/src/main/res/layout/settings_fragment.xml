@@ -3,15 +3,15 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="@dimen/margin_5"
+    android:layout_marginStart="@dimen/margin_10"
     android:layout_marginTop="@dimen/margin_10"
-    android:layout_marginRight="@dimen/margin_5"
+    android:layout_marginEnd="@dimen/margin_5"
     android:layout_marginBottom="@dimen/margin_5"
     android:background="@drawable/shape_menu"
     android:clickable="true"
     android:elevation="2dp"
-    android:padding="10dp"
-    android:focusable="true">
+    android:focusable="true"
+    android:padding="10dp">
 
     <Button
         android:id="@+id/close2"

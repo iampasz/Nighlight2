@@ -34,6 +34,7 @@ import com.sarnavsky.pasz.nighlight2.util.SOUNDS_BUTTON
 import com.sarnavsky.pasz.nighlight2.adapters.MainMenuAdapter
 import com.sarnavsky.pasz.nighlight2.adapters.NightlightersAdapter
 import com.sarnavsky.pasz.nighlight2.data.db.entity.Settings
+import com.sarnavsky.pasz.nighlight2.data.db.entity.Timer
 import com.sarnavsky.pasz.nighlight2.databinding.MainFragmentBinding
 import com.sarnavsky.pasz.nighlight2.objects.Nightlighter
 import com.sarnavsky.pasz.nighlight2.util.ANIMATION_BUTTON
@@ -50,6 +51,7 @@ class MainFragment : Fragment() {
     lateinit var binding: MainFragmentBinding
     private val viewModel: SettingsViewModel by activityViewModel()
     private lateinit var mySetting: Settings
+    private lateinit var myTimer: Timer
 
     private val mainMenuAdapter = MainMenuAdapter { menuItem, longClick ->
 
@@ -101,7 +103,7 @@ class MainFragment : Fragment() {
         techniques.add(Techniques.FlipInY)
 
         val random = Random()
-        val i = random.nextInt (techniques.size)
+        val i = random.nextInt(techniques.size)
 
         YoYo.with(techniques[i])
             .duration(700)
@@ -126,7 +128,7 @@ class MainFragment : Fragment() {
     private var currentBgImage = 0
     private var currentNLColor = 0
     private var brights = 0
-    private var settingsIsLoaded = false
+    private var timerIsLoaded = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -178,9 +180,12 @@ class MainFragment : Fragment() {
 
                 binding.bottomText.setText(arrayList[binding.pager.currentItem].name)
 
-                if (settingsIsLoaded) {
-                    val updatedSettings = mySetting.copy(currentNightlight = position)
-                    viewModel.updateSettings(updatedSettings)
+                if (timerIsLoaded) {
+                    val updatedTimer = myTimer.copy(
+                        timerDuration = 9999,
+                        timerStatus = false,
+                    )
+                    viewModel.updateTimer(updatedTimer)
                 }
             }
         })
@@ -395,10 +400,12 @@ class MainFragment : Fragment() {
 
                     //viewModel.updateSettings(mySetting)
                     Log.i("FINISH", "App is OFF")
-                    activity!!.finish()
+                    activity?.finish()
                 }
+
             }
             cdt?.start()
+
         } else {
             binding.bottomText.text = ""
             binding.bottomText.visibility = View.INVISIBLE
@@ -408,25 +415,32 @@ class MainFragment : Fragment() {
     private fun observer() {
 
         viewModel.getSettings()
+        viewModel.getTimer()
+
+        viewModel.timerLiveData.observe(viewLifecycleOwner){
+            if(it == null){
+                viewModel.insertTimer()
+            }else{
+                myTimer = it
+                timerIsLoaded = true
+                if (it.timerStatus) {
+                    binding.bottomText.visibility = View.VISIBLE
+                    closeApp(it.timerDuration)
+                }
+            }
+
+        }
 
         viewModel.settingsLiveData.observe(viewLifecycleOwner) {
             if (it == null) {
                 viewModel.insertItem()
             } else {
                 mySetting = it
-                settingsIsLoaded = true
+
 
                 binding.mainBg.setBackgroundColor(it.backgroundColor)
                 changeNLColor(it.nightlightColor)
                 binding.pager.currentItem = it.currentNightlight
-
-                if (it.timerStatus) {
-
-                    binding.bottomText.visibility = View.VISIBLE
-                    closeApp(it.timerDuration)
-                }
-
-
 
                 binding.animateBg
                     .setImageResource(it.animationType)
@@ -442,10 +456,10 @@ class MainFragment : Fragment() {
     private fun showColorPicker(type: Int) {
         val colorPickerDialog = ColorPickerDialog
             .newBuilder()
-            .setSelectedButtonText(android.R.string.selectTextMode)
-            .setDialogTitle(android.R.string.selectTextMode)
-            .setCustomButtonText(android.R.string.selectTextMode)
-            .setPresetsButtonText(android.R.string.selectTextMode)
+            .setSelectedButtonText(R.string.selected_button)
+            .setDialogTitle(R.string.dialog_title)
+            .setCustomButtonText(R.string.custom_button)
+            .setPresetsButtonText(R.string.presets_button)
             .setColor(Color.RED)
             .create()
         colorPickerDialog.show(parentFragmentManager, "")
@@ -475,7 +489,7 @@ class MainFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         mySetting.currentNightlight = binding.pager.currentItem
-        mySetting.timerStatus = false
+        myTimer.timerStatus = false
         viewModel.updateSettings(mySetting)
     }
 
