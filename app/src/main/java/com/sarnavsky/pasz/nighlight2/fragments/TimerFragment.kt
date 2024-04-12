@@ -94,9 +94,6 @@ class TimerFragment : Fragment() {
                 viewModel.insertTimer()
             } else {
                 myTimer = it
-
-                //binding.mainBg.setBackgroundColor(it.backgroundColor)
-                //binding.pager.currentItem = it.currentNightlight
             }
 
             binding.spinnerHours.setSelection(it.lastTimerHour)
@@ -105,8 +102,8 @@ class TimerFragment : Fragment() {
     }
 
 
-    fun convertHoursAndMinutesToMilliseconds(hours: Int, minutes: Int): Int {
+     private fun convertHoursAndMinutesToMilliseconds(hours: Int, minutes: Int): Int {
         val totalMinutes = hours * 60 + minutes
-        return totalMinutes * 60 * 1000 // Переводимо в мілісекунди
+        return totalMinutes * 60 * 1000
     }
 }
