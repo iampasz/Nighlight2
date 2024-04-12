@@ -5,7 +5,7 @@ import android.media.MediaPlayer
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class MediaPlayerViewModel() : ViewModel() {
+class MediaPlayerViewModel : ViewModel() {
     private var mediaPlayer: MediaPlayer? = null
     private var isPlaying: Boolean = false
 

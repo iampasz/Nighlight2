@@ -62,8 +62,6 @@ class MainMenuAdapter(
             true
         }
 
-            //itemSelected(item)
-
         ItemMenuBinding.bind(holder.itemView).apply {
             textMenu.text = item.name
             colorShape.setColorFilter(item.color)

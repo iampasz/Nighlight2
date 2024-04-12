@@ -46,13 +46,6 @@ class ColorPickerFragment : Fragment(), ColorPickerDialogListener {
             .create()
         colorPickerDialog.show(parentFragmentManager, "")
         colorPickerDialog.setColorPickerDialogListener(this)
-//        val main_fragment =
-//            parentFragmentManager.findFragmentByTag("main_fragment") as MainFragment?
-//        if (main_fragment != null) {
-//            // mainBg =  main_fragment.mainBg;
-//            //underImg =  main_fragment.underImg;
-//        }
-
         observer()
     }
 

@@ -87,9 +87,4 @@ class MusicListAdapter(
 
         }
     }
-
-//    private fun ItemCheckMarkBinding.setSelected() {
-//
-//    }
-
 }

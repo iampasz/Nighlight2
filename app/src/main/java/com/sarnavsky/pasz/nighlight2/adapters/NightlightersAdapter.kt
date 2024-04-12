@@ -73,9 +73,6 @@ class NightlightersAdapter(
     fun updateImageColorsWithColor(newColor: Int) {
         color = newColor
         notifyDataSetChanged()
-//        notifyItemChanged(position-1)
-//        notifyItemChanged(position)
-//        notifyItemChanged(position+1)
     }
 
 }
