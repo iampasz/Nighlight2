@@ -20,7 +20,6 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
-import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
@@ -33,7 +32,6 @@ import com.sarnavsky.pasz.nighlight2.adapters.NightlightersAdapter
 import com.sarnavsky.pasz.nighlight2.data.db.entity.Settings
 import com.sarnavsky.pasz.nighlight2.data.db.entity.Timer
 import com.sarnavsky.pasz.nighlight2.databinding.MainFragmentBinding
-import com.sarnavsky.pasz.nighlight2.objects.Nightlighter
 import com.sarnavsky.pasz.nighlight2.util.ANIMATION_BUTTON
 import com.sarnavsky.pasz.nighlight2.util.ANIMATION_TYPE_BUTTON
 import com.sarnavsky.pasz.nighlight2.util.BG_COLOR_BUTTON
@@ -107,11 +105,9 @@ class MainFragment : Fragment() {
             .playOn(binding.pager)
 
     }
-    private lateinit var colors: Array<String>
+
     private lateinit var bgColors: Array<String>
     private lateinit var bgNlColors: Array<String>
-    private var underImg: ImageView? = null
-    private var adRequest: AdRequest? = null
     private var checkMenu = true
     private var show = true
     private var checkAnim = false
@@ -135,45 +131,13 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        adRequest = AdRequest.Builder().build()
-        val addCounter = (activity as MainActivity?)!!.getSettings()
-        if (addCounter > 0) {
-            binding.adView.visibility = View.GONE
-        } else {
-            adRequest?.let {
-                binding.adView.loadAd(it)
-            }
-        }
-
-        colors = resources.getStringArray(R.array.myColors)
-        bgColors = resources.getStringArray(R.array.bgColors)
-        bgNlColors = resources.getStringArray(R.array.bgNlColors)
-        val arrayList = ArrayList<Nightlighter>()
-        arrayList.addAll(NightlightHelper.getNightlighters())
-
-        binding.pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-
-                binding.bottomText.setText(arrayList[binding.pager.currentItem].name)
-
-                if (timerIsLoaded) {
-                    val updatedTimer = myTimer.copy(
-                        timerDuration = 9999,
-                        timerStatus = false,
-                    )
-                    viewModel.updateTimer(updatedTimer)
-                }
-            }
-        })
-
+        initArrays()
         setAdsSetting()
-        closeApp(0)
         initAdapter()
         initListener()
         observer()
         initView()
+        closeApp(0)
     }
 
     private fun initAdapter() {
@@ -483,7 +447,30 @@ class MainFragment : Fragment() {
     }
 
     private fun initView(){
-        underImg = binding.pager.findViewById(R.id.underImg)
+
+        val arrayList = NightlightHelper.getNightlighters()
+
+        binding.pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+
+                binding.bottomText.setText(arrayList[position].name)
+
+                if (timerIsLoaded) {
+                    val updatedTimer = myTimer.copy(
+                        timerDuration = 9999,
+                        timerStatus = false,
+                    )
+                    viewModel.updateTimer(updatedTimer)
+                }
+            }
+        })
+
+    }
+
+    private fun initArrays(){
+        bgColors = resources.getStringArray(R.array.bgColors)
+        bgNlColors = resources.getStringArray(R.array.bgNlColors)
     }
 
 }
