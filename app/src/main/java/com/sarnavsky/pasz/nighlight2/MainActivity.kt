@@ -1,6 +1,8 @@
 package com.sarnavsky.pasz.nighlight2
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -15,6 +17,8 @@ class MainActivity : AppCompatActivity() {
 
     private val mediaPlayerViewModel: MediaPlayerViewModel by viewModel()
 
+    private lateinit var googleMobileAdsConsentManager: GoogleMobileAdsConsentManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -22,12 +26,18 @@ class MainActivity : AppCompatActivity() {
         isFirstOpen()
         saveSettings(-1)
 
+        googleMobileAdsConsentManager = GoogleMobileAdsConsentManager.getInstance(applicationContext)
+
+
         openFragment(MainFragment())
 
         //TODO SET RIGHT GDPR
         //GDPRHelper.showGDPR(this)
 
         mediaPlayerViewModel.initializeMediaPlayer()
+
+        googleMobileAdsConsentManager = GoogleMobileAdsConsentManager.getInstance(applicationContext)
+
     }
 
 
@@ -78,4 +88,8 @@ class MainActivity : AppCompatActivity() {
         // Зупинити медіаплеєр і вивільнити ресурси при завершенні активності
         mediaPlayerViewModel.stopMediaPlayer()
     }
+
+
+
+
 }

@@ -1,6 +1,7 @@
 package com.sarnavsky.pasz.nighlight2.fragments
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -18,8 +19,12 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.daimajia.androidanimations.library.YoYo
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
+import com.google.android.gms.ads.appopen.AppOpenAd
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import com.sarnavsky.pasz.nighlight2.MainActivity
@@ -42,6 +47,8 @@ import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import java.util.Random
 
 class MainFragment : Fragment() {
+
+
 
     lateinit var binding: MainFragmentBinding
     private val viewModel: SettingsViewModel by activityViewModel()
@@ -122,11 +129,14 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initArrays()
-        setAdsSetting()
         initAdapter()
         initListener()
         observer()
         initView()
+
+        initAds()
+
+
     }
 
     private fun initAdapter() {
@@ -140,7 +150,7 @@ class MainFragment : Fragment() {
 
     }
 
-    private fun setAdsSetting() {
+    private fun initAds() {
         MobileAds.initialize(
             requireContext()
         ) { initializationStatus ->
@@ -161,6 +171,46 @@ class MainFragment : Fragment() {
             .setTagForChildDirectedTreatment(RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE)
             .build()
         MobileAds.setRequestConfiguration(requestConfiguration)
+
+
+
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
+
+        binding.adView.adListener = object: AdListener() {
+            override fun onAdClicked() {
+                // Code to be executed when the user clicks on an ad.
+                Log.i("ADSMY", "Code to be executed when the user clicks on an ad.")
+            }
+
+            override fun onAdClosed() {
+                // Code to be executed when the user is about to return
+                // to the app after tapping on an ad.
+                Log.i("ADSMY", " Code to be executed when the user is about to return")
+            }
+
+            override fun onAdFailedToLoad(adError : LoadAdError) {
+                // Code to be executed when an ad request fails.
+                Log.i("ADSMY", "Code to be executed when an ad request fails.")
+            }
+
+            override fun onAdImpression() {
+                // Code to be executed when an impression is recorded
+                // for an ad.
+                Log.i("ADSMY", "Code to be executed when an impression is recorded")
+            }
+
+            override fun onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+                Log.i("ADSMY", "Code to be executed when an ad finishes loading.")
+            }
+
+            override fun onAdOpened() {
+                // Code to be executed when an ad opens an overlay that
+                // covers the screen.
+                Log.i("ADSMY", "Code to be executed when an ad opens an overlay that")
+            }
+        }
     }
 
     private fun showButtons() {
@@ -458,5 +508,7 @@ class MainFragment : Fragment() {
         bgColors = resources.getStringArray(R.array.bgColors)
         bgNlColors = resources.getStringArray(R.array.bgNlColors)
     }
+
+
 
 }
