@@ -63,7 +63,7 @@
     <string name="no">No</string>
     <string name="dont">Do not show notification again</string>
 
-    <string name="selected_button">Ok</string>
+    <string name="selected_button">OK</string>
     <string name="dialog_title">Colors</string>
     <string name="custom_button">Color palette</string>
     <string name="presets_button">Standard colors</string>

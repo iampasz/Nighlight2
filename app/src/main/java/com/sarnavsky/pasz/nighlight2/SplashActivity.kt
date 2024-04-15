@@ -1,10 +1,10 @@
 package com.sarnavsky.pasz.nighlight2
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.ads.MobileAds
 import java.util.concurrent.TimeUnit
@@ -19,6 +19,7 @@ private const val COUNTER_TIME_MILLISECONDS = 5000L
 private const val LOG_TAG = "SplashActivity"
 
 /** Splash Activity that inflates splash activity xml. */
+@SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
 
     private lateinit var googleMobileAdsConsentManager: GoogleMobileAdsConsentManager

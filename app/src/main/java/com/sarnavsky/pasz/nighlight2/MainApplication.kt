@@ -1,3 +1,5 @@
+
+
 package com.sarnavsky.pasz.nighlight2
 
 import android.app.Activity
@@ -6,9 +8,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
@@ -47,12 +47,6 @@ class MainApplication : Application(), Application.ActivityLifecycleCallbacks, L
     }
 
 
-    /** LifecycleObserver method that shows the app open ad when the app moves to foreground. */
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    fun onMoveToForeground() {
-        // Show the ad (if available) when the app moves to foreground.
-        currentActivity?.let { appOpenAdManager.showAdIfAvailable(it) }
-    }
 
     /** ActivityLifecycleCallback methods. */
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
@@ -183,21 +177,7 @@ class MainApplication : Application(), Application.ActivityLifecycleCallbacks, L
             return appOpenAd != null && wasLoadTimeLessThanNHoursAgo(4)
         }
 
-        /**
-         * Show the ad if one isn't already showing.
-         *
-         * @param activity the activity that shows the app open ad
-         */
-        fun showAdIfAvailable(activity: Activity) {
-            showAdIfAvailable(
-                activity,
-                object : OnShowAdCompleteListener {
-                    override fun onShowAdComplete() {
-                        // Empty because the user will go back to the activity that shows the ad.
-                    }
-                }
-            )
-        }
+
 
         /**
          * Show the ad if one isn't already showing.

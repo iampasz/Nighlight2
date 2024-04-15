@@ -4,7 +4,6 @@ package com.sarnavsky.pasz.nighlight2
 import android.app.Activity
 import android.content.Context
 import com.google.android.ump.ConsentDebugSettings
-import com.google.android.ump.ConsentForm.OnConsentFormDismissedListener
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.ConsentRequestParameters
 import com.google.android.ump.FormError
@@ -29,11 +28,6 @@ class GoogleMobileAdsConsentManager private constructor(context: Context) {
         get() = consentInformation.canRequestAds()
 
     /** Helper variable to determine if the privacy options form is required. */
-    val isPrivacyOptionsRequired: Boolean
-        get() =
-            consentInformation.privacyOptionsRequirementStatus ==
-                    ConsentInformation.PrivacyOptionsRequirementStatus.REQUIRED
-
     /**
      * Helper method to call the UMP SDK methods to request consent information and load/show a
      * consent form if necessary.
@@ -70,13 +64,7 @@ class GoogleMobileAdsConsentManager private constructor(context: Context) {
         )
     }
 
-    /** Helper method to call the UMP SDK method to show the privacy options form. */
-    fun showPrivacyOptionsForm(
-        activity: Activity,
-        onConsentFormDismissedListener: OnConsentFormDismissedListener
-    ) {
-        UserMessagingPlatform.showPrivacyOptionsForm(activity, onConsentFormDismissedListener)
-    }
+
 
     companion object {
         @Volatile private var instance: GoogleMobileAdsConsentManager? = null

@@ -1,8 +1,6 @@
 package com.sarnavsky.pasz.nighlight2
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment

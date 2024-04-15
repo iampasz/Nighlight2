@@ -1,7 +1,6 @@
 package com.sarnavsky.pasz.nighlight2.fragments
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -24,7 +23,6 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
-import com.google.android.gms.ads.appopen.AppOpenAd
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import com.sarnavsky.pasz.nighlight2.MainActivity
@@ -35,12 +33,12 @@ import com.sarnavsky.pasz.nighlight2.adapters.NightlightersAdapter
 import com.sarnavsky.pasz.nighlight2.data.db.entity.Settings
 import com.sarnavsky.pasz.nighlight2.data.db.entity.Timer
 import com.sarnavsky.pasz.nighlight2.databinding.MainFragmentBinding
-import com.sarnavsky.pasz.nighlight2.util.NightlightHelper
 import com.sarnavsky.pasz.nighlight2.util.ANIMATION_BUTTON
 import com.sarnavsky.pasz.nighlight2.util.ANIMATION_TYPE_BUTTON
 import com.sarnavsky.pasz.nighlight2.util.BG_COLOR_BUTTON
 import com.sarnavsky.pasz.nighlight2.util.BRIGHTS_BUTTON
 import com.sarnavsky.pasz.nighlight2.util.NL_COLOR_BUTTON
+import com.sarnavsky.pasz.nighlight2.util.NightlightHelper
 import com.sarnavsky.pasz.nighlight2.util.SOUNDS_BUTTON
 import com.sarnavsky.pasz.nighlight2.util.TIMER_BUTTON
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
