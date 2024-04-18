@@ -16,7 +16,7 @@
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">@color/durty_blue</item>
+        <item name="android:windowBackground">@drawable/splash_list</item>
     </style>
 
     <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">

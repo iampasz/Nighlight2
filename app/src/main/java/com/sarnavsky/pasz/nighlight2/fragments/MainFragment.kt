@@ -25,7 +25,9 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
+import com.sarnavsky.pasz.nighlight2.GoogleMobileAdsConsentManager
 import com.sarnavsky.pasz.nighlight2.MainActivity
+import com.sarnavsky.pasz.nighlight2.MainApplication
 import com.sarnavsky.pasz.nighlight2.R
 import com.sarnavsky.pasz.nighlight2.SettingsViewModel
 import com.sarnavsky.pasz.nighlight2.adapters.MainMenuAdapter
@@ -43,9 +45,15 @@ import com.sarnavsky.pasz.nighlight2.util.SOUNDS_BUTTON
 import com.sarnavsky.pasz.nighlight2.util.TIMER_BUTTON
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import java.util.Random
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicBoolean
 
 class MainFragment : Fragment() {
 
+
+    private lateinit var googleMobileAdsConsentManager: GoogleMobileAdsConsentManager
+    private val isMobileAdsInitializeCalled = AtomicBoolean(false)
+    private var secondsRemaining: Long = 0L
 
 
     lateinit var binding: MainFragmentBinding
@@ -134,6 +142,7 @@ class MainFragment : Fragment() {
 
         initAds()
 
+        initOpenAds()
 
     }
 
@@ -171,11 +180,10 @@ class MainFragment : Fragment() {
         MobileAds.setRequestConfiguration(requestConfiguration)
 
 
-
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
 
-        binding.adView.adListener = object: AdListener() {
+        binding.adView.adListener = object : AdListener() {
             override fun onAdClicked() {
                 // Code to be executed when the user clicks on an ad.
                 Log.i("ADSMY", "Code to be executed when the user clicks on an ad.")
@@ -187,7 +195,7 @@ class MainFragment : Fragment() {
                 Log.i("ADSMY", " Code to be executed when the user is about to return")
             }
 
-            override fun onAdFailedToLoad(adError : LoadAdError) {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
                 // Code to be executed when an ad request fails.
                 Log.i("ADSMY", "Code to be executed when an ad request fails.")
             }
@@ -416,7 +424,8 @@ class MainFragment : Fragment() {
 
                 binding.mainBg.setBackgroundColor(it.backgroundColor)
                 changeNLColor(it.nightlightColor)
-                binding.pager.currentItem = it.currentNightlight
+
+                binding.pager.setCurrentItem(it.currentNightlight, false)
 
                 binding.animateBg
                     .setImageResource(it.animationType)
@@ -425,8 +434,11 @@ class MainFragment : Fragment() {
                     startAnimation()
                 }
 
+               // binding.load.visibility = View.GONE
+
             }
         }
+
     }
 
     private fun showColorPicker(type: Int) {
@@ -471,7 +483,7 @@ class MainFragment : Fragment() {
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private fun initListener(){
+    private fun initListener() {
         binding.settingsButton.setOnClickListener {
             (requireActivity() as MainActivity).openFragment(SettingsFragment())
         }
@@ -482,7 +494,7 @@ class MainFragment : Fragment() {
         binding.lockButton.setOnClickListener { lockButton() }
     }
 
-    private fun initView(){
+    private fun initView() {
         val arrayList = NightlightHelper.getNightlighters()
         binding.pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -502,11 +514,91 @@ class MainFragment : Fragment() {
 
     }
 
-    private fun initArrays(){
+    private fun initArrays() {
         bgColors = resources.getStringArray(R.array.bgColors)
         bgNlColors = resources.getStringArray(R.array.bgNlColors)
     }
 
+    private fun createTimer(time: Long) {
+        //val counterTextView: TextView = findViewById(R.id.timer)
+        val countDownTimer: CountDownTimer =
+            object : CountDownTimer(time, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    secondsRemaining = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) + 1
+                    // counterTextView.text = "App is done loading in: $secondsRemaining"
 
+                }
+
+                override fun onFinish() {
+                    secondsRemaining = 0
+                    // counterTextView.text = "Done."
+
+                    if (isAdded){
+
+                        (requireActivity().application as MainApplication).showAdIfAvailable(
+                            requireActivity(),
+                            object : MainApplication.OnShowAdCompleteListener {
+                                override fun onShowAdComplete() {
+                                    // Check if the consent form is currently on screen before moving to the main
+                                    // activity.
+                                    if (googleMobileAdsConsentManager.canRequestAds) {
+                                        startMainActivity()
+                                    }
+                                }
+                            }
+                        )
+
+                    }
+
+                }
+            }
+        countDownTimer.start()
+    }
+
+    private fun initializeMobileAdsSdk() {
+        if (isMobileAdsInitializeCalled.getAndSet(true)) {
+            return
+        }
+
+        if (isAdded) {
+            MobileAds.initialize(requireContext()) {}
+            (requireActivity().application as MainApplication).loadAd(requireActivity())
+        }
+    }
+
+    fun startMainActivity() {
+//        val intent = Intent(this, MainActivity::class.java)
+//        startActivity(intent)
+
+        binding.progressBar2.visibility = View.GONE
+        binding.lockFrame.setBackgroundColor(Color.TRANSPARENT)
+        binding.lockFrame.visibility = View.GONE
+    }
+
+    fun initOpenAds(){
+        createTimer(5000)
+
+        googleMobileAdsConsentManager = GoogleMobileAdsConsentManager
+            .getInstance(requireContext())
+        googleMobileAdsConsentManager.gatherConsent(requireActivity()) { consentError ->
+            if (consentError != null) {
+                // Consent not obtained in current session.
+                Log.w(
+                    "initOpenAds",
+                    String.format("%s: %s", consentError.errorCode, consentError.message)
+                )
+            }
+
+            if (googleMobileAdsConsentManager.canRequestAds) {
+                initializeMobileAdsSdk()
+            }
+
+            if (secondsRemaining <= 0) {
+                binding.progressBar2.visibility = View.GONE
+                binding.lockFrame.setBackgroundColor(Color.TRANSPARENT)
+                binding.lockFrame.visibility = View.GONE
+            }
+        }
+    }
 
 }

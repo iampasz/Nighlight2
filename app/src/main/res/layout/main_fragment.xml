@@ -9,7 +9,6 @@
 
 
     <ImageView
-
         android:id="@+id/animateBg"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -56,12 +55,12 @@
         android:orientation="horizontal"
         ads:layout_constraintEnd_toEndOf="parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:reverseLayout="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:reverseLayout="false" />
 
 
-<!--    //MyADMOB ADD-->
+    <!--    //MyADMOB ADD-->
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="match_parent"
@@ -79,7 +78,15 @@
         android:id="@+id/lock_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="false">
+        android:background="#E1000000"
+        android:clickable="true"
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintHorizontal_bias="0.5"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toTopOf="parent"
+        ads:layout_constraintVertical_bias="0.5"
+        android:focusable="true">
 
     </FrameLayout>
 
@@ -120,5 +127,15 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="@android:style/Widget.Holo.ProgressBar.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintEnd_toEndOf="@+id/animateBg"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

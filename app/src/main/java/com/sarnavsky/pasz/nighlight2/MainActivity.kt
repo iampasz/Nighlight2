@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
 
         mediaPlayerViewModel.initializeMediaPlayer()
 
-        googleMobileAdsConsentManager = GoogleMobileAdsConsentManager.getInstance(applicationContext)
 
     }
 
@@ -83,11 +82,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        // Зупинити медіаплеєр і вивільнити ресурси при завершенні активності
         mediaPlayerViewModel.stopMediaPlayer()
     }
-
-
-
 
 }
