@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -11,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_5"
-        android:text="1 месяц"
+        android:text="@string/one_month"
         android:textAlignment="center"
         android:textColor="@color/sub_text"
         android:textSize="@dimen/text_size_15"
@@ -36,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="9 USD"
+            android:text="@string/price9"
             android:textAlignment="center"
             android:textColor="@color/sub_text"
             android:textSize="@dimen/text_size_25" />
@@ -47,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="2,99 USD"
+            android:text="@string/price3"
             android:textAlignment="center"
             android:textColor="@color/sub_text"
             android:textSize="@dimen/text_size_25"

@@ -1,14 +1,13 @@
-
+@file:Suppress("DEPRECATION")
 
 package com.sarnavsky.pasz.nighlight2
 
 import android.app.Activity
 import android.app.Application
-import android.content.Context
-import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
@@ -19,14 +18,14 @@ import com.sarnavsky.pasz.nighlight2.di.dbModule
 import com.sarnavsky.pasz.nighlight2.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin
-import java.util.Date
 
 private const val AD_UNIT_ID = "ca-app-pub-3940256099942544/9257395921"
-private const val LOG_TAG = "MyApplication"
 
-class MainApplication : Application(), Application.ActivityLifecycleCallbacks, LifecycleObserver {
+@Suppress("DEPRECATION")
+class MainApplication : Application(), LifecycleObserver {
 
     private lateinit var appOpenAdManager: AppOpenAdManager
+    private var currentActivity: Activity? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -37,160 +36,137 @@ class MainApplication : Application(), Application.ActivityLifecycleCallbacks, L
             modules(viewModelModule)
         }
 
-        registerActivityLifecycleCallbacks(this)
-
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
         appOpenAdManager = AppOpenAdManager()
-
     }
 
-
-
-    /** ActivityLifecycleCallback methods. */
-    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
-
-    override fun onActivityStarted(activity: Activity) {
-//        if (!appOpenAdManager.isShowingAd) {
-//            currentActivity = activity
-//        }
-    }
-
-    override fun onActivityResumed(activity: Activity) {}
-
-    override fun onActivityPaused(activity: Activity) {}
-
-    override fun onActivityStopped(activity: Activity) {}
-
-    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
-
-    override fun onActivityDestroyed(activity: Activity) {}
-
-    fun showAdIfAvailable(activity: Activity, onShowAdCompleteListener: OnShowAdCompleteListener) {
-        // We wrap the showAdIfAvailable to enforce that other classes only interact with MyApplication
-        // class.
-        appOpenAdManager.showAdIfAvailable(activity, onShowAdCompleteListener)
-    }
-
-    fun loadAd(activity: Activity) {
-        // We wrap the loadAd to enforce that other classes only interact with MyApplication
-        // class.
-        appOpenAdManager.loadAd(activity)
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    fun onMoveToForeground() {
+        currentActivity?.let { appOpenAdManager.showAd() }
     }
 
     interface OnShowAdCompleteListener {
         fun onShowAdComplete()
     }
 
-
     private inner class AppOpenAdManager {
 
-        private var googleMobileAdsConsentManager: GoogleMobileAdsConsentManager =
-            GoogleMobileAdsConsentManager.getInstance(applicationContext)
-        private var appOpenAd: AppOpenAd? = null
-        private var isLoadingAd = false
-        var isShowingAd = false
+        var appOpenAd: AppOpenAd? = null
 
-        private var loadTime: Long = 0
+        fun loadAdFirst(onShowAdCompleteListener: OnShowAdCompleteListener) {
 
-        fun loadAd(context: Context) {
-            // Do not load ad if there is an unused ad or one is already loading.
+            Log.i("ACTIVITU_STATUS", "loadAdFirst має спрацвати тільки один раз")
 
-            if (isLoadingAd || isAdAvailable()) {
-                return
-            }
-
-            isLoadingAd = true
             val request = AdRequest.Builder().build()
-            AppOpenAd.load(
-                context,
-                AD_UNIT_ID,
-                request,
-                object : AppOpenAd.AppOpenAdLoadCallback() {
-                    override fun onAdLoaded(ad: AppOpenAd) {
-                        appOpenAd = ad
-                        isLoadingAd = false
-                        loadTime = Date().time
-                        Log.d(LOG_TAG, "onAdLoaded.")
-                        Toast.makeText(context, "onAdLoaded", Toast.LENGTH_SHORT).show()
+            currentActivity?.let { it ->
+                AppOpenAd.load(
+                    it,
+                    AD_UNIT_ID,
+                    request,
+                    object : AppOpenAd.AppOpenAdLoadCallback() {
+                        override fun onAdLoaded(ad: AppOpenAd) {
+
+                            // appOpenAd = ad
+
+                            // showAdIfAvailable()
+                            Log.i("ACTIVITU_STATUS", "Реклама завантажена")
+
+                            onShowAdCompleteListener.onShowAdComplete()
+
+                            ad.fullScreenContentCallback =
+                                object : FullScreenContentCallback() {
+
+                                    override fun onAdClicked() {
+                                        super.onAdClicked()
+                                        Log.i("FULL_SCREEEN","onAdClicked")
+                                        onShowAdCompleteListener.onShowAdComplete()
+
+                                    }
+
+                                    override fun onAdDismissedFullScreenContent() {
+                                        super.onAdDismissedFullScreenContent()
+                                        Log.i("FULL_SCREEEN","onAdDismissedFullScreenContent")
+
+                                    }
 
 
+                                    override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                                        super.onAdFailedToShowFullScreenContent(p0)
+                                        Log.i("FULL_SCREEEN","onAdFailedToShowFullScreenContent")
+                                    }
+
+                                    override fun onAdShowedFullScreenContent() {
+                                        super.onAdShowedFullScreenContent()
+
+                                        loadAd()
+                                        Log.i("FULL_SCREEEN","onAdShowedFullScreenContent")
+                                    }
+                                }
+                            ad.show(it)
+
+                        }
+
+                        override fun onAdFailedToLoad(loadAdError: LoadAdError) {
+                            Log.i("ACTIVITU_STATUS", "Реклама НЕ завантажена ${loadAdError}")
+                            onShowAdCompleteListener.onShowAdComplete()
+                        }
                     }
-                    override fun onAdFailedToLoad(loadAdError: LoadAdError) {
-                        isLoadingAd = false
-                        Log.d(LOG_TAG, "onAdFailedToLoad: " + loadAdError.message)
-                        Toast.makeText(context, "onAdFailedToLoad", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            )
-        }
+                )
 
-        private fun wasLoadTimeLessThanNHoursAgo(numHours: Long): Boolean {
-            val dateDifference: Long = Date().time - loadTime
-            val numMilliSecondsPerHour: Long = 3600000
-            return dateDifference < numMilliSecondsPerHour * numHours
-        }
-
-        private fun isAdAvailable(): Boolean {
-
-            return appOpenAd != null && wasLoadTimeLessThanNHoursAgo(4)
-        }
-
-        fun showAdIfAvailable(activity: Activity, onShowAdCompleteListener: OnShowAdCompleteListener) {
-            // If the app open ad is already showing, do not show the ad again.
-            if (isShowingAd) {
-                Log.d(LOG_TAG, "The app open ad is already showing.")
-                return
             }
 
-            // If the app open ad is not available yet, invoke the callback.
-            if (!isAdAvailable()) {
-                Log.d(LOG_TAG, "The app open ad is not ready yet.")
-                onShowAdCompleteListener.onShowAdComplete()
-                if (googleMobileAdsConsentManager.canRequestAds) {
-                    loadAd(activity)
-                }
-                return
+
+        }
+
+        fun loadAd() {
+            Log.i("ACTIVITU_STATUS", "Реклама завантажується loadAd")
+            val request = AdRequest.Builder().build()
+            currentActivity?.let {
+                AppOpenAd.load(
+                    it,
+                    AD_UNIT_ID,
+                    request,
+                    object : AppOpenAd.AppOpenAdLoadCallback() {
+                        override fun onAdLoaded(ad: AppOpenAd) {
+                            appOpenAd = ad
+                            Log.i("ACTIVITU_STATUS", "Реклама завантажилась додав в appOpenAd")
+                        }
+
+                        override fun onAdFailedToLoad(loadAdError: LoadAdError) {
+                            Log.i("ACTIVITU_STATUS", "помилка не завантажилась loadAd")
+                        }
+                    }
+                )
             }
 
-            Log.d(LOG_TAG, "Will show ad.")
+        }
 
+        fun showAd() {
+            Log.i("ACTIVITU_STATUS", "якщо реклама є я ї покажу при повернені в додаток")
             appOpenAd?.fullScreenContentCallback =
                 object : FullScreenContentCallback() {
-                    /** Called when full screen content is dismissed. */
-                    override fun onAdDismissedFullScreenContent() {
-                        // Set the reference to null so isAdAvailable() returns false.
-                        appOpenAd = null
-                        isShowingAd = false
-                        Log.d(LOG_TAG, "onAdDismissedFullScreenContent.")
-                        //Toast.makeText(activity, "onAdDismissedFullScreenContent", Toast.LENGTH_SHORT).show()
-
-                        onShowAdCompleteListener.onShowAdComplete()
-                        if (googleMobileAdsConsentManager.canRequestAds) {
-                            loadAd(activity)
-                        }
-                    }
-
-                    /** Called when fullscreen content failed to show. */
-                    override fun onAdFailedToShowFullScreenContent(adError: AdError) {
-                        appOpenAd = null
-                        isShowingAd = false
-                        Log.d(LOG_TAG, "onAdFailedToShowFullScreenContent: " + adError.message)
-                       // Toast.makeText(activity, "onAdFailedToShowFullScreenContent", Toast.LENGTH_SHORT).show()
-
-                        onShowAdCompleteListener.onShowAdComplete()
-                        if (googleMobileAdsConsentManager.canRequestAds) {
-                            loadAd(activity)
-                        }
-                    }
-
-                    /** Called when fullscreen content is shown. */
                     override fun onAdShowedFullScreenContent() {
-                        Log.d(LOG_TAG, "onAdShowedFullScreenContent.")
-                       // Toast.makeText(activity, "onAdShowedFullScreenContent", Toast.LENGTH_SHORT).show()
+                        super.onAdShowedFullScreenContent()
+                        loadAd()
+                        Log.i(
+                            "ACTIVITU_STATUS", "я повернувсся в додаток, реклама відобразилась," +
+                                    " я її знову завантажую на майбутнє"
+                        )
                     }
                 }
-            isShowingAd = true
-            appOpenAd?.show(activity)
+
+            currentActivity?.let {
+                appOpenAd?.show(it)
+            }
         }
     }
+
+    fun loadAdFirst(activity: Activity, onShowAdCompleteListener: OnShowAdCompleteListener) {
+        currentActivity = activity
+        appOpenAdManager.loadAdFirst(onShowAdCompleteListener)
+    }
 }
+
+
+
+

@@ -1,10 +1,20 @@
 package com.sarnavsky.pasz.nighlight2.util
 
+import android.content.Context
 import android.content.res.Resources
+import android.net.ConnectivityManager
+import android.util.Log
+import android.view.View
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
+import android.view.animation.Animation.AnimationListener
+import android.widget.ImageView
 import com.daimajia.androidanimations.library.Techniques
+import com.daimajia.androidanimations.library.YoYo
 import com.sarnavsky.pasz.nighlight2.R
 import com.sarnavsky.pasz.nighlight2.objects.MenuItem
 import com.sarnavsky.pasz.nighlight2.objects.Nightlighter
+import kotlin.random.Random
 
 @Suppress("DEPRECATION")
 class NightlightHelper {
@@ -126,10 +136,10 @@ class NightlightHelper {
                     res.getColor(R.color.violet),
                     R.drawable.ic_light,
                     res.getString(R.string.brightness),
-                     BRIGHTS_BUTTON
+                    BRIGHTS_BUTTON
                 )
             )
-           return menuButtons
+            return menuButtons
         }
 
         fun getBgArray(): IntArray {
@@ -148,7 +158,7 @@ class NightlightHelper {
             )
         }
 
-        fun getTechniquesArray(): ArrayList<Techniques>{
+        private fun getTechniquesArray(): ArrayList<Techniques> {
             val techniques: ArrayList<Techniques> = ArrayList()
             techniques.add(Techniques.Bounce)
             techniques.add(Techniques.BounceIn)
@@ -161,5 +171,82 @@ class NightlightHelper {
             techniques.add(Techniques.FlipInY)
             return techniques
         }
+
+        fun checkInternet(ctx: Context): Int {
+            val cm = ctx.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            var wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
+            if (wifiInfo != null && wifiInfo.isConnected) {
+                return ConnectivityManager.TYPE_WIFI
+            }
+
+            wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
+            if (wifiInfo != null && wifiInfo.isConnected) {
+                return ConnectivityManager.TYPE_MOBILE
+            }
+            wifiInfo = cm.activeNetworkInfo
+            if (wifiInfo != null && wifiInfo.isConnected) {
+                return INTERNET_CONNECTION
+            }
+            return NO_INTERNET_CONNECTION
+        }
+
+        fun changeColor(view: View) {
+
+            var repeater = true
+
+            val alphaAnimation = AlphaAnimation(0f, 1f)
+
+            alphaAnimation.duration = 2000
+            alphaAnimation.repeatCount = -1
+            alphaAnimation.repeatMode = Animation.REVERSE
+            alphaAnimation.setAnimationListener(object : AnimationListener {
+                override fun onAnimationStart(animation: Animation?) {
+
+                }
+
+                override fun onAnimationEnd(animation: Animation?) {
+
+                }
+
+                override fun onAnimationRepeat(animation: Animation?) {
+
+                    repeater = !repeater
+
+                    val random = Random.nextInt(255)
+                    val random1 = Random.nextInt(255)
+                    val random2 = Random.nextInt(255)
+
+                    if (repeater) {
+                        (view as ImageView).setColorFilter(
+                            android
+                                .graphics
+                                .Color
+                                .argb(255, random, random1, random2)
+                        )
+
+                    }
+                    Log.i("SEEDSSSDS", "${repeater}")
+
+                }
+
+            })
+            view.startAnimation(alphaAnimation)
+
+        }
+
+        fun startYoYoAnimation(view: View) {
+            val techniques = getTechniquesArray()
+            val random = java.util.Random()
+            val i = random.nextInt(techniques.size)
+
+            YoYo.with(techniques[i])
+                .duration(700)
+                .playOn(view)
+        }
     }
+
 }
+
+
+
+

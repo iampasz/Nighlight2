@@ -87,5 +87,11 @@
     <string name="nl2_descriptions">Download another version from Google Play. More animals, more melodies. less or no ads
     </string>
 
+    <string name="one_month" translatable="false">1 месяц</string>
+    <string name="price9" translatable="false">9 USD</string>
+    <string name="price3" translatable="false">2,99 USD</string>
+    <string name="procent70" translatable="false">-70%</string>
+    <string name="version" translatable="false">v.6.3</string>
+
 
 </resources>

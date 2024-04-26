@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity() {
 
     private val mediaPlayerViewModel: MediaPlayerViewModel by viewModel()
 
-    private lateinit var googleMobileAdsConsentManager: GoogleMobileAdsConsentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,17 +23,12 @@ class MainActivity : AppCompatActivity() {
         isFirstOpen()
         saveSettings(-1)
 
-        googleMobileAdsConsentManager = GoogleMobileAdsConsentManager.getInstance(applicationContext)
-
-
         openFragment(MainFragment())
 
         //TODO SET RIGHT GDPR
         //GDPRHelper.showGDPR(this)
 
         mediaPlayerViewModel.initializeMediaPlayer()
-
-
     }
 
 
@@ -84,5 +78,4 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         mediaPlayerViewModel.stopMediaPlayer()
     }
-
 }

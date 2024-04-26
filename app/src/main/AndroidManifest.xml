@@ -20,7 +20,7 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:screenOrientation="portrait"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar"
+        android:theme="@style/AppTheme.FullScreen"
         tools:ignore="AllowBackup"
 
         tools:targetApi="n">
@@ -53,9 +53,9 @@
             android:value="CsFdIcdy3bb1MbtM1t5hX2BTt0Tg2EgFikbct_BERtiD3xwGLQOITnXILFrgwgUOetkDZeilCI0eGkvI_QTfuG" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashActivity"
             tools:ignore="LockedOrientationActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:theme="@style/AppTheme.FullScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -63,7 +63,10 @@
             </intent-filter>
         </activity>
 
-
+        <activity
+            android:theme="@style/AppTheme.FullScreen"
+            android:name=".MainActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

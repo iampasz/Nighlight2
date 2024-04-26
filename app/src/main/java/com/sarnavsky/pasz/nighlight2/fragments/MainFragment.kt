@@ -17,7 +17,6 @@ import android.view.animation.ScaleAnimation
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
-import com.daimajia.androidanimations.library.YoYo
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
@@ -25,9 +24,7 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
-import com.sarnavsky.pasz.nighlight2.GoogleMobileAdsConsentManager
 import com.sarnavsky.pasz.nighlight2.MainActivity
-import com.sarnavsky.pasz.nighlight2.MainApplication
 import com.sarnavsky.pasz.nighlight2.R
 import com.sarnavsky.pasz.nighlight2.SettingsViewModel
 import com.sarnavsky.pasz.nighlight2.adapters.MainMenuAdapter
@@ -44,22 +41,13 @@ import com.sarnavsky.pasz.nighlight2.util.NightlightHelper
 import com.sarnavsky.pasz.nighlight2.util.SOUNDS_BUTTON
 import com.sarnavsky.pasz.nighlight2.util.TIMER_BUTTON
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
-import java.util.Random
-import java.util.concurrent.TimeUnit
-import java.util.concurrent.atomic.AtomicBoolean
 
 class MainFragment : Fragment() {
-
-
-    private lateinit var googleMobileAdsConsentManager: GoogleMobileAdsConsentManager
-    private val isMobileAdsInitializeCalled = AtomicBoolean(false)
-    private var secondsRemaining: Long = 0L
-
 
     lateinit var binding: MainFragmentBinding
     private val viewModel: SettingsViewModel by activityViewModel()
 
-    private lateinit var mySetting: Settings
+    private var mySetting: Settings? = null
     private lateinit var myTimer: Timer
 
     var cdt: CountDownTimer? = null
@@ -69,7 +57,7 @@ class MainFragment : Fragment() {
 
     private var currentBgColor = 0
     private var currentBgImage = 0
-    private var currentNLColor = 0
+    private var currentNLColor = -1
     private var brights = 0
     private var timerIsLoaded = false
     private var checkMenu = true
@@ -108,16 +96,9 @@ class MainFragment : Fragment() {
             }
         }
     }
+
     private val nightlightersAdapter = NightlightersAdapter {
-
-        val techniques = NightlightHelper.getTechniquesArray()
-        val random = Random()
-        val i = random.nextInt(techniques.size)
-
-        YoYo.with(techniques[i])
-            .duration(700)
-            .playOn(binding.pager)
-
+        NightlightHelper.startYoYoAnimation(binding.pager)
     }
 
     override fun onCreateView(
@@ -142,7 +123,6 @@ class MainFragment : Fragment() {
 
         initAds()
 
-        initOpenAds()
 
     }
 
@@ -279,14 +259,15 @@ class MainFragment : Fragment() {
             currentBgColor = 0
         }
         binding.mainBg.setBackgroundColor(Color.parseColor(bgColors[currentBgColor]))
-        mySetting.backgroundColor = Color.parseColor(bgColors[currentBgColor])
+        mySetting?.backgroundColor = Color.parseColor(bgColors[currentBgColor])
         //viewModel.updateSettings(mySetting)
 
     }
 
     private fun changeNLColor(color: Int) {
         nightlightersAdapter.updateImageColorsWithColor(color)
-        mySetting.nightlightColor = color
+        mySetting?.nightlightColor = color
+
     }
 
     private fun startAnimation() {
@@ -315,12 +296,12 @@ class MainFragment : Fragment() {
             binding.animateBg.startAnimation(scale)
             set.addAnimation(scale)
             binding.animateBg.startAnimation(set)
-            mySetting.animationStatus = true
+            mySetting?.animationStatus = true
         } else {
             binding.animateBg.clearAnimation()
             binding.animateBg.scaleType = ImageView.ScaleType.CENTER_CROP
             checkAnim = false
-            mySetting.animationStatus = false
+            mySetting?.animationStatus = false
         }
     }
 
@@ -336,7 +317,7 @@ class MainFragment : Fragment() {
         }
 
         binding.animateBg.setImageResource(NightlightHelper.getBgArray()[currentBgImage])
-        mySetting.animationType = NightlightHelper.getBgArray()[currentBgImage]
+        mySetting?.animationType = NightlightHelper.getBgArray()[currentBgImage]
     }
 
     private fun changeBrightest() {
@@ -401,10 +382,10 @@ class MainFragment : Fragment() {
         viewModel.getSettings()
         viewModel.getTimer()
 
-        viewModel.timerLiveData.observe(viewLifecycleOwner){
-            if(it == null){
+        viewModel.timerLiveData.observe(viewLifecycleOwner) {
+            if (it == null) {
                 viewModel.insertTimer()
-            }else{
+            } else {
                 myTimer = it
                 timerIsLoaded = true
                 if (it.timerStatus) {
@@ -434,11 +415,10 @@ class MainFragment : Fragment() {
                     startAnimation()
                 }
 
-               // binding.load.visibility = View.GONE
+                // binding.load.visibility = View.GONE
 
             }
         }
-
     }
 
     private fun showColorPicker(type: Int) {
@@ -458,12 +438,12 @@ class MainFragment : Fragment() {
 
                     when (type) {
                         BG_COLOR_BUTTON -> {
-                            mySetting.backgroundColor = color
+                            mySetting?.backgroundColor = color
                             binding.mainBg.setBackgroundColor(color)
                         }
 
                         NL_COLOR_BUTTON -> {
-                            mySetting.nightlightColor = color
+                            mySetting?.nightlightColor = color
                             changeNLColor(color)
                         }
                     }
@@ -476,9 +456,13 @@ class MainFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        mySetting.currentNightlight = binding.pager.currentItem
+
+        mySetting?.currentNightlight = binding.pager.currentItem
+
         myTimer.timerStatus = false
-        viewModel.updateSettings(mySetting)
+        mySetting?.let {
+            viewModel.updateSettings(it)
+        }
         viewModel.updateTimer(myTimer)
     }
 
@@ -489,9 +473,16 @@ class MainFragment : Fragment() {
         }
         binding.lockFrame.setOnTouchListener { _, _ ->
             showButtons()
+            if (!checkMenu) {
+                hideLock()
+            }
+
+
             false
         }
-        binding.lockButton.setOnClickListener { lockButton() }
+        binding.lockButton.setOnClickListener {
+            lockButton()
+        }
     }
 
     private fun initView() {
@@ -511,7 +502,6 @@ class MainFragment : Fragment() {
                 }
             }
         })
-
     }
 
     private fun initArrays() {
@@ -519,86 +509,29 @@ class MainFragment : Fragment() {
         bgNlColors = resources.getStringArray(R.array.bgNlColors)
     }
 
-    private fun createTimer(time: Long) {
-        //val counterTextView: TextView = findViewById(R.id.timer)
-        val countDownTimer: CountDownTimer =
-            object : CountDownTimer(time, 1000) {
-                override fun onTick(millisUntilFinished: Long) {
-                    secondsRemaining = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) + 1
-                    // counterTextView.text = "App is done loading in: $secondsRemaining"
+    private var hideLockTimer: CountDownTimer? = null
 
-                }
+    private fun hideLock() {
 
-                override fun onFinish() {
-                    secondsRemaining = 0
-                    // counterTextView.text = "Done."
+        hideLockTimer?.cancel()
 
-                    if (isAdded){
+        hideLockTimer = object : CountDownTimer(3000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
 
-                        (requireActivity().application as MainApplication).showAdIfAvailable(
-                            requireActivity(),
-                            object : MainApplication.OnShowAdCompleteListener {
-                                override fun onShowAdComplete() {
-                                    // Check if the consent form is currently on screen before moving to the main
-                                    // activity.
-                                    if (googleMobileAdsConsentManager.canRequestAds) {
-                                        startMainActivity()
-                                    }
-                                }
-                            }
-                        )
-
-                    }
-
-                }
             }
-        countDownTimer.start()
-    }
 
-    private fun initializeMobileAdsSdk() {
-        if (isMobileAdsInitializeCalled.getAndSet(true)) {
-            return
+            override fun onFinish() {
+                binding.lockButton.visibility = View.GONE
+                binding.bottomText.visibility = View.GONE
+
+            }
+
         }
 
-        if (isAdded) {
-            MobileAds.initialize(requireContext()) {}
-            (requireActivity().application as MainApplication).loadAd(requireActivity())
-        }
-    }
 
-    fun startMainActivity() {
-//        val intent = Intent(this, MainActivity::class.java)
-//        startActivity(intent)
+        hideLockTimer?.start()
 
-        binding.progressBar2.visibility = View.GONE
-        binding.lockFrame.setBackgroundColor(Color.TRANSPARENT)
-        binding.lockFrame.visibility = View.GONE
-    }
 
-    fun initOpenAds(){
-        createTimer(5000)
-
-        googleMobileAdsConsentManager = GoogleMobileAdsConsentManager
-            .getInstance(requireContext())
-        googleMobileAdsConsentManager.gatherConsent(requireActivity()) { consentError ->
-            if (consentError != null) {
-                // Consent not obtained in current session.
-                Log.w(
-                    "initOpenAds",
-                    String.format("%s: %s", consentError.errorCode, consentError.message)
-                )
-            }
-
-            if (googleMobileAdsConsentManager.canRequestAds) {
-                initializeMobileAdsSdk()
-            }
-
-            if (secondsRemaining <= 0) {
-                binding.progressBar2.visibility = View.GONE
-                binding.lockFrame.setBackgroundColor(Color.TRANSPARENT)
-                binding.lockFrame.visibility = View.GONE
-            }
-        }
     }
 
 }
