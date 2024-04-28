@@ -1,7 +1,10 @@
 package com.sarnavsky.pasz.nighlight2
 
+
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.WindowManager
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.sarnavsky.pasz.nighlight2.databinding.MainBinding
@@ -9,15 +12,15 @@ import com.sarnavsky.pasz.nighlight2.fragments.MainFragment
 import com.sarnavsky.pasz.nighlight2.util.MY_SETTINGS
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: MainBinding
-
     private val mediaPlayerViewModel: MediaPlayerViewModel by viewModel()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         initView()
         isFirstOpen()
@@ -30,8 +33,6 @@ class MainActivity : AppCompatActivity() {
 
         mediaPlayerViewModel.initializeMediaPlayer()
     }
-
-
     private fun isFirstOpen() {
         val sp = getSharedPreferences(
             MY_SETTINGS,
@@ -45,7 +46,6 @@ class MainActivity : AppCompatActivity() {
             e.apply()
         }
     }
-
     private fun saveSettings(adCounter: Int) {
         val currentCount: Int = getSettings()
         if (currentCount > 0 && adCounter > -1) {
@@ -55,27 +55,30 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
     fun getSettings(): Int {
         val sharedPref =
             getSharedPreferences(MY_SETTINGS, 0)
         return sharedPref.getInt("NO_ADS_COUNTER", 0)
     }
-
     fun openFragment(fragment: Fragment) {
         supportFragmentManager
             .beginTransaction()
             .add(R.id.container, fragment)
             .commit()
     }
-
-    private fun initView(){
+    private fun initView() {
+        window.enterTransition = TransitionInflater
+            .from(this).inflateTransition(android.R.transition.slide_bottom)
         binding = MainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-    }
 
+        val slideBottomAnimation = AnimationUtils
+            .loadAnimation(this, R.anim.fade_in)
+        binding.root.startAnimation(slideBottomAnimation)
+    }
     override fun onDestroy() {
         super.onDestroy()
         mediaPlayerViewModel.stopMediaPlayer()
     }
+
 }

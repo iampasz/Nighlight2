@@ -212,8 +212,9 @@ class MainFragment : Fragment() {
     }
 
     private fun lockButton() {
-        val showAdd = (activity as MainActivity?)?.getSettings()
+
         if (checkMenu) {
+            hideLock()
             binding.lockFrame.isClickable = true
             // openMenu(NightlightHelper.getMenuButtons(colors))
             binding.rv.visibility = View.INVISIBLE
@@ -228,11 +229,7 @@ class MainFragment : Fragment() {
                 }
             }
             binding.lockButton.setImageResource(R.drawable.ic_lock)
-            if (showAdd != null) {
-                if (showAdd < 0) {
-                    binding.adView.visibility = View.INVISIBLE
-                }
-            }
+            binding.adView.visibility = View.INVISIBLE
             binding.lockFrame.isClickable = true
             checkMenu = false
             show = false
@@ -241,11 +238,9 @@ class MainFragment : Fragment() {
             binding.rv.visibility = View.VISIBLE
             binding.bottomText.visibility = View.VISIBLE
             binding.lockButton.setImageResource(R.drawable.ic_unlock)
-            if (showAdd != null) {
-                if (showAdd < 0) {
-                    binding.adView.visibility = View.VISIBLE
-                }
-            }
+
+            binding.adView.visibility = View.VISIBLE
+
             binding.settingsButton.visibility = View.VISIBLE
             binding.lockFrame.isClickable = false
             checkMenu = true
@@ -523,9 +518,7 @@ class MainFragment : Fragment() {
             override fun onFinish() {
                 binding.lockButton.visibility = View.GONE
                 binding.bottomText.visibility = View.GONE
-
             }
-
         }
 
 
