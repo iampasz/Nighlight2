@@ -3,8 +3,8 @@ package com.sarnavsky.pasz.nighlight2
 
 import android.os.Bundle
 import android.transition.TransitionInflater
+import android.util.Log
 import android.view.WindowManager
-import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.sarnavsky.pasz.nighlight2.databinding.MainBinding
@@ -28,11 +28,13 @@ class MainActivity : AppCompatActivity() {
 
         openFragment(MainFragment())
 
-        //TODO SET RIGHT GDPR
-        //GDPRHelper.showGDPR(this)
-
         mediaPlayerViewModel.initializeMediaPlayer()
+
+        (this@MainActivity.application as MainApplication).showAd(this)
+        //(this@MainActivity.application as MainApplication).loadAd()
+
     }
+
     private fun isFirstOpen() {
         val sp = getSharedPreferences(
             MY_SETTINGS,
@@ -46,6 +48,7 @@ class MainActivity : AppCompatActivity() {
             e.apply()
         }
     }
+
     private fun saveSettings(adCounter: Int) {
         val currentCount: Int = getSettings()
         if (currentCount > 0 && adCounter > -1) {
@@ -55,27 +58,27 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
     fun getSettings(): Int {
         val sharedPref =
             getSharedPreferences(MY_SETTINGS, 0)
         return sharedPref.getInt("NO_ADS_COUNTER", 0)
     }
+
     fun openFragment(fragment: Fragment) {
         supportFragmentManager
             .beginTransaction()
             .add(R.id.container, fragment)
             .commit()
     }
+
     private fun initView() {
         window.enterTransition = TransitionInflater
             .from(this).inflateTransition(android.R.transition.slide_bottom)
         binding = MainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val slideBottomAnimation = AnimationUtils
-            .loadAnimation(this, R.anim.fade_in)
-        binding.root.startAnimation(slideBottomAnimation)
     }
+
     override fun onDestroy() {
         super.onDestroy()
         mediaPlayerViewModel.stopMediaPlayer()

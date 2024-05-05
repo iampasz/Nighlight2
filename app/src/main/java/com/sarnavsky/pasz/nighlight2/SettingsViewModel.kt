@@ -28,7 +28,7 @@ class SettingsViewModel(
             val newItem = Settings(
                 currentNightlight = 0,
                 backgroundColor = Color.BLACK,
-                nightlightColor = Color.BLACK,
+                nightlightColor = Color.BLUE,
                 animationType = R.drawable.bg_flowers,
                 animationStatus = false
             )

@@ -2,8 +2,10 @@
 
 package com.sarnavsky.pasz.nighlight2
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
+import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
@@ -16,14 +18,16 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.appopen.AppOpenAd
 import com.sarnavsky.pasz.nighlight2.di.dbModule
 import com.sarnavsky.pasz.nighlight2.di.viewModelModule
+import org.checkerframework.checker.units.qual.A
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin
 import java.util.Date
 
-private const val AD_UNIT_ID = "ca-app-pub-3940256099942544/9257395921"
+private const val AD_UNIT_ID = "ca-app-pub-1237459888817948/3817999426"
+
 
 @Suppress("DEPRECATION")
-class MainApplication : Application(), LifecycleObserver {
+class MainApplication : Application(), LifecycleObserver, Application.ActivityLifecycleCallbacks {
 
     private lateinit var appOpenAdManager: AppOpenAdManager
     private var currentActivity: Activity? = null
@@ -35,6 +39,8 @@ class MainApplication : Application(), LifecycleObserver {
     override fun onCreate() {
         super.onCreate()
 
+        Log.i("MAIN_APPLICATION_TEST", "onCreate()")
+
         startKoin {
             androidContext(this@MainApplication)
             modules(dbModule)
@@ -43,177 +49,170 @@ class MainApplication : Application(), LifecycleObserver {
 
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
         appOpenAdManager = AppOpenAdManager()
+
+        registerActivityLifecycleCallbacks(this)
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onMoveToForeground() {
-        currentActivity?.let { appOpenAdManager.showAd() }
+        currentActivity?.let { appOpenAdManager.showAd(it) }
+    }
+
+    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+
+    }
+
+
+    override fun onActivityStarted(activity: Activity) {
+        // Updating the currentActivity only when an ad is not showing.
+        if (!appOpenAdManager.isShowingAd) {
+            currentActivity = activity
+        }
+        Log.i("GETACITVII", "currentActivity ${currentActivity}")
+    }
+
+    override fun onActivityResumed(activity: Activity) {
+
+    }
+
+    override fun onActivityPaused(activity: Activity) {
+
+    }
+
+    override fun onActivityStopped(activity: Activity) {
+
+    }
+
+    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
+
+    }
+
+    override fun onActivityDestroyed(activity: Activity) {
+
     }
 
     interface OnShowAdCompleteListener {
-        fun onShowAdComplete(successStatus:Boolean)
+        fun onShowAdComplete(successStatus: Boolean)
     }
 
     private inner class AppOpenAdManager {
 
         var appOpenAd: AppOpenAd? = null
+        var isShowingAd = false
 
-        fun loadAdFirst(onShowAdCompleteListener: OnShowAdCompleteListener) {
 
 
-            if(addIsLoaded || isAdAvailable()){
-                return
-            }
+        @SuppressLint("SuspiciousIndentation")
+        fun loadAd(activity: Activity) {
 
-            Log.i("ACTIVITU_STATUS", "loadAdFirst має спрацвати тільки один раз")
+            Log.i("LOADAD","LOADAD")
 
             val request = AdRequest.Builder().build()
 
 
-            addIsLoaded = true
-                currentActivity?.let { it ->
-                    AppOpenAd.load(
-                        it,
-                        AD_UNIT_ID,
-                        request,
-                        object : AppOpenAd.AppOpenAdLoadCallback() {
-                            override fun onAdLoaded(ad: AppOpenAd) {
-
-                                addIsLoaded = false
-                                appOpenAd = ad
-                                loadTime = Date().time
-
-                                //showAdFirst(onShowAdCompleteListener)
-
-                                // showAdIfAvailable()
-                                Log.i("ACTIVITU_STATUS", "Реклама завантажена")
-
-                                onShowAdCompleteListener.onShowAdComplete(true)
-
-
-                            }
-
-                            override fun onAdFailedToLoad(loadAdError: LoadAdError) {
-                                addIsLoaded = false
-                                Log.i("ACTIVITU_STATUS", "Реклама НЕ завантажена ${loadAdError}")
-                                onShowAdCompleteListener.onShowAdComplete(false)
-                            }
-                        }
-                    )
-
-                }
-
-
-
-
-        }
-
-        fun loadAd() {
-            Log.i("ACTIVITU_STATUS", "Реклама завантажується loadAd")
-            val request = AdRequest.Builder().build()
-
-            Log.i("ADD_WAS_LOADED", "$addIsLoaded")
-
-
-
-            if(addIsLoaded || isAdAvailable()){
+            if (addIsLoaded || isAdAvailable()) {
                 return
             }
+
             addIsLoaded = true
-                currentActivity?.let {
-                    AppOpenAd.load(
-                        it,
-                        AD_UNIT_ID,
-                        request,
-                        object : AppOpenAd.AppOpenAdLoadCallback() {
-                            override fun onAdLoaded(ad: AppOpenAd) {
-                                appOpenAd = ad
-                                Log.i("ACTIVITU_STATUS", "Реклама завантажилась додав в appOpenAd")
-                                addIsLoaded = false
-                                loadTime = Date().time
-                                Log.i("ADD_WAS_LOADED", "$addIsLoaded")
-                            }
+            Log.i("JFNJNVJRNVRn", "currentActivity ${currentActivity}")
 
-                            override fun onAdFailedToLoad(loadAdError: LoadAdError) {
-                                addIsLoaded = false
-                                Log.i("ACTIVITU_STATUS", "помилка не завантажилась loadAd")
-                            }
-                        }
-                    )
+            AppOpenAd.load(
+                activity,
+                AD_UNIT_ID,
+                request,
+                object : AppOpenAd.AppOpenAdLoadCallback() {
+                    override fun onAdLoaded(ad: AppOpenAd) {
+                        appOpenAd = ad
+                        addIsLoaded = false
+                        loadTime = Date().time
+                        Log.i("JFNJNVJRNVRn", "Реклама завантажена")
+
+                    }
+
+                    override fun onAdFailedToLoad(loadAdError: LoadAdError) {
+                        addIsLoaded = false
+                        Log.i("JFNJNVJRNVRn", "Реклама НЕ завантажена ${loadAdError}")
+
+                    }
                 }
-
-
+            )
 
 
         }
 
-        fun showAd() {
-            Log.i("ACTIVITU_STATUS", "якщо реклама є я ї покажу при повернені в додаток")
+        fun showAd(activity: Activity) {
+            Log.i("JFNJNVJRNVRn", "showAd")
+
+            if (isShowingAd) {
+                return
+            }
+
+            if (!isAdAvailable()) {
+                    loadAd(activity)
+                return
+            }
+
+            Log.i("JFNJNVJRNVRn", "appOpenAd ${appOpenAd}")
+
             appOpenAd?.fullScreenContentCallback =
                 object : FullScreenContentCallback() {
+                    @SuppressLint("SuspiciousIndentation")
                     override fun onAdShowedFullScreenContent() {
                         super.onAdShowedFullScreenContent()
 
+                        isShowingAd = false
                         addIsLoaded = false
+                            loadAd(activity)
 
-                        loadAd()
+
                         Log.i(
                             "ACTIVITU_STATUS", "я повернувсся в додаток, реклама відобразилась," +
                                     " я її знову завантажую на майбутнє"
                         )
-                    }
-                }
 
-            currentActivity?.let {
-                appOpenAd?.show(it)
-            }
-        }
-
-        fun showAdFirst(onShowAdCompleteListener : OnShowAdCompleteListener) {
-
-            appOpenAd?.fullScreenContentCallback =
-                object : FullScreenContentCallback() {
-
-                    override fun onAdClicked() {
-                        super.onAdClicked()
-                        Log.i("FULL_SCREEEN","onAdClicked")
-                        onShowAdCompleteListener.onShowAdComplete(true)
 
                     }
 
                     override fun onAdDismissedFullScreenContent() {
                         super.onAdDismissedFullScreenContent()
-                        Log.i("FULL_SCREEEN","onAdDismissedFullScreenContent")
-                        onShowAdCompleteListener.onShowAdComplete(true)
+                        appOpenAd = null
+                        isShowingAd = false
+                        currentActivity?.let {
+                            loadAd(activity)
+                        }
                     }
-
 
                     override fun onAdFailedToShowFullScreenContent(p0: AdError) {
                         super.onAdFailedToShowFullScreenContent(p0)
-                        Log.i("FULL_SCREEEN","onAdFailedToShowFullScreenContent")
-                        onShowAdCompleteListener.onShowAdComplete(true)
-                    }
-
-                    override fun onAdShowedFullScreenContent() {
-                        super.onAdShowedFullScreenContent()
-                        //onShowAdCompleteListener.onShowAdComplete(true)
-                        addIsLoaded = false
-                        loadAd()
-                        Log.i("FULL_SCREEEN","onAdShowedFullScreenContent")
+                        appOpenAd = null
+                        isShowingAd = false
+                        currentActivity?.let {
+                            loadAd(activity)
+                        }
                     }
                 }
+
+
+        Log.i("BIDNINWINDOWNDWN","here")
+            isShowingAd = true
+
             currentActivity?.let {
                 appOpenAd?.show(it)
             }
 
-
         }
+
+
 
         private fun isAdAvailable(): Boolean {
             return appOpenAd != null && wasLoadTimeLessThanNHoursAgo(4)
         }
 
         private fun wasLoadTimeLessThanNHoursAgo(numHours: Long): Boolean {
+
+            Log.i("MAIN_APPLICATION_TEST", "wasLoadTimeLessThanNHoursAgo()")
+
             val dateDifference: Long = Date().time - loadTime
             val numMilliSecondsPerHour: Long = 3600000
             return dateDifference < numMilliSecondsPerHour * numHours
@@ -221,14 +220,24 @@ class MainApplication : Application(), LifecycleObserver {
 
     }
 
-    fun showAdFirst( onShowAdCompleteListener : OnShowAdCompleteListener) {
-
-        appOpenAdManager.showAdFirst(onShowAdCompleteListener)
+    fun showAdFirst(onShowAdCompleteListener: OnShowAdCompleteListener) {
+        Log.i("MAIN_APPLICATION_TEST", "showAdFirst() OS")
+        //appOpenAdManager.showAdFirst(onShowAdCompleteListener)
     }
 
-    fun loadAdFirst(activity: Activity, onShowAdCompleteListener: OnShowAdCompleteListener) {
-        currentActivity = activity
-        appOpenAdManager.loadAdFirst(onShowAdCompleteListener)
+
+    fun loadAd(activity: Activity) {
+
+        appOpenAdManager.loadAd(activity)
+    }
+
+    fun getAdd(): Boolean {
+        return appOpenAdManager.appOpenAd != null
+    }
+
+    fun showAd(activity: Activity) {
+        //currentActivity = activity
+        appOpenAdManager.showAd(activity)
     }
 }
 
