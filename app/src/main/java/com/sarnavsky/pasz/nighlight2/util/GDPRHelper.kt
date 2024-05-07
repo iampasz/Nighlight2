@@ -8,7 +8,7 @@ import com.google.android.ump.ConsentRequestParameters
 import com.google.android.ump.UserMessagingPlatform
 import java.util.concurrent.atomic.AtomicBoolean
 
-class GDPRHelper(private val activity:Activity) {
+class GDPRHelper(private val activity: Activity) {
 
     private lateinit var consentInformation: ConsentInformation
 
@@ -16,7 +16,9 @@ class GDPRHelper(private val activity:Activity) {
 
     var consentForm: ConsentForm? = null
 
-    fun checkGDPR(onShowAdRequest: OnShowAdRequest) {
+    fun checkGDPR( onShowAdRequest: OnShowAdRequest) {
+
+        Log.i("GDPRTESST", "sttart")
 
         // Create a ConsentRequestParameters object.
         val params = ConsentRequestParameters
@@ -34,8 +36,10 @@ class GDPRHelper(private val activity:Activity) {
 
                         consentForm = it
 
+                        Log.i("GDPRTESST", "consentForm ${consentForm}")
+
                         if (consentInformation.canRequestAds()) {
-                            initializeMobileAdsSdk(onShowAdRequest)
+                            initializeMobileAdsSdk()
 
                             onShowAdRequest.showAdPossible(true)
                         } else {
@@ -44,23 +48,29 @@ class GDPRHelper(private val activity:Activity) {
                     },
                     {
                         Log.i(
-                            "KJKJKJKJJKjKJ",
+                            "GDPRTESST",
                             "fail"
                         )
                     })
 
             },
             {
-
+                Log.i(
+                    "GDPRTESST",
+                    "fail2"
+                )
             })
         if (consentInformation.canRequestAds()) {
-            initializeMobileAdsSdk(onShowAdRequest)
+            initializeMobileAdsSdk()
         }
 
         //consentInformation.reset()
     }
 
-    fun showGDPR(onShowAdRequest: OnShowAdRequest){
+    fun showGDPR( onShowAdRequest: OnShowAdRequest){
+
+        Log.i("GDPRTESST", "We ${consentForm}")
+
         consentForm?.show(activity) {
 
             onShowAdRequest.showAdPossible(true)
@@ -68,7 +78,7 @@ class GDPRHelper(private val activity:Activity) {
         }
     }
 
-    private fun initializeMobileAdsSdk(onShowAdRequest: OnShowAdRequest) {
+    private fun initializeMobileAdsSdk() {
 
         if (isMobileAdsInitializeCalled.getAndSet(true)) {
             return

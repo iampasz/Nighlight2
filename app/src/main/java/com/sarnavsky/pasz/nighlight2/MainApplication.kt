@@ -18,7 +18,7 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.appopen.AppOpenAd
 import com.sarnavsky.pasz.nighlight2.di.dbModule
 import com.sarnavsky.pasz.nighlight2.di.viewModelModule
-import org.checkerframework.checker.units.qual.A
+import com.sarnavsky.pasz.nighlight2.util.GDPRHelper
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin
 import java.util.Date
@@ -31,15 +31,12 @@ class MainApplication : Application(), LifecycleObserver, Application.ActivityLi
 
     private lateinit var appOpenAdManager: AppOpenAdManager
     private var currentActivity: Activity? = null
-
     private var loadTime: Long = 0
-
     var addIsLoaded = false
+
 
     override fun onCreate() {
         super.onCreate()
-
-        Log.i("MAIN_APPLICATION_TEST", "onCreate()")
 
         startKoin {
             androidContext(this@MainApplication)
@@ -51,16 +48,43 @@ class MainApplication : Application(), LifecycleObserver, Application.ActivityLi
         appOpenAdManager = AppOpenAdManager()
 
         registerActivityLifecycleCallbacks(this)
+
+
+    }
+
+    fun checkGDPR(activity: Activity) {
+        val gdpr = GDPRHelper(activity)
+        gdpr.checkGDPR(object : GDPRHelper.OnShowAdRequest {
+            override fun showAdPossible(success: Boolean) {
+
+                if (success) {
+                    Log.i("GDPRTESST", "We got answer, you can show the ads")
+                } else {
+                    Log.i(
+                        "GDPRTESST", "We got answer, you can't show the ads." +
+                                " But you acsepted menu is loaded, you can show it"
+                    )
+
+                    gdpr.showGDPR(object : GDPRHelper.OnShowAdRequest {
+                        override fun showAdPossible(success: Boolean) {
+
+                        }
+                    })
+                }
+
+            }
+
+        })
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onMoveToForeground() {
+        Log.i("FJRNVJNRNVRNVR", "onMoveToForeground")
         currentActivity?.let { appOpenAdManager.showAd(it) }
-    }
-
-    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
 
     }
+
+    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
 
 
     override fun onActivityStarted(activity: Activity) {
@@ -68,32 +92,17 @@ class MainApplication : Application(), LifecycleObserver, Application.ActivityLi
         if (!appOpenAdManager.isShowingAd) {
             currentActivity = activity
         }
-        Log.i("GETACITVII", "currentActivity ${currentActivity}")
     }
 
-    override fun onActivityResumed(activity: Activity) {
+    override fun onActivityResumed(activity: Activity) {}
 
-    }
+    override fun onActivityPaused(activity: Activity) {}
 
-    override fun onActivityPaused(activity: Activity) {
+    override fun onActivityStopped(activity: Activity) {}
 
-    }
+    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
 
-    override fun onActivityStopped(activity: Activity) {
-
-    }
-
-    override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
-
-    }
-
-    override fun onActivityDestroyed(activity: Activity) {
-
-    }
-
-    interface OnShowAdCompleteListener {
-        fun onShowAdComplete(successStatus: Boolean)
-    }
+    override fun onActivityDestroyed(activity: Activity) {}
 
     private inner class AppOpenAdManager {
 
@@ -101,21 +110,15 @@ class MainApplication : Application(), LifecycleObserver, Application.ActivityLi
         var isShowingAd = false
 
 
-
         @SuppressLint("SuspiciousIndentation")
         fun loadAd(activity: Activity) {
 
-            Log.i("LOADAD","LOADAD")
-
             val request = AdRequest.Builder().build()
-
-
             if (addIsLoaded || isAdAvailable()) {
                 return
             }
 
             addIsLoaded = true
-            Log.i("JFNJNVJRNVRn", "currentActivity ${currentActivity}")
 
             AppOpenAd.load(
                 activity,
@@ -142,18 +145,15 @@ class MainApplication : Application(), LifecycleObserver, Application.ActivityLi
         }
 
         fun showAd(activity: Activity) {
-            Log.i("JFNJNVJRNVRn", "showAd")
-
             if (isShowingAd) {
                 return
             }
 
             if (!isAdAvailable()) {
-                    loadAd(activity)
+                loadAd(activity)
                 return
             }
 
-            Log.i("JFNJNVJRNVRn", "appOpenAd ${appOpenAd}")
 
             appOpenAd?.fullScreenContentCallback =
                 object : FullScreenContentCallback() {
@@ -161,17 +161,9 @@ class MainApplication : Application(), LifecycleObserver, Application.ActivityLi
                     override fun onAdShowedFullScreenContent() {
                         super.onAdShowedFullScreenContent()
 
-                        isShowingAd = false
+                        // isShowingAd = false
                         addIsLoaded = false
-                            loadAd(activity)
-
-
-                        Log.i(
-                            "ACTIVITU_STATUS", "я повернувсся в додаток, реклама відобразилась," +
-                                    " я її знову завантажую на майбутнє"
-                        )
-
-
+                        loadAd(activity)
                     }
 
                     override fun onAdDismissedFullScreenContent() {
@@ -193,25 +185,20 @@ class MainApplication : Application(), LifecycleObserver, Application.ActivityLi
                     }
                 }
 
-
-        Log.i("BIDNINWINDOWNDWN","here")
             isShowingAd = true
 
             currentActivity?.let {
+                Log.i("FJRNVJNRNVRNVR", "ПОКАЗУЮ ЯКЩО Є")
                 appOpenAd?.show(it)
             }
 
         }
-
-
 
         private fun isAdAvailable(): Boolean {
             return appOpenAd != null && wasLoadTimeLessThanNHoursAgo(4)
         }
 
         private fun wasLoadTimeLessThanNHoursAgo(numHours: Long): Boolean {
-
-            Log.i("MAIN_APPLICATION_TEST", "wasLoadTimeLessThanNHoursAgo()")
 
             val dateDifference: Long = Date().time - loadTime
             val numMilliSecondsPerHour: Long = 3600000
@@ -220,14 +207,7 @@ class MainApplication : Application(), LifecycleObserver, Application.ActivityLi
 
     }
 
-    fun showAdFirst(onShowAdCompleteListener: OnShowAdCompleteListener) {
-        Log.i("MAIN_APPLICATION_TEST", "showAdFirst() OS")
-        //appOpenAdManager.showAdFirst(onShowAdCompleteListener)
-    }
-
-
     fun loadAd(activity: Activity) {
-
         appOpenAdManager.loadAd(activity)
     }
 
@@ -236,7 +216,6 @@ class MainApplication : Application(), LifecycleObserver, Application.ActivityLi
     }
 
     fun showAd(activity: Activity) {
-        //currentActivity = activity
         appOpenAdManager.showAd(activity)
     }
 }

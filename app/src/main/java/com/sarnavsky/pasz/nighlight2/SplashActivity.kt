@@ -8,7 +8,6 @@ import android.os.CountDownTimer
 import android.transition.TransitionInflater
 import android.util.Log
 import com.sarnavsky.pasz.nighlight2.databinding.SplashActivityBinding
-import com.sarnavsky.pasz.nighlight2.util.GDPRHelper
 import com.sarnavsky.pasz.nighlight2.util.INTERNET_CONNECTION
 import com.sarnavsky.pasz.nighlight2.util.NO_INTERNET_CONNECTION
 import com.sarnavsky.pasz.nighlight2.util.NightlightHelper
@@ -20,32 +19,25 @@ import kotlin.random.Random
 class SplashActivity : Activity() {
 
     private lateinit var binding: SplashActivityBinding
-    var adWasLoaded = false
-    var GDPRWasLoaded = false
-
-    private var cdt:CountDownTimer? = null
+    private var cdt: CountDownTimer? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
-       // initFullScreenAd()
-
-        (application as MainApplication).loadAd(this)
-
-        startLoaderTimer(10000)
 
 
+        binding.imageView.setColorFilter(
+            android
+                .graphics
+                .Color
+                .argb(255, 255, 0, 0)
+        )
         NightlightHelper.changeColor(binding.imageView)
 
 
-        // val animationView =  binding.lottieAnimationView
 
-        //animationView.pauseAnimation()
-//        animationView.speed = 2f
-//        animationView.playAnimation()
-
-
+initFullScreenAd()
     }
 
     private fun initView() {
@@ -53,8 +45,6 @@ class SplashActivity : Activity() {
             .from(this).inflateTransition(android.R.transition.slide_bottom)
         binding = SplashActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
     }
 
     private fun initFullScreenAd() {
@@ -62,7 +52,9 @@ class SplashActivity : Activity() {
             TYPE_WIFI,
             TYPE_MOBILE,
             INTERNET_CONNECTION -> {
-                loadFullScreenAds()
+
+                (application as MainApplication).loadAd(this)
+                startLoaderTimer(5000)
             }
 
             NO_INTERNET_CONNECTION -> {
@@ -73,44 +65,10 @@ class SplashActivity : Activity() {
         }
     }
 
-    private fun loadFullScreenAds() {
-
-        startLoaderTimer(7000)
-
-        Log.i("ADWASLOADED", "after timer ")
-
-        val gdpr = GDPRHelper(this@SplashActivity)
-
-        gdpr.checkGDPR( object : GDPRHelper.OnShowAdRequest {
-            override fun showAdPossible(success: Boolean) {
-
-                Log.i("ADWASLOADED", "callback ")
-                if (success) {
-
-                    Log.i("ADWASLOADED", "true ")
-                }else{
-                    Log.i("ADWASLOADED", "false ")
-                    cdt?.cancel()
-                  gdpr.showGDPR(object : GDPRHelper.OnShowAdRequest{
-                      override fun showAdPossible(success: Boolean) {
-                          finish()
-                          startMainActivity()
-                      }
-
-                  })
-                }
-            }
-        })
-
-        // startLoaderTimer(5000)
-
-    }
-
 
 
     fun startMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
-
         startActivity(intent)
     }
 
@@ -127,87 +85,40 @@ class SplashActivity : Activity() {
     }
 
 
-
     private fun startLoaderTimer(seconds: Long) {
 
         cdt = object : CountDownTimer(seconds, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val random = Random.nextInt(30)
                 loadLoader(random)
-
-
-                Log.i("LOADERTIMERW", " ${ (this@SplashActivity.application as MainApplication).getAdd()}")
                 if ((this@SplashActivity.application as MainApplication).getAdd()) {
-                    this.cancel()
-                    this@SplashActivity.finish()
-                    startMainActivity()
 
-//                    (this@SplashActivity.application as MainApplication).showAdFirst(object :
-//                        MainApplication.OnShowAdCompleteListener {
-//                        override fun onShowAdComplete(successStatus: Boolean) {
-//
-//                            Log.i("CHEKTHISONE", "showAdFirst")
-//
-//                        }
-//
-//                    })
-//                    finish()
+                   // if (googleMobileAdsConsentManager.canRequestAds) {
+                        this.cancel()
+                        this@SplashActivity.finish()
+                        startMainActivity()
+                   // }
+
                 }
-//
-//                if (GDPRWasLoaded) {
-//                    this.cancel()
-//                    this@SplashActivity.finish()
-//                    startMainActivity()
-//
-//                    (this@SplashActivity.application as MainApplication).showAdFirst(object :
-//                        MainApplication.OnShowAdCompleteListener {
-//                        override fun onShowAdComplete(successStatus: Boolean) {
-//                            Log.i("CHEKTHISONE", "showAdFirst")
-//                        }
-//                    })
-//                    finish()
-//                }
 
-
+              //  secondsRemaining = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) + 1
             }
 
             override fun onFinish() {
                 loadLoader(100)
                 Log.i("LOADERTIMER", "onFinish")
+                //secondsRemaining = 0
+
+                    startMainActivity()
+                    finish()
 
 
-                startMainActivity()
-                finish()
-
-//                (this@SplashActivity.application as MainApplication).showAdFirst(
-//
-//                    object : MainApplication.OnShowAdCompleteListener {
-//                        override fun onShowAdComplete(successStatus: Boolean) {
-//
-//                            finish()
-//                        }
-//                    })
-
-//                finish()
-//                if (adIsLoaded) {
-//                   // (this@SplashActivity.application as MainApplication).showAdFirst()
-//                }else{
-//                    startMainActivity()
-//                }
             }
         }.start()
 
-
-//        (this@SplashActivity.application as MainApplication).loadAdFirst(this@SplashActivity,
-//            object : MainApplication.OnShowAdCompleteListener {
-//                override fun onShowAdComplete(successStatus: Boolean) {
-//                    binding.progressBar.progress = 100
-//                    Log.d("ACTIVITU_STATUS", "something heppens load or not wherever")
-//
-//                    if(successStatus){
-//                        adIsLoaded = true
-//                    }
-//                }
-//            })
     }
+
+
+
+
 }

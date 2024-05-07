@@ -1,9 +1,9 @@
 package com.sarnavsky.pasz.nighlight2
 
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.transition.TransitionInflater
-import android.util.Log
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -26,11 +26,14 @@ class MainActivity : AppCompatActivity() {
         isFirstOpen()
         saveSettings(-1)
 
+
+
         openFragment(MainFragment())
 
         mediaPlayerViewModel.initializeMediaPlayer()
 
         (this@MainActivity.application as MainApplication).showAd(this)
+        (this@MainActivity.application as MainApplication).checkGDPR(this)
         //(this@MainActivity.application as MainApplication).loadAd()
 
     }
@@ -84,4 +87,10 @@ class MainActivity : AppCompatActivity() {
         mediaPlayerViewModel.stopMediaPlayer()
     }
 
+
+    @Deprecated("Deprecated in Java", ReplaceWith("moveTaskToBack(true)"))
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        moveTaskToBack(true)
+    }
 }

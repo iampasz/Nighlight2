@@ -28,8 +28,8 @@ class SettingsViewModel(
             val newItem = Settings(
                 currentNightlight = 0,
                 backgroundColor = Color.BLACK,
-                nightlightColor = Color.BLUE,
-                animationType = R.drawable.bg_flowers,
+                nightlightColor = Color.rgb(55,178,212),
+                animationType = R.drawable.light_blue,
                 animationStatus = false
             )
             settingsDao.insert(newItem)
