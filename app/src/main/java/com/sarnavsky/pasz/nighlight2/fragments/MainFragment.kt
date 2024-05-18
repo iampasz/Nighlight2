@@ -48,7 +48,7 @@ class MainFragment : Fragment() {
     private val viewModel: SettingsViewModel by activityViewModel()
 
     private var mySetting: Settings? = null
-    private lateinit var myTimer: Timer
+    private var myTimer: Timer? = null
 
     var cdt: CountDownTimer? = null
 
@@ -454,11 +454,14 @@ class MainFragment : Fragment() {
 
         mySetting?.currentNightlight = binding.pager.currentItem
 
-        myTimer.timerStatus = false
+        myTimer?.timerStatus = false
         mySetting?.let {
             viewModel.updateSettings(it)
         }
-        viewModel.updateTimer(myTimer)
+        myTimer?.let {
+            viewModel.updateTimer(it)
+        }
+
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -489,11 +492,14 @@ class MainFragment : Fragment() {
                 binding.bottomText.setText(arrayList[position].name)
 
                 if (timerIsLoaded) {
-                    val updatedTimer = myTimer.copy(
+                    val updatedTimer = myTimer?.copy(
                         timerDuration = 9999,
                         timerStatus = false,
                     )
-                    viewModel.updateTimer(updatedTimer)
+                    updatedTimer?.let {
+                        viewModel.updateTimer(it)
+                    }
+
                 }
             }
         })
@@ -520,11 +526,6 @@ class MainFragment : Fragment() {
                 binding.bottomText.visibility = View.GONE
             }
         }
-
-
         hideLockTimer?.start()
-
-
     }
-
 }

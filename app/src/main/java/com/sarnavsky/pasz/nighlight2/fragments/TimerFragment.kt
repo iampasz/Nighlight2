@@ -15,7 +15,7 @@ import org.koin.androidx.viewmodel.ext.android.activityViewModel
 class TimerFragment : Fragment() {
 
     private lateinit var binding: TimerFragmentBinding
-    private lateinit var myTimer: Timer
+    private  var myTimer: Timer? = null
     private val viewModel: SettingsViewModel by activityViewModel()
 
     override fun onCreateView(
@@ -69,16 +69,21 @@ class TimerFragment : Fragment() {
             )
 
             if (timerMilliseconds > 0) {
-                myTimer.timerDuration = timerMilliseconds
-                myTimer.timerStatus = true
+                myTimer?.timerDuration = timerMilliseconds
+                myTimer?.timerStatus = true
             } else {
-                myTimer.timerDuration = 0
-                myTimer.timerStatus = false
+                myTimer?.timerDuration = 0
+                myTimer?.timerStatus = false
             }
 
-            myTimer.lastTimerHour = binding.spinnerHours.selectedItemPosition
-            myTimer.lastTimerMinute = binding.spinnerMinutes.selectedItemPosition
-            viewModel.updateTimer(myTimer)
+            myTimer?.lastTimerHour = binding.spinnerHours.selectedItemPosition
+            myTimer?.lastTimerMinute = binding.spinnerMinutes.selectedItemPosition
+
+            myTimer?.let {
+                viewModel.updateTimer(it)
+            }
+
+
             removeThisFragment()
         }
     }

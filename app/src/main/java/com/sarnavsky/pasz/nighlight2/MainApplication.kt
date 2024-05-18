@@ -29,7 +29,7 @@ private const val AD_UNIT_ID = "ca-app-pub-1237459888817948/3817999426"
 @Suppress("DEPRECATION")
 class MainApplication : Application(), LifecycleObserver, Application.ActivityLifecycleCallbacks {
 
-    private lateinit var appOpenAdManager: AppOpenAdManager
+    private var appOpenAdManager: AppOpenAdManager? = null
     private var currentActivity: Activity? = null
     private var loadTime: Long = 0
     var addIsLoaded = false
@@ -80,7 +80,7 @@ class MainApplication : Application(), LifecycleObserver, Application.ActivityLi
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onMoveToForeground() {
         Log.i("FJRNVJNRNVRNVR", "onMoveToForeground")
-        currentActivity?.let { appOpenAdManager.showAd(it) }
+        currentActivity?.let { appOpenAdManager?.showAd(it) }
 
     }
 
@@ -89,9 +89,12 @@ class MainApplication : Application(), LifecycleObserver, Application.ActivityLi
 
     override fun onActivityStarted(activity: Activity) {
         // Updating the currentActivity only when an ad is not showing.
-        if (!appOpenAdManager.isShowingAd) {
-            currentActivity = activity
+        appOpenAdManager?.let {
+            if (!it.isShowingAd) {
+                currentActivity = activity
+            }
         }
+
     }
 
     override fun onActivityResumed(activity: Activity) {}
@@ -208,15 +211,15 @@ class MainApplication : Application(), LifecycleObserver, Application.ActivityLi
     }
 
     fun loadAd(activity: Activity) {
-        appOpenAdManager.loadAd(activity)
+        appOpenAdManager?.loadAd(activity)
     }
 
     fun getAdd(): Boolean {
-        return appOpenAdManager.appOpenAd != null
+        return appOpenAdManager?.appOpenAd != null
     }
 
     fun showAd(activity: Activity) {
-        appOpenAdManager.showAd(activity)
+        appOpenAdManager?.showAd(activity)
     }
 }
 
