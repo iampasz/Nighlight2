@@ -62,7 +62,8 @@ class MusicListFragment : Fragment() {
         }
 
        if(mediaPlayerViewModel.isPlaying()) {
-           val foundAudio = audioList.find { it.audioName == mediaPlayerViewModel.currentAudioItem.value }
+           val foundAudio = audioList
+               .find { it.audioName == mediaPlayerViewModel.currentAudioItem.value }
 
            foundAudio?.let {
                foundAudio.status = true
